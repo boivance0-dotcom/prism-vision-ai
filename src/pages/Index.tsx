@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import SearchBar from '@/components/SearchBar';
 import AIModesSlider from '@/components/AIModesSlider';
 import { Bot, Sparkles } from 'lucide-react';
-import forestHeroBg from '@/assets/forest-hero-bg.jpg';
+import forestHeroBg from '@/assets/forest-hero-premium.jpg';
 
 const Index = () => {
   const [selectedMode, setSelectedMode] = useState('climate');
@@ -38,13 +38,13 @@ const Index = () => {
           <div className="flex-1 flex flex-col justify-center items-center text-center">
             {/* Large Hero Title */}
             <div className="mb-8 animate-fade-in">
-              <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 tracking-tight">
+              <h1 className="text-7xl md:text-9xl font-serif font-bold text-white mb-6 tracking-tight leading-none">
                 NATURE POWERED
                 <br />
-                <span className="text-primary">AI INTELLIGENCE</span>
+                <span className="text-primary font-display">AI INTELLIGENCE</span>
               </h1>
               
-              <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
+              <p className="text-xl md:text-2xl text-white/95 max-w-4xl mx-auto leading-relaxed font-light tracking-wide">
                 Explore Advanced Environmental Intelligence Through Specialized AI Systems
               </p>
             </div>
