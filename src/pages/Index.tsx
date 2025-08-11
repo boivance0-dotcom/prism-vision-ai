@@ -19,39 +19,31 @@ const Index = () => {
     <div className="min-h-screen">
       {/* Hero Section with Nature Background */}
       <div className="relative min-h-screen">
-        {/* Background Image */}
+        {/* Background Image with cinematic treatment */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-image-filter"
           style={{ backgroundImage: `url(${forestHeroBg})` }}
         />
 
-        {/* Dark Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-black/40" />
+        {/* Matte and readability overlays */}
+        <div className="hero-matte" />
+        <div className="hero-gradient-top" />
+        <div className="hero-gradient-bottom" />
+        <div className="hero-vignette" />
 
-        {/* Subtle Fog/Mist Overlay */}
-        <div className="fog-overlay pointer-events-none" />
-
-        {/* Floating Leaves */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <span className="floating-leaf left-[8%] top-[10%]" />
-          <span className="floating-leaf left-[75%] top-[15%] delay-150" />
-          <span className="floating-leaf left-[55%] top-[45%] delay-300" />
-          <span className="floating-leaf left-[20%] top-[60%] delay-500" />
-          <span className="floating-leaf left-[88%] top-[70%] delay-[700ms]" />
-        </div>
+        {/* Remove floating leaves to keep text area clean */}
 
         <div className="relative z-10 container mx-auto px-6 py-16 min-h-screen flex flex-col">
           {/* Main Hero Content */}
           <div className="flex-1 flex flex-col justify-center items-center text-center">
             {/* Large Hero Title */}
             <div className="mb-8 animate-fade-in">
-              <div className="kicker mb-6">Nature AI Project</div>
-              <h1 className="headline-cinematic text-gradient-premium text-center text-balance animate-scale-fade-in">
+              <h1 className="hero-title-poster hero-title-gradient text-center animate-scale-fade-in">
                 Nature Makes <span className="accent-earth">Us Happy</span>
               </h1>
 
-              <p className="mt-6 subheadline max-w-[600px] mx-auto text-center animate-fade-up-delayed">
-                Explore the emotional state of real happiness through immersive, nature-inspired intelligence.
+              <p className="mt-6 hero-subtitle-poster max-w-[600px] mx-auto text-center animate-fade-up-delayed">
+                IMMERSIVE NATURE INTELLIGENCE FOR CURIOUS MINDS
               </p>
             </div>
 
