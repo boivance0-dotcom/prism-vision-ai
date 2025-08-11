@@ -1,7 +1,3 @@
 name = "prism-vision-ai"
-# Cloudflare Pages: use npm for installing/building and point to Vite output
+# Cloudflare Pages: output directory for Vite
 pages_build_output_dir = "dist"
-
-[build]
-# Force npm for install + build on the platform
-command = "npm ci && npm run build"
