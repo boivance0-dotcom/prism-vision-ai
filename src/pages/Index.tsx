@@ -52,7 +52,7 @@ const Index = () => {
                 <span className="block">US HAPPY</span>
               </h1>
 
-              <p className="mt-6 text-lg md:text-2xl text-white/95 max-w-3xl mx-auto leading-relaxed font-light tracking-wide">
+              <p className="mt-6 text-lg md:text-2xl text-white/95 max-w-3xl mx-auto leading-relaxed tracking-wide font-serif italic">
                 Explore The Emotional State Of 'Real Happiness'
               </p>
             </div>

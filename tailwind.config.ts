@@ -113,11 +113,11 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out',
 				'slide-in': 'slide-in 0.4s ease-out'
 			},
-			fontFamily: {
-				sans: ['Inter', 'system-ui', 'sans-serif'],
-				serif: ['Playfair Display', 'Georgia', 'serif'],
-				display: ['Crimson Text', 'Georgia', 'serif'],
-			}
+							fontFamily: {
+								sans: ['Inter', 'system-ui', 'sans-serif'],
+								serif: ['Playfair Display', 'Georgia', 'serif'],
+								display: ['League Spartan', 'Inter', 'system-ui', 'sans-serif'],
+							}
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
