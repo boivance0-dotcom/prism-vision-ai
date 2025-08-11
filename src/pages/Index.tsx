@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import SearchBar from '@/components/SearchBar';
 import AIModesSlider from '@/components/AIModesSlider';
 import { Bot, Sparkles } from 'lucide-react';
-import forestHeroBg from '@/assets/forest-hero-premium.jpg';
+import forestHeroBg from '@/assets/forest-landscape-bg.jpg';
 
 const Index = () => {
   const [selectedMode, setSelectedMode] = useState('climate');
