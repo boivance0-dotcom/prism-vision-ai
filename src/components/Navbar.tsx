@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
             <Search className="h-5 w-5" />
           </button>
           <a href="#start" className="hidden sm:inline-flex items-center rounded-full border border-white px-4 py-2 text-white font-medium hover:bg-white hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#86C232]">
-            Join
+            Log in
           </a>
         </div>
       </nav>
