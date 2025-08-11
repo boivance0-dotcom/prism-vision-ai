@@ -46,10 +46,9 @@ const Index = () => {
             {/* Large Hero Title */}
             <div className="mb-8 animate-fade-in">
               <div className="kicker mb-6">Nature AI Project</div>
-              <h1 className="display-hero text-white text-shadow-xl text-balance">
-                NATURE MAKES
-                <br />
-                <span className="block">US HAPPY</span>
+              <h1 className="text-soft-contrast text-balance">
+                <span className="block headline-line-top text-white">NATURE MAKES</span>
+                <span className="block headline-line-bottom text-white">US HAPPY</span>
               </h1>
 
               <p className="mt-6 text-lg md:text-2xl text-white/95 max-w-3xl mx-auto leading-relaxed tracking-wide font-serif italic">
@@ -58,8 +57,8 @@ const Index = () => {
             </div>
 
             {/* CTA Button */}
-            <div className="mt-4 animate-slide-in">
-              <button onClick={scrollToExperience} className="glass-button">
+            <div className="mt-6 animate-slide-in">
+              <button onClick={scrollToExperience} className="cta-pill">
                 START EXPERIENCE
               </button>
             </div>

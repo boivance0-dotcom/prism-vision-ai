@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -169,6 +169,53 @@
   .floating-leaf {
     @apply absolute block w-8 h-8 bg-white/20 rounded-full blur-[2px] opacity-60;
     animation: leaf-fall 9s ease-in-out infinite;
+  }
+
+  /* Soft text outline/drop shadow for contrast */
+  .text-soft-contrast {
+    text-shadow: 0 2px 12px rgba(0,0,0,0.55), 0 1px 2px rgba(0,0,0,0.6);
+  }
+
+  /* Headline two-line sizing and tracking */
+  .headline-line-top {
+    font-family: theme('fontFamily.display');
+    font-weight: 900;
+    letter-spacing: -0.02em; /* ~ -0.5 to -1px vs responsive sizes */
+    text-transform: uppercase;
+    font-size: clamp(2.25rem, 6.5vw, 6.5vw);
+    line-height: 0.9;
+  }
+  .headline-line-bottom {
+    font-family: theme('fontFamily.display');
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    font-size: clamp(3rem, 8.5vw, 8.5vw);
+    line-height: 0.88;
+  }
+
+  /* Subheadline */
+  .subheadline {
+    font-family: theme('fontFamily.serif');
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1rem, 1.4vw, 1.5rem);
+    color: rgba(255,255,255,0.88);
+  }
+}
+
+@layer components {
+  /* CTA pill button matching spec */
+  .cta-pill {
+    @apply inline-flex items-center justify-center rounded-full border-2 border-white text-white transition-colors duration-200;
+    font-family: theme('fontFamily.display');
+    font-weight: 800;
+    font-size: 1rem; /* base ~1rem */
+    padding: 12px 32px; /* 12px 32px */
+    background: transparent;
+  }
+  .cta-pill:hover {
+    @apply bg-white text-black;
   }
 }
 
