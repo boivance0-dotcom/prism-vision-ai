@@ -3,19 +3,19 @@ import React, { useRef, useState } from 'react';
 import SearchBar from '@/components/SearchBar';
 import AIModesSlider from '@/components/AIModesSlider';
 import forestHeroBg from '@/assets/forest-hero-bg.jpg';
+import { useParallax } from '@/lib/hooks/useParallax';
 
 const Index = () => {
   const [started, setStarted] = useState(false);
   const experienceRef = useRef<HTMLDivElement | null>(null);
 
+  useParallax('.parallax-item');
+
   const handleSearch = (query: string) => {
     console.log(`Searching:`, query);
-    // Integrate with your actual AI search API here
   };
 
-  const startExperience = () => {
-    setStarted(true);
-  };
+  const startExperience = () => setStarted(true);
 
   return (
     <div className="min-h-screen">
@@ -23,8 +23,10 @@ const Index = () => {
       <div className="relative min-h-screen overflow-hidden">
         {/* Background Image with cinematic treatment */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-image-filter"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-image-filter parallax-item"
+          data-speed="0.6"
           style={{ backgroundImage: `url(${forestHeroBg})` }}
+          aria-hidden
         />
 
         {/* Matte and readability overlays */}
@@ -39,13 +41,13 @@ const Index = () => {
             <div className="relative w-full">
               {/* Initial State */}
               {!started && (
-                <div className="text-center animate-scale-fade-in">
+                <div className="text-center animate-scale-fade-in parallax-item" data-speed="1">
                   <h1 className="hero-title-clean">Nature Makes Us Happy</h1>
                   <p className="mt-5 hero-subtitle-contrast max-w-[600px] mx-auto">
                     Immersive nature intelligence for curious minds.
                   </p>
                   <div className="mt-8">
-                    <button onClick={startExperience} className="cta-outline-white cta-outline-white--lg">
+                    <button onClick={startExperience} className="cta-outline-white cta-outline-white--lg hover-lift">
                       Start Experience
                     </button>
                   </div>
@@ -54,19 +56,14 @@ const Index = () => {
 
               {/* Experience State */}
               {started && (
-                <div className="animate-hero-in">
+                <div className="animate-hero-in parallax-item" data-speed="1">
                   <div className="max-w-4xl mx-auto">
                     <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
                   </div>
                   <div className="mt-10 md:mt-12 lg:mt-14">
-                    <AIModesSlider selectedMode="forest" onModeChange={() => {}} className="md:max-w-5xl mx-auto" />
+                    <AIModesSlider selectedMode="forest" onModeChange={() => {}} className="md:max-w-5xl mx-auto hover-lift" />
                   </div>
                 </div>
-              )}
-
-              {/* Out animation overlay for initial block */}
-              {!started && (
-                <div className="pointer-events-none absolute inset-0" />
               )}
             </div>
           </div>

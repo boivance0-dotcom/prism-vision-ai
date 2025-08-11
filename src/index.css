@@ -366,3 +366,37 @@
 
 /* Navbar spacing tokens */
 :root { --nav-h: 88px; --nav-h-compact: 64px; }
+
+:root {
+  --shadow-hover: 0 18px 48px rgba(0,0,0,0.65);
+}
+
+@layer utilities {
+  /* Hover lift utility (no layout shift) */
+  .hover-lift {
+    transform: translateZ(0) translateY(0) scale(1);
+    transition: transform 300ms ease-in-out, box-shadow 300ms ease-in-out, filter 300ms ease-in-out;
+    will-change: transform;
+  }
+  .hover-lift:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* Parallax base for JS-managed elements */
+  .parallax-item {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* Reveal on scroll */
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 500ms ease-out, transform 500ms ease-out;
+  }
+  .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
