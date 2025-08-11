@@ -334,3 +334,46 @@
     font-size: clamp(0.9rem, 1.05vw, 1.1rem);
   }
 }
+
+@layer utilities {
+  /* Clean hero headline: readable, non-metallic */
+  .hero-title-clean {
+    font-family: theme('fontFamily.display');
+    font-weight: 700;
+    letter-spacing: -0.02em; /* tightened */
+    font-size: clamp(2rem, 6vw, 5.5rem);
+    line-height: 1.08;
+    color: #ffffff; /* pure white */
+    text-shadow: 0 12px 24px rgba(0,0,0,0.55);
+  }
+  .hero-subtitle-contrast {
+    font-family: theme('fontFamily.sans');
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-weight: 300;
+    color: #E0E0E0;
+    opacity: 0.9;
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+  }
+}
+
+@layer components {
+  .cta-outline-white {
+    @apply inline-flex items-center justify-center rounded-full border border-white text-white font-semibold transition transform;
+    padding: 12px 24px; /* base; overridden below for spec */
+  }
+  .cta-outline-white--lg {
+    padding: 14px 38px;
+  }
+  .cta-outline-white:hover {
+    @apply bg-white text-slate-800 scale-105;
+  }
+  .cta-outline-white:focus-visible {
+    @apply outline-none ring-4 ring-white/30;
+  }
+}
+
+/* Reduced motion safety */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

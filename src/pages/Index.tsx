@@ -26,7 +26,7 @@ const Index = () => {
         />
 
         {/* Matte and readability overlays */}
-        <div className="hero-matte" />
+        <div className="absolute inset-0 bg-black/40" />
         <div className="hero-gradient-top" />
         <div className="hero-gradient-bottom" />
         <div className="hero-vignette" />
@@ -38,18 +38,18 @@ const Index = () => {
           <div className="flex-1 flex flex-col justify-center items-center text-center">
             {/* Large Hero Title */}
             <div className="mb-8 animate-fade-in">
-              <h1 className="hero-title-poster hero-title-gradient text-center animate-scale-fade-in">
-                Nature Makes <span className="accent-earth">Us Happy</span>
+              <h1 className="hero-title-clean text-center animate-scale-fade-in">
+                Nature Makes Us Happy
               </h1>
 
-              <p className="mt-6 hero-subtitle-poster max-w-[600px] mx-auto text-center animate-fade-up-delayed">
-                IMMERSIVE NATURE INTELLIGENCE FOR CURIOUS MINDS
+              <p className="mt-5 hero-subtitle-contrast max-w-[600px] mx-auto text-center animate-fade-up-delayed">
+                Immersive nature intelligence for curious minds.
               </p>
             </div>
 
             {/* CTA Button */}
             <div className="mt-8 animate-fade-up-late">
-              <button onClick={scrollToExperience} className="cta-premium">
+              <button onClick={scrollToExperience} className="cta-outline-white cta-outline-white--lg">
                 Start Experience
               </button>
             </div>
