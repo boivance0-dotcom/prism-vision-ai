@@ -38,13 +38,14 @@ const Index = () => {
           <div className="flex-1 flex flex-col justify-center items-center text-center">
             {/* Large Hero Title */}
             <div className="mb-8 animate-fade-in">
-              <h1 className="text-7xl md:text-9xl font-serif font-bold text-white mb-6 tracking-tight leading-none">
-                NATURE POWERED
+              <div className="kicker mb-6">Nature AI Intelligence</div>
+              <h1 className="display-hero text-white text-shadow-xl text-balance">
+                NATURE MAKES
                 <br />
-                <span className="text-primary font-display">AI INTELLIGENCE</span>
+                <span className="block">US HAPPY</span>
               </h1>
               
-              <p className="text-xl md:text-2xl text-white/95 max-w-4xl mx-auto leading-relaxed font-light tracking-wide">
+              <p className="mt-6 text-lg md:text-2xl text-white/95 max-w-4xl mx-auto leading-relaxed font-light tracking-wide">
                 Explore Advanced Environmental Intelligence Through Specialized AI Systems
               </p>
             </div>

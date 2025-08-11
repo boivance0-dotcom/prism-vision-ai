@@ -119,3 +119,34 @@
     @apply opacity-100;
   }
 }
+
+@layer utilities {
+  /* Cinematic display headline utility */
+  .display-hero {
+    font-family: theme('fontFamily.sans');
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 0.85;
+    text-transform: uppercase;
+    font-size: clamp(3rem, 9vw, 11rem);
+  }
+
+  /* Better multi-line headline wrapping */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Deep text shadow for readability over imagery */
+  .text-shadow-xl {
+    text-shadow: 0 18px 40px rgba(0, 0, 0, 0.55), 0 6px 18px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Small uppercase label above hero */
+  .kicker {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+    font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+    color: rgb(255 255 255 / 0.7);
+  }
+}
