@@ -71,3 +71,8 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Deployment notes
+
+- The project uses npm for installs and builds. Lockfile: `package-lock.json`. The Bun lockfile was intentionally removed.
+- Build command: `npm run build`.
