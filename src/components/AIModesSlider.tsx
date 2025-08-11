@@ -13,45 +13,45 @@ interface AIMode {
 const aiModes: AIMode[] = [
   {
     id: 'climate',
-    name: 'Climate AI',
-    description: 'Advanced climate analysis and environmental insights',
+    name: 'Climate Intelligence',
+    description: 'Advanced climate modeling and environmental impact analysis',
     icon: <Globe className="h-8 w-8" />,
-    gradient: 'from-blue-500/20 to-green-500/20'
+    gradient: 'from-primary/8 to-accent/8'
   },
   {
     id: 'forest',
-    name: 'Forest AI',
-    description: 'Forest ecosystem monitoring and conservation strategies',
+    name: 'Forest Monitoring',
+    description: 'Ecosystem health assessment and conservation strategies',
     icon: <Trees className="h-8 w-8" />,
-    gradient: 'from-green-600/20 to-emerald-500/20'
+    gradient: 'from-primary/10 to-primary/5'
   },
   {
     id: 'wildlife',
-    name: 'Wildlife AI',
-    description: 'Species tracking and biodiversity analysis',
+    name: 'Wildlife Analytics',
+    description: 'Species tracking and biodiversity conservation insights',
     icon: <Bird className="h-8 w-8" />,
-    gradient: 'from-orange-500/20 to-yellow-500/20'
+    gradient: 'from-accent/8 to-primary/6'
   },
   {
     id: 'energy',
-    name: 'Energy AI',
-    description: 'Renewable energy optimization and grid analysis',
+    name: 'Energy Systems',
+    description: 'Renewable energy optimization and smart grid analysis',
     icon: <Zap className="h-8 w-8" />,
-    gradient: 'from-purple-500/20 to-blue-500/20'
+    gradient: 'from-primary/6 to-accent/10'
   },
   {
     id: 'ocean',
-    name: 'Ocean AI',
-    description: 'Marine ecosystem health and ocean conservation',
+    name: 'Marine Research',
+    description: 'Ocean health monitoring and marine conservation',
     icon: <Droplets className="h-8 w-8" />,
-    gradient: 'from-cyan-500/20 to-blue-600/20'
+    gradient: 'from-accent/6 to-primary/8'
   },
   {
     id: 'sustainability',
-    name: 'Sustainability AI',
-    description: 'Corporate sustainability and environmental impact',
+    name: 'ESG Analytics',
+    description: 'Corporate sustainability metrics and environmental compliance',
     icon: <Leaf className="h-8 w-8" />,
-    gradient: 'from-green-500/20 to-teal-500/20'
+    gradient: 'from-primary/8 to-accent/6'
   }
 ];
 

@@ -42,7 +42,7 @@ const Index = () => {
             </div>
             
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Professional AI-powered search with specialized models for climate, sustainability, and environmental intelligence
+              Advanced AI-powered environmental intelligence platform with specialized domain expertise
             </p>
           </div>
 

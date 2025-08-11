@@ -4,45 +4,45 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Professional Design System */
+/* Professional Nature-Inspired Design System */
 @layer base {
   :root {
-    /* Background System */
-    --background: 220 27% 5%;
-    --foreground: 220 10% 95%;
+    /* Background System - Deep forest inspired */
+    --background: 200 15% 8%;
+    --foreground: 150 10% 92%;
 
-    /* Card System */
-    --card: 220 20% 8%;
-    --card-foreground: 220 10% 95%;
+    /* Card System - Natural earth tones */
+    --card: 200 20% 12%;
+    --card-foreground: 150 8% 90%;
 
     /* Popover System */
-    --popover: 220 20% 8%;
-    --popover-foreground: 220 10% 95%;
+    --popover: 200 20% 12%;
+    --popover-foreground: 150 8% 90%;
 
-    /* Primary Brand */
-    --primary: 217 91% 60%;
-    --primary-foreground: 220 27% 5%;
+    /* Primary Brand - Forest green */
+    --primary: 150 60% 45%;
+    --primary-foreground: 200 15% 8%;
 
-    /* Secondary */
-    --secondary: 220 15% 12%;
-    --secondary-foreground: 220 10% 80%;
+    /* Secondary - Sophisticated earth */
+    --secondary: 200 18% 15%;
+    --secondary-foreground: 150 12% 75%;
 
-    /* Muted */
-    --muted: 220 15% 10%;
-    --muted-foreground: 220 10% 60%;
+    /* Muted - Subtle forest floor */
+    --muted: 200 18% 12%;
+    --muted-foreground: 150 8% 55%;
 
-    /* Accent */
-    --accent: 220 15% 12%;
-    --accent-foreground: 220 10% 95%;
+    /* Accent - Professional sage */
+    --accent: 170 25% 20%;
+    --accent-foreground: 150 10% 88%;
 
     /* Destructive */
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 220 10% 95%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 150 10% 92%;
 
-    /* Borders & Inputs */
-    --border: 220 15% 15%;
-    --input: 220 15% 15%;
-    --ring: 217 91% 60%;
+    /* Borders & Inputs - Refined natural */
+    --border: 200 20% 18%;
+    --input: 200 20% 18%;
+    --ring: 150 60% 45%;
 
     --radius: 0.75rem;
 
