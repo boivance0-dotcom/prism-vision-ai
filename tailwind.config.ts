@@ -116,7 +116,7 @@ export default {
 							fontFamily: {
 								sans: ['Inter', 'system-ui', 'sans-serif'],
 								serif: ['Playfair Display', 'Georgia', 'serif'],
-								display: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'],
+								display: ['Oswald', 'Inter', 'system-ui', 'sans-serif'],
 							}
 		}
 	},
