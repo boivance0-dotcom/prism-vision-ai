@@ -59,7 +59,7 @@ const Index = () => {
                     <SearchBar onSearch={handleSearch} />
                   </div>
                   <div className="mt-10">
-                    <AIModesSlider selectedMode="forest" onModeChange={() => {}} />
+                    <AIModesSlider selectedMode="forest" onModeChange={() => {}} className="md:max-w-5xl mx-auto" />
                   </div>
                 </div>
               )}
