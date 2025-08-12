@@ -369,7 +369,33 @@
 
 :root {
   --shadow-hover: 0 18px 48px rgba(0,0,0,0.65);
+  --grad-a: #0b3d2e;
+  --grad-b: #0e4a2d;
+  --grad-c: #1a5630;
 }
+
+.animated-gradient {
+  background: radial-gradient(60% 60% at 20% 20%, var(--grad-a), transparent 60%),
+              radial-gradient(50% 50% at 80% 30%, var(--grad-b), transparent 60%),
+              radial-gradient(40% 40% at 50% 80%, var(--grad-c), transparent 60%);
+  animation: gradient-move 16s ease-in-out infinite alternate;
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+}
+.animated-gradient:hover { animation-duration: 10s; }
+
+@keyframes gradient-move {
+  0% { transform: translate3d(0,0,0) scale(1); }
+  100% { transform: translate3d(0,-2%,0) scale(1.03); }
+}
+
+.particle-field { position: absolute; inset: 0; pointer-events: none; }
+.particle { position: absolute; width: 3px; height: 3px; border-radius: 9999px; background: rgba(255,255,255,0.35); opacity: 0.6; filter: blur(0.5px); animation: float 9s ease-in-out infinite; }
+@keyframes float { 0%{ transform: translateY(0);} 50%{ transform: translateY(-14px);} 100%{ transform: translateY(0);} }
+
+/* Tilt hover (3D-like) */
+.tilt-hover { transition: transform .3s ease, box-shadow .3s ease; transform-style: preserve-3d; }
+.tilt-hover:hover { transform: translateY(-6px) rotateX(1deg) rotateY(-1deg); box-shadow: var(--shadow-hover); }
 
 @layer utilities {
   /* Hover lift utility (no layout shift) */

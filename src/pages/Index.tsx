@@ -5,6 +5,9 @@ import AIModesSlider from '@/components/AIModesSlider';
 import forestHeroBg from '@/assets/forest-hero-bg.jpg';
 import { useParallax } from '@/lib/hooks/useParallax';
 import HeroShowcase from '@/components/HeroShowcase';
+import AnimatedGradient from '@/components/AnimatedGradient';
+import FeatureCarousel from '@/components/FeatureCarousel';
+import Testimonials from '@/components/Testimonials';
 
 const Index = () => {
   const [started, setStarted] = useState(false);
@@ -29,6 +32,7 @@ const Index = () => {
           style={{ backgroundImage: `url(${forestHeroBg})` }}
           aria-hidden
         />
+        <AnimatedGradient />
 
         {/* Matte and readability overlays */}
         <div className="absolute inset-0 bg-black/40" />
@@ -72,6 +76,10 @@ const Index = () => {
           </div>
         </div>
       </div>
+
+      {/* Additional sections */}
+      <FeatureCarousel />
+      <Testimonials />
 
       {/* Footer */}
       <footer className="border-t border-border/50 bg-background">
