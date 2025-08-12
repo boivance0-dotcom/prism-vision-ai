@@ -61,7 +61,17 @@ const Index = () => {
               {/* Experience State */}
               {started && (
                 <div className="animate-hero-in parallax-item" data-speed="1">
-                  <HeroShowcase />
+                  <div className="max-w-3xl mx-auto text-center">
+                    <h2 className="text-white font-extrabold leading-tight" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)', letterSpacing: '-0.01em', textShadow: '0 10px 20px rgba(0,0,0,0.45)' }}>
+                      What do you want to explore?
+                    </h2>
+                    <p className="mt-3 text-white/90 text-base md:text-lg">
+                      Ask about forests, climate, wildlife or sustainability. Our AI will guide you.
+                    </p>
+                    <div className="mt-6">
+                      <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
