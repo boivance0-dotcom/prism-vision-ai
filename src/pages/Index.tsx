@@ -4,6 +4,7 @@ import SearchBar from '@/components/SearchBar';
 import AIModesSlider from '@/components/AIModesSlider';
 import forestHeroBg from '@/assets/forest-hero-bg.jpg';
 import { useParallax } from '@/lib/hooks/useParallax';
+import { useReveal } from '@/lib/hooks/useReveal';
 import HeroShowcase from '@/components/HeroShowcase';
 import AnimatedGradient from '@/components/AnimatedGradient';
 import FeatureCarousel from '@/components/FeatureCarousel';
@@ -14,6 +15,7 @@ const Index = () => {
   const experienceRef = useRef<HTMLDivElement | null>(null);
 
   useParallax('.parallax-item');
+  useReveal('.reveal-on-scroll');
 
   const handleSearch = (query: string) => {
     console.log(`Searching:`, query);
@@ -87,8 +89,12 @@ const Index = () => {
       </div>
 
       {/* Additional sections */}
-      <FeatureCarousel />
-      <Testimonials />
+      <div className="reveal-on-scroll reveal-up" data-duration="600ms" data-delay="120ms">
+        <FeatureCarousel />
+      </div>
+      <div className="reveal-on-scroll reveal-up" data-duration="600ms" data-delay="200ms">
+        <Testimonials />
+      </div>
 
       {/* Footer */}
       <footer className="border-t border-border/50 bg-background">

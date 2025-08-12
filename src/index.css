@@ -429,3 +429,15 @@
 
 /* Fixed full-viewport background utility */
 .fixed-bg { position: fixed; inset: 0; background-size: cover; background-position: center; background-repeat: no-repeat; z-index: 0; }
+
+@layer utilities {
+  /* Reveal base already exists; extend with direction variants */
+  .reveal-up { transform: translateY(16px); opacity: 0; }
+  .reveal-left { transform: translateX(-16px); opacity: 0; }
+  .reveal-right { transform: translateX(16px); opacity: 0; }
+  .reveal-fade { opacity: 0; }
+  .is-visible.reveal-up,
+  .is-visible.reveal-left,
+  .is-visible.reveal-right,
+  .is-visible.reveal-fade { transform: translate(0,0); opacity: 1; }
+}
