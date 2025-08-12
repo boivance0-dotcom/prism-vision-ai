@@ -10,7 +10,7 @@ const features = [
   {
     title: 'Climate AI',
     desc: 'For climate trends & renewable energy insights.',
-    img: '/images/ai-climate-1920.webp'
+    img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg'
   },
   {
     title: 'Wildlife AI',
