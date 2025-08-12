@@ -1,201 +1,144 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Keyboard, Autoplay, A11y } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 import { Button } from '@/components/ui/button';
 
 const features = [
-  {
-    title: 'Wildlife AI',
-    desc: 'Track biodiversity and animal habitats.',
-    img: '/images/ai-explore-1920.webp'
-  },
-  {
-    title: 'Climate AI',
-    desc: 'Climate trends and renewable energy insights.',
-    img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg'
-  },
-  {
-    title: 'Marine AI',
-    desc: 'Protect oceans and marine ecosystems.',
-    img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg'
-  },
-  {
-    title: 'Forest AI',
-    desc: 'Monitor deforestation and forest health.',
-    img: '/images/ai-forest-1920.webp'
-  },
-  {
-    title: 'Research AI',
-    desc: 'Discover papers, datasets, and findings.',
-    img: ''
-  },
-  {
-    title: 'Career AI',
-    desc: 'Explore roles, skills, and opportunities.',
-    img: ''
-  },
-  {
-    title: 'Education AI',
-    desc: 'Learn with curated courses and tutorials.',
-    img: ''
-  },
+  { title: 'Wildlife AI', desc: 'Track biodiversity and animal habitats.', img: '/images/ai-explore-1920.webp' },
+  { title: 'Climate AI', desc: 'Climate trends and renewable energy insights.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg' },
+  { title: 'Marine AI', desc: 'Protect oceans and marine ecosystems.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg' },
+  { title: 'Forest AI', desc: 'Monitor deforestation and forest health.', img: '/images/ai-forest-1920.webp' },
+  { title: 'Research AI', desc: 'Discover papers, datasets, and findings.', img: '' },
+  { title: 'Career AI', desc: 'Explore roles, skills, and opportunities.', img: '' },
+  { title: 'Education AI', desc: 'Learn with curated courses and tutorials.', img: '' },
 ];
+
+const EASE: any = [0.2, 0.9, 0.3, 1];
 
 const FeatureCarousel: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
+  const itemCount = features.length;
+  const stepAngle = 360 / itemCount;
+
+  // Responsive ring radius and card size
+  const { radius, cardWidth, cardHeight } = useMemo(() => {
+    const isSmall = typeof window !== 'undefined' ? window.innerWidth < 640 : false;
+    const isMedium = typeof window !== 'undefined' ? window.innerWidth >= 640 && window.innerWidth < 1024 : false;
+    const baseWidth = isSmall ? 220 : isMedium ? 260 : 300;
+    const baseHeight = Math.round(baseWidth * 0.625); // 16:10 approx 0.625
+    const r = isSmall ? 360 : isMedium ? 420 : 520; // ring radius
+    return { radius: r, cardWidth: baseWidth, cardHeight: baseHeight };
+  }, []);
+
+  const rotateYDeg = -(activeIndex * stepAngle);
+
+  const next = () => setActiveIndex((i) => (i + 1) % itemCount);
+  const prev = () => setActiveIndex((i) => (i - 1 + itemCount) % itemCount);
 
   const handleChangeAI = () => {
-    const activeFeature = features[activeIndex];
-    console.log('Change AI clicked for:', activeFeature?.title);
-    setIsExpanded(true);
+    const active = features[activeIndex];
+    console.log('Change AI for:', active?.title);
   };
-
-  const closeExpanded = () => setIsExpanded(false);
-
-  const getSignedCircularDelta = (index: number, active: number, total: number) => {
-    let diff = index - active;
-    const abs = Math.abs(diff);
-    if (abs > total / 2) diff = -Math.sign(diff) * (total - abs);
-    return diff;
-  };
-
-  // Make active smaller and neighbors progressively smaller
-  const getScale = (distance: number) => {
-    const d = Math.abs(distance);
-    if (d === 0) return 0.92;
-    if (d === 1) return 0.84;
-    if (d === 2) return 0.76;
-    return 0.7;
-  };
-
-  const getOpacity = (distance: number) => {
-    const d = Math.abs(distance);
-    if (d === 0) return 1;
-    if (d === 1) return 0.75;
-    if (d === 2) return 0.55;
-    return 0.4;
-  };
-
-  const getRotateY = (distance: number) => {
-    const sign = distance < 0 ? -1 : distance > 0 ? 1 : 0;
-    const d = Math.abs(distance);
-    if (d === 0) return 0;
-    if (d === 1) return 8 * sign;
-    if (d === 2) return 12 * sign;
-    return 16 * sign;
-  };
-
-  const getXOffset = (distance: number) => {
-    const sign = distance < 0 ? -1 : distance > 0 ? 1 : 0;
-    const d = Math.abs(distance);
-    if (d === 0) return 0;
-    if (d === 1) return 6 * sign;
-    if (d === 2) return 10 * sign;
-    return 12 * sign;
-  };
-
-  const getYOffset = (distance: number) => {
-    const d = Math.abs(distance);
-    if (d === 0) return -4;
-    if (d === 1) return -2;
-    if (d === 2) return 0;
-    return 2;
-  };
-
-  const getZIndex = (distance: number) => 50 - Math.min(Math.abs(distance), 4);
 
   return (
     <section className="relative w-full py-20">
-      {/* Blur/dim overlay behind the slider when expanded */}
-      <div
-        onClick={closeExpanded}
-        className={`${isExpanded ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} absolute inset-0 bg-black/35 backdrop-blur-sm transition-opacity duration-300`}
-        aria-hidden
-      />
+      <div className="max-w-6xl mx-auto px-6">
+        <h3 className="text-white/95 text-xl font-semibold mb-6 text-center">Explore other AI's</h3>
 
-      <div className="max-w-6xl mx-auto px-6 relative">
-        <h3 className="text-white/95 text-xl font-semibold mb-4">Explore other AI's</h3>
-
-        <motion.div
-          className="relative z-10"
-          style={{ perspective: '1200px' }}
-          animate={{ scale: isExpanded ? 1.04 : 1 }}
-          transition={{ duration: 0.25, ease: [0.2, 0.9, 0.3, 1] }}
-        >
-          <Swiper
-            modules={[Navigation, Pagination, Keyboard, Autoplay, A11y]}
-            slidesPerView={1.3}
-            centeredSlides
-            spaceBetween={isExpanded ? 20 : 14}
-            loop
-            speed={600}
-            keyboard={{ enabled: true, onlyInViewport: true }}
-            autoplay={{ delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true }}
-            pagination={{ clickable: true }}
-            navigation
-            autoHeight
-            onSwiper={(swiper) => setActiveIndex((swiper as any).realIndex ?? 0)}
-            onSlideChange={(swiper) => setActiveIndex((swiper as any).realIndex ?? 0)}
-            breakpoints={{
-              320: { slidesPerView: 1.18, spaceBetween: isExpanded ? 16 : 12 },
-              640: { slidesPerView: 1.28, spaceBetween: isExpanded ? 18 : 14 },
-              1024: { slidesPerView: 1.45, spaceBetween: isExpanded ? 20 : 16 }
-            }}
-            className="relative transition-all duration-300 overflow-visible"
+        {/* 3D ring container */}
+        <div className="relative" style={{ perspective: 2000 }}>
+          {/* Ring viewport */}
+          <motion.div
+            className="relative mx-auto"
+            style={{ width: '100%', height: cardHeight + 140 }}
           >
-            {features.map((f, i) => {
-              const delta = getSignedCircularDelta(i, activeIndex, features.length);
-              const isActive = delta === 0;
-              const scale = getScale(delta);
-              const opacity = getOpacity(delta);
-              const rotateY = getRotateY(delta);
-              const zIndex = getZIndex(delta);
-              const x = getXOffset(delta);
-              const y = getYOffset(delta);
+            {/* Navigation */}
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-between">
+              <div className="pointer-events-auto pl-1 sm:pl-3">
+                <button
+                  aria-label="Previous"
+                  onClick={prev}
+                  className="h-10 w-10 grid place-items-center rounded-full bg-black/50 text-white hover:bg-black/70 border border-white/20 transition"
+                >
+                  ‹
+                </button>
+              </div>
+              <div className="pointer-events-auto pr-1 sm:pr-3">
+                <button
+                  aria-label="Next"
+                  onClick={next}
+                  className="h-10 w-10 grid place-items-center rounded-full bg-black/50 text-white hover:bg-black/70 border border-white/20 transition"
+                >
+                  ›
+                </button>
+              </div>
+            </div>
 
-              return (
-                <SwiperSlide key={f.title}>
-                  <motion.article
-                    className={`relative rounded-xl overflow-hidden bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md hover:border-[#86C232]/40`}
-                    style={{ opacity, zIndex }}
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    animate={{ scale, rotateY, x, y }}
-                    transition={{ duration: 0.45, ease: [0.2, 0.9, 0.3, 1] }}
+            {/* Ring stage: preserve-3d so children keep depth; rotate to bring active to front */}
+            <motion.div
+              className="absolute left-1/2 top-10 -translate-x-1/2 will-change-transform"
+              style={{ transformStyle: 'preserve-3d' as any }}
+              animate={{ rotateY: rotateYDeg }}
+              transition={{ duration: 0.6, ease: EASE }}
+            >
+              {features.map((f, index) => {
+                const angle = index * stepAngle;
+                // Depth-based scaling/opacity using angle distance from front (0deg)
+                const norm = Math.min(
+                  Math.abs(((angle + rotateYDeg) % 360 + 360) % 360),
+                  Math.abs((((angle + rotateYDeg) % 360 + 360) % 360) - 360)
+                );
+                const depthT = 1 - Math.min(norm / 180, 1); // 1 at front, 0 at back
+                const scale = 0.85 + depthT * 0.25; // 0.85..1.10
+                const opacity = 0.35 + depthT * 0.65; // 0.35..1.0
+                const isActive = index === activeIndex;
+
+                return (
+                  <div
+                    key={f.title}
+                    className="absolute left-1/2 top-0"
+                    style={{
+                      width: cardWidth,
+                      height: cardHeight,
+                      transformStyle: 'preserve-3d',
+                      transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
+                      marginLeft: -cardWidth / 2,
+                    }}
                   >
-                    {f.img ? (
-                      <div className={`aspect-[16/10] w-full bg-cover bg-center`} style={{ backgroundImage: `url(${f.img})` }} />
-                    ) : (
-                      <div className={`aspect-[16/10] w-full bg-gradient-to-br from-[#0B3D2E] via-[#0E4A2D] to-[#1A5630]`} />
-                    )}
-                    <div className="p-5">
-                      <h3 className={`text-white text-lg font-semibold`}>{f.title}</h3>
-                      <p className="text-white/70 text-sm mt-2">{f.desc}</p>
-                    </div>
+                    <motion.article
+                      className="relative rounded-xl overflow-hidden border border-white/15 bg-[rgba(7,16,12,0.65)] shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md"
+                      style={{ opacity }}
+                      animate={{ scale }}
+                      transition={{ duration: 0.45, ease: EASE }}
+                    >
+                      {f.img ? (
+                        <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${f.img})` }} />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-[#0B3D2E] via-[#0E4A2D] to-[#1A5630]" />
+                      )}
 
-                    {isActive && (
-                      <div className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 w-[55%] h-6 rounded-full blur-md" style={{ background: 'radial-gradient(ellipse at center, rgba(134,194,50,0.35), rgba(134,194,50,0))' }} />
-                    )}
-                  </motion.article>
+                      {/* subtle highlight ring on active */}
+                      {isActive && (
+                        <div className="pointer-events-none absolute inset-0 ring-2 ring-[#86C232]/70 rounded-xl" />
+                      )}
+                    </motion.article>
+                  </div>
+                );
+              })}
+            </motion.div>
+          </motion.div>
+        </div>
 
-                  {isActive && (
-                    <div className="mt-3 flex justify-center">
-                      <Button size="sm" className="bg-[#86C232] hover:bg-[#76b028] text-black font-semibold" onClick={handleChangeAI}>
-                        Change AI
-                      </Button>
-                    </div>
-                  )}
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
-        </motion.div>
+        {/* Active details + Change AI */}
+        <div className="mt-6 text-center">
+          <h4 className="text-white text-lg font-semibold">{features[activeIndex].title}</h4>
+          <p className="text-white/70 text-sm mt-1">{features[activeIndex].desc}</p>
+          <div className="mt-3 flex justify-center">
+            <Button size="sm" className="bg-[#86C232] hover:bg-[#76b028] text-black font-semibold" onClick={handleChangeAI}>
+              Change AI
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   );
