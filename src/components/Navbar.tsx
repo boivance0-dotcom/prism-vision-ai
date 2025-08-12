@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
         aria-label="Primary"
       >
         {/* Left: Logo + Company Name */}
-        <Link to="/" className="flex items-center gap-3 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#86C232] rounded">
+        <Link to="/" className="flex items-center gap-3 rounded hover:opacity-90 focus-visible:underline" >
           <div className="h-10 w-10 md:h-12 md:w-12 rounded bg-white/10 border border-white/20 backdrop-blur flex items-center justify-center text-white font-bold">
             NA
           </div>
@@ -35,9 +35,9 @@ const Navbar: React.FC = () => {
 
         {/* Right: About us, Contact, Log in */}
         <div className="flex items-center justify-end gap-6 text-[14px] tracking-[0.08em] uppercase">
-          <a href="#about" className="text-white/90 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#86C232] rounded px-1">About us</a>
-          <a href="#contact" className="text-white/90 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#86C232] rounded px-1">Contact</a>
-          <a href="#login" className="inline-flex items-center rounded-full border border-white px-4 py-2 text-white font-medium hover:bg-white hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#86C232]">Log in</a>
+          <a href="#about" className="text-white/80 hover:text-white/100 transition-colors rounded px-1">About us</a>
+          <a href="#contact" className="text-white/80 hover:text-white/100 transition-colors rounded px-1">Contact</a>
+          <a href="#login" className="inline-flex items-center rounded-full border border-white/70 px-4 py-2 text-white font-medium transition-all hover:bg-white hover:text-slate-900 hover:shadow-[0_8px_24px_rgba(0,0,0,0.35)]">Log in</a>
         </div>
       </nav>
     </header>
