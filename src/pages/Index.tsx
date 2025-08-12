@@ -67,7 +67,7 @@ const Index = () => {
           {/* Bottom brand marker */}
           <div className="pb-6 text-left">
             <span className="inline-block text-white/80 text-xs tracking-widest uppercase px-2 py-1 bg-black/20 rounded-md backdrop-blur">
-              Nature Studios
+              Zytherion Biovance
             </span>
           </div>
         </div>
