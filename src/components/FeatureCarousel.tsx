@@ -25,7 +25,7 @@ const features = [
   {
     title: 'Marine AI',
     desc: 'Protects oceans & marine ecosystems.',
-    img: ''
+    img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg'
   },
   {
     title: 'Air Quality AI',
