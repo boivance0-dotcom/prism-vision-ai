@@ -47,7 +47,7 @@ const Index = () => {
               {!started && (
                 <div className="text-center animate-scale-fade-in parallax-item" data-speed="1">
                   <h1 className="hero-title-clean">Nature Makes Us Happy</h1>
-                  <p className="mt-5 hero-subtitle-contrast max-w-[600px] mx-auto">
+                  <p className="mt-5 inline-block max-w-[680px] bg-black/50 text-white px-4 py-2 rounded-md backdrop-blur-sm shadow-[0_6px_24px_rgba(0,0,0,0.45)]">
                     Immersive nature intelligence for curious minds.
                   </p>
                   <div className="mt-8">
