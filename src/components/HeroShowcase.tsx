@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cpu, Waves, Rocket } from 'lucide-react';
+import { Bird, Globe, Droplets, Trees, Microscope, Briefcase, GraduationCap } from 'lucide-react';
 
 interface ShowcaseSlide {
   id: string;
@@ -18,28 +18,60 @@ interface ShowcaseSlide {
 
 const slides: ShowcaseSlide[] = [
   {
-    id: 'ai-forest',
-    title: 'Forest Intelligence',
-    subtitle: 'Real-time ecosystem insights',
-    description: 'Monitor biodiversity and forest health with advanced models trained on satellite and field data.',
-    icon: <Waves className="h-8 w-8" />,
-    background: '/images/ai-forest-1920.webp',
+    id: 'wildlife',
+    title: 'Wildlife AI',
+    subtitle: 'Species tracking & biodiversity insights',
+    description: 'Track endangered species, monitor habitats, and inform conservation strategies with AI-driven analytics.',
+    icon: <Bird className="h-8 w-8" />,
+    background: '/placeholder.svg',
   },
   {
     id: 'climate',
-    title: 'Climate Modeling',
-    subtitle: 'Predictive environmental analytics',
-    description: 'Forecast climate risk with multi-scale simulations and interpretable projections.',
-    icon: <Cpu className="h-8 w-8" />,
-    background: '/images/ai-climate-1920.webp',
+    title: 'Climate AI',
+    subtitle: 'Predictive climate and energy analytics',
+    description: 'Model climate trends and optimize renewable energy decisions with interpretable projections.',
+    icon: <Globe className="h-8 w-8" />,
+    background: '/placeholder.svg',
   },
   {
-    id: 'explore',
-    title: 'Exploration Studio',
-    subtitle: 'Nature data meets creativity',
-    description: 'Create, compare, and explore scenarios using curated datasets and powerful AI tools.',
-    icon: <Rocket className="h-8 w-8" />,
-    background: '/images/ai-explore-1920.webp',
+    id: 'marine',
+    title: 'Marine AI',
+    subtitle: 'Ocean health monitoring',
+    description: 'Protect oceans and marine ecosystems through real-time analysis and forecasting tools.',
+    icon: <Droplets className="h-8 w-8" />,
+    background: '/placeholder.svg',
+  },
+  {
+    id: 'forest',
+    title: 'Forest AI',
+    subtitle: 'Ecosystem health and deforestation alerts',
+    description: 'Assess forest health, biodiversity, and deforestation risk with satellite and in-situ data.',
+    icon: <Trees className="h-8 w-8" />,
+    background: '/placeholder.svg',
+  },
+  {
+    id: 'research',
+    title: 'Research AI',
+    subtitle: 'Knowledge discovery & synthesis',
+    description: 'Accelerate environmental research with data-driven literature mining and synthesis.',
+    icon: <Microscope className="h-8 w-8" />,
+    background: '/placeholder.svg',
+  },
+  {
+    id: 'career',
+    title: 'Career AI',
+    subtitle: 'Personalized guidance in sustainability',
+    description: 'Navigate green careers with tailored insights, skill mapping, and role recommendations.',
+    icon: <Briefcase className="h-8 w-8" />,
+    background: '/placeholder.svg',
+  },
+  {
+    id: 'education',
+    title: 'Education AI',
+    subtitle: 'Adaptive learning experiences',
+    description: 'Support environmental education with adaptive learning paths and interactive content.',
+    icon: <GraduationCap className="h-8 w-8" />,
+    background: '/placeholder.svg',
   },
 ];
 
