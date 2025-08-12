@@ -35,7 +35,6 @@ const Index = () => {
         <AnimatedGradient />
 
         {/* Matte and readability overlays */}
-        <div className="absolute inset-0 bg-black/40" />
         <div className="hero-gradient-top" />
         <div className="hero-gradient-bottom" />
         <div className="hero-vignette" />
