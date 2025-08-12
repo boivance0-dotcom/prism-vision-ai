@@ -29,7 +29,7 @@ const FeatureCarousel: React.FC = () => {
     const isMedium = typeof window !== 'undefined' ? window.innerWidth >= 640 && window.innerWidth < 1024 : false;
     const baseWidth = isSmall ? 220 : isMedium ? 260 : 300;
     const baseHeight = Math.round(baseWidth * 0.625);
-    const r = isSmall ? 220 : isMedium ? 280 : 320;
+    const r = isSmall ? 260 : isMedium ? 360 : 460; // more radius to avoid overlap on sides
     return { radius: r, cardWidth: baseWidth, cardHeight: baseHeight };
   }, []);
 
@@ -48,7 +48,7 @@ const FeatureCarousel: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6">
         <h3 className="text-white/95 text-xl font-semibold mb-6 text-center">Explore other AI's</h3>
 
-        <div className="relative" style={{ perspective: 2000 }}>
+        <div className="relative" style={{ perspective: 2200 }}>
           <motion.div className="relative mx-auto" style={{ width: '100%', height: cardHeight + 260 }}>
             <div className="pointer-events-none absolute inset-0 flex items-center justify-between">
               <div className="pointer-events-auto pl-1 sm:pl-3">
@@ -84,10 +84,13 @@ const FeatureCarousel: React.FC = () => {
                   Math.abs((((angle + rotateYDeg) % 360 + 360) % 360) - 360)
                 );
                 const depthT = 1 - Math.min(norm / 180, 1);
-                const scale = 0.85 + depthT * 0.25;
-                const opacity = 0.45 + depthT * 0.55;
+                const scale = 0.75 + depthT * 0.2; // 0.75..0.95 to reduce side overlap
+                const opacity = 0.5 + depthT * 0.5; // 0.5..1.0
                 const isActive = index === activeIndex;
                 const zIndex = 10 + Math.round(depthT * 100);
+
+                // Show captions only for center and immediate neighbors
+                const showCaption = norm <= (stepAngle + 5);
 
                 return (
                   <div
@@ -125,9 +128,13 @@ const FeatureCarousel: React.FC = () => {
                       )}
                     </motion.article>
 
-                    <div className="mt-2 text-center">
-                      <p className="text-white/90 text-sm font-medium">{f.title}</p>
-                    </div>
+                    {showCaption && (
+                      <div className="mt-2 text-center">
+                        <span className="inline-block px-3 py-1 rounded-full bg-black/40 border border-white/10 text-transparent bg-clip-text bg-gradient-to-r from-[#C8FF70] via-[#86C232] to-[#6BAF1F] font-semibold text-xs md:text-sm drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
+                          {f.title}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 );
               })}
