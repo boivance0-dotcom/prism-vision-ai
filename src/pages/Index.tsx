@@ -15,6 +15,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 const Index = () => {
   const [started, setStarted] = useState(false);
   const experienceRef = useRef<HTMLDivElement | null>(null);
+  const [selectedMode, setSelectedMode] = useState<string>('forest');
 
   useParallax('.parallax-item');
   useReveal('.reveal-on-scroll');
@@ -113,8 +114,11 @@ const Index = () => {
                     >
                       <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
                     </motion.div>
+                  </div>
 
-
+                  {/* AI Modes Slider */}
+                  <div className="mt-10 reveal-on-scroll" data-duration="600ms" data-delay="100ms">
+                    <AIModesSlider selectedMode={selectedMode} onModeChange={setSelectedMode} />
                   </div>
 
                   {/* Cards shown only after start */}
