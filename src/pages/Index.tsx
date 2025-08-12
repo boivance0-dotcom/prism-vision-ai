@@ -86,7 +86,7 @@ const Index = () => {
 
               {/* Experience State */}
               {started && (
-                <div className="animate-hero-in parallax-item" data-speed="1">
+                <div className="animate-hero-in parallax-item mt-16 md:mt-24" data-speed="1">
                   <div className="max-w-3xl mx-auto text-center">
                     <motion.h2
                       className="text-white font-extrabold leading-tight"
