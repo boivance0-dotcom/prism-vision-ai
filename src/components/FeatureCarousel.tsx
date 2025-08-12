@@ -85,6 +85,7 @@ const FeatureCarousel: React.FC = () => {
             autoplay={{ delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true }}
             pagination={{ clickable: true }}
             navigation
+            autoHeight
             onSwiper={(swiper) => setActiveIndex((swiper as any).realIndex ?? 0)}
             onSlideChange={(swiper) => setActiveIndex((swiper as any).realIndex ?? 0)}
             breakpoints={{
@@ -92,7 +93,7 @@ const FeatureCarousel: React.FC = () => {
               640: { slidesPerView: 2.1, spaceBetween: isExpanded ? 18 : 14 },
               1024: { slidesPerView: 3.2, spaceBetween: isExpanded ? 20 : 16 }
             }}
-            className="relative transition-all duration-300"
+            className="relative transition-all duration-300 overflow-visible"
           >
             {features.map((f, i) => {
               const isActive = i === activeIndex;
