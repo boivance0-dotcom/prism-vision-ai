@@ -2,7 +2,7 @@
 import React, { useRef, useState } from 'react';
 import SearchBar from '@/components/SearchBar';
 import AIModesSlider from '@/components/AIModesSlider';
-import forestHeroBg from '@/assets/forest-hero-bg.jpg';
+// import forestHeroBg from '@/assets/forest-hero-bg.jpg';
 import { useParallax } from '@/lib/hooks/useParallax';
 import { useReveal } from '@/lib/hooks/useReveal';
 import HeroShowcase from '@/components/HeroShowcase';
@@ -28,6 +28,8 @@ const Index = () => {
 
   const startExperience = () => setStarted(true);
 
+  const forestHeroBgUrl = 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg';
+
   return (
     <div className="relative z-10 min-h-screen">
 
@@ -36,7 +38,7 @@ const Index = () => {
         {/* Fixed Background Image with cinematic treatment */}
         <div
           className="fixed-bg hero-image-filter"
-          style={{ backgroundImage: `url(${forestHeroBg})`, zIndex: 0 as unknown as number }}
+          style={{ backgroundImage: `url(${forestHeroBgUrl})`, zIndex: 0 as unknown as number }}
           aria-hidden
         />
         <AnimatedGradient />
