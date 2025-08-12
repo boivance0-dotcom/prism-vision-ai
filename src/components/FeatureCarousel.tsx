@@ -7,48 +7,20 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 const features = [
-  {
-    title: 'Climate AI',
-    desc: 'For climate trends & renewable energy insights.',
-    img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg'
-  },
-  {
-    title: 'Wildlife AI',
-    desc: 'Tracks endangered species & biodiversity.',
-    img: '/images/ai-explore-1920.webp'
-  },
-  {
-    title: 'Forest AI',
-    desc: 'Monitors deforestation & forest health.',
-    img: '/images/ai-forest-1920.webp'
-  },
-  {
-    title: 'Marine AI',
-    desc: 'Protects oceans & marine ecosystems.',
-    img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg'
-  },
-  {
-    title: 'Air Quality AI',
-    desc: 'Predicts and monitors city air quality.',
-    img: ''
-  },
-  {
-    title: 'Disaster Response AI',
-    desc: 'Real-time disaster detection & response.',
-    img: ''
-  },
-  {
-    title: 'Agriculture AI',
-    desc: 'Optimizes farming & crop health.',
-    img: ''
-  },
+  { title: 'Wildlife AI', desc: 'Species tracking & biodiversity insights.', img: '/placeholder.svg' },
+  { title: 'Climate AI', desc: 'Climate trends & renewable energy insights.', img: '/placeholder.svg' },
+  { title: 'Marine AI', desc: 'Protect oceans & marine ecosystems.', img: '/placeholder.svg' },
+  { title: 'Forest AI', desc: 'Monitor deforestation & forest health.', img: '/placeholder.svg' },
+  { title: 'Research AI', desc: 'Data-driven research and synthesis.', img: '/placeholder.svg' },
+  { title: 'Career AI', desc: 'Personalized career guidance.', img: '/placeholder.svg' },
+  { title: 'Education AI', desc: 'Adaptive learning & educational support.', img: '/placeholder.svg' },
 ];
 
 const FeatureCarousel: React.FC = () => {
   return (
     <section className="relative w-full py-20">
       <div className="max-w-6xl mx-auto px-6">
-        <h3 className="text-white/95 text-xl font-semibold mb-4">Explore other AI's</h3>
+        <h3 className="text-white/95 text-xl font-semibold mb-4">Explore AI categories</h3>
         <Swiper
           modules={[Navigation, Pagination, Keyboard, Autoplay, A11y]}
           slidesPerView={'auto'}
