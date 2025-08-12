@@ -41,18 +41,18 @@ const Index = () => {
         <div className="hero-gradient-bottom" />
         <div className="hero-vignette" />
 
-        <div className="relative z-10 container mx-auto px-6 py-16 min-h-screen flex flex-col">
+        <div className="relative z-10 container mx-auto px-6 py-16 min-h-screen flex flex-col page-enter">
           <div className="flex-1 grid place-items-center">
             {/* Stack the two states and animate between them */}
             <div className="relative w-full">
               {/* Initial State */}
               {!started && (
                 <div className="text-center animate-scale-fade-in parallax-item" data-speed="1">
-                  <h1 className="hero-title-clean">Nature Makes Us Happy</h1>
-                  <p className="mt-5 inline-block max-w-[720px] bg-black/80 text-white px-6 py-3 rounded-lg text-base md:text-xl font-medium tracking-wide shadow-[0_8px_30px_rgba(0,0,0,0.55)]">
+                  <h1 className="hero-title-clean" style={{ animationDelay: '80ms' }}>Nature Makes Us Happy</h1>
+                  <p className="mt-5 inline-block max-w-[720px] bg-black/80 text-white px-6 py-3 rounded-lg text-base md:text-xl font-medium tracking-wide shadow-[0_8px_30px_rgba(0,0,0,0.55)]" style={{ animationDelay: '160ms' }}>
                     Immersive nature intelligence for curious minds.
                   </p>
-                  <div className="mt-8">
+                  <div className="mt-8" style={{ animationDelay: '220ms' }}>
                     <button onClick={startExperience} className="cta-outline-white cta-outline-white--lg hover-lift">
                       Start Experience
                     </button>
