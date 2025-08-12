@@ -76,7 +76,7 @@ const FeatureCarousel: React.FC = () => {
         >
           <Swiper
             modules={[Navigation, Pagination, Keyboard, Autoplay, A11y]}
-            slidesPerView={'auto'}
+            slidesPerView={1.2}
             centeredSlides
             spaceBetween={isExpanded ? 20 : 16}
             loop
@@ -89,17 +89,16 @@ const FeatureCarousel: React.FC = () => {
             onSwiper={(swiper) => setActiveIndex((swiper as any).realIndex ?? 0)}
             onSlideChange={(swiper) => setActiveIndex((swiper as any).realIndex ?? 0)}
             breakpoints={{
-              320: { slidesPerView: 1.05, spaceBetween: isExpanded ? 16 : 12 },
-              640: { slidesPerView: 2.1, spaceBetween: isExpanded ? 18 : 14 },
-              1024: { slidesPerView: 3.2, spaceBetween: isExpanded ? 20 : 16 }
+              320: { slidesPerView: 1.2, spaceBetween: isExpanded ? 16 : 12 },
+              640: { slidesPerView: 1.4, spaceBetween: isExpanded ? 18 : 14 },
+              1024: { slidesPerView: 1.6, spaceBetween: isExpanded ? 20 : 16 }
             }}
             className="relative transition-all duration-300 overflow-visible"
           >
             {features.map((f, i) => {
               const isActive = i === activeIndex;
-              const slideWidth = isExpanded ? '!w-[340px] sm:!w-[420px]' : '!w-[280px] sm:!w-[340px]';
               return (
-                <SwiperSlide key={f.title} className={`${slideWidth} transition-[width] duration-300`}>
+                <SwiperSlide key={f.title}>
                   <motion.article
                     className={`rounded-xl overflow-hidden bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md tilt-hover hover:border-[#86C232]/40 transition-transform transition-opacity duration-300 ${isActive ? 'opacity-100 border-[#86C232]/60 shadow-[0_12px_50px_rgba(134,194,50,0.25)] scale-[1.02]' : 'opacity-60'}`}
                     initial={{ opacity: 0, y: 12 }}
