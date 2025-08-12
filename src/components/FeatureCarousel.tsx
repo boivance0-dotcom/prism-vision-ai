@@ -64,38 +64,39 @@ const FeatureCarousel: React.FC = () => {
     return diff;
   };
 
+  // Make active smaller and neighbors progressively smaller
   const getScale = (distance: number) => {
     const d = Math.abs(distance);
-    if (d === 0) return 1.0;
-    if (d === 1) return 0.9;
-    if (d === 2) return 0.8;
+    if (d === 0) return 0.92;
+    if (d === 1) return 0.84;
+    if (d === 2) return 0.76;
     return 0.7;
   };
 
   const getOpacity = (distance: number) => {
     const d = Math.abs(distance);
     if (d === 0) return 1;
-    if (d === 1) return 0.7;
-    if (d === 2) return 0.5;
-    return 0.35;
+    if (d === 1) return 0.75;
+    if (d === 2) return 0.55;
+    return 0.4;
   };
 
   const getRotateY = (distance: number) => {
     const sign = distance < 0 ? -1 : distance > 0 ? 1 : 0;
     const d = Math.abs(distance);
     if (d === 0) return 0;
-    if (d === 1) return 10 * sign;
-    if (d === 2) return 16 * sign;
-    return 18 * sign;
+    if (d === 1) return 8 * sign;
+    if (d === 2) return 12 * sign;
+    return 16 * sign;
   };
 
   const getXOffset = (distance: number) => {
     const sign = distance < 0 ? -1 : distance > 0 ? 1 : 0;
     const d = Math.abs(distance);
     if (d === 0) return 0;
-    if (d === 1) return 8 * sign;
-    if (d === 2) return 14 * sign;
-    return 18 * sign;
+    if (d === 1) return 6 * sign;
+    if (d === 2) return 10 * sign;
+    return 12 * sign;
   };
 
   const getYOffset = (distance: number) => {
@@ -122,17 +123,17 @@ const FeatureCarousel: React.FC = () => {
 
         <motion.div
           className="relative z-10"
-          style={{ perspective: '1200px', WebkitMaskImage: 'linear-gradient(to right, transparent, rgba(0,0,0,0.75) 10%, #000 25%, #000 75%, rgba(0,0,0,0.75) 90%, transparent)', maskImage: 'linear-gradient(to right, transparent, rgba(0,0,0,0.75) 10%, #000 25%, #000 75%, rgba(0,0,0,0.75) 90%, transparent)' }}
-          animate={{ scale: isExpanded ? 1.05 : 1 }}
+          style={{ perspective: '1200px' }}
+          animate={{ scale: isExpanded ? 1.04 : 1 }}
           transition={{ duration: 0.25, ease: [0.2, 0.9, 0.3, 1] }}
         >
           <Swiper
             modules={[Navigation, Pagination, Keyboard, Autoplay, A11y]}
-            slidesPerView={1.05}
+            slidesPerView={1.3}
             centeredSlides
-            spaceBetween={isExpanded ? 18 : 12}
+            spaceBetween={isExpanded ? 20 : 14}
             loop
-            speed={650}
+            speed={600}
             keyboard={{ enabled: true, onlyInViewport: true }}
             autoplay={{ delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true }}
             pagination={{ clickable: true }}
@@ -141,9 +142,9 @@ const FeatureCarousel: React.FC = () => {
             onSwiper={(swiper) => setActiveIndex((swiper as any).realIndex ?? 0)}
             onSlideChange={(swiper) => setActiveIndex((swiper as any).realIndex ?? 0)}
             breakpoints={{
-              320: { slidesPerView: 1.05, spaceBetween: isExpanded ? 14 : 10 },
-              640: { slidesPerView: 1.06, spaceBetween: isExpanded ? 16 : 12 },
-              1024: { slidesPerView: 1.07, spaceBetween: isExpanded ? 18 : 12 }
+              320: { slidesPerView: 1.18, spaceBetween: isExpanded ? 16 : 12 },
+              640: { slidesPerView: 1.28, spaceBetween: isExpanded ? 18 : 14 },
+              1024: { slidesPerView: 1.45, spaceBetween: isExpanded ? 20 : 16 }
             }}
             className="relative transition-all duration-300 overflow-visible"
           >
@@ -159,40 +160,37 @@ const FeatureCarousel: React.FC = () => {
 
               return (
                 <SwiperSlide key={f.title}>
-                  <div className="mx-auto w-[78%] sm:w-[68%] md:w-[56%]">
-                    <motion.article
-                      className={`relative rounded-xl overflow-hidden bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md hover:border-[#86C232]/40`}
-                      style={{ opacity, zIndex, filter: Math.abs(delta) >= 3 ? 'blur(1px) saturate(0.95) brightness(0.95)' : 'none' }}
-                      initial={{ opacity: 0, y: 12 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      animate={{ scale, rotateY, x, y }}
-                      transition={{ duration: 0.45, ease: [0.2, 0.9, 0.3, 1] }}
-                    >
-                      {f.img ? (
-                        <div className={`aspect-[16/10] w-full bg-cover bg-center`} style={{ backgroundImage: `url(${f.img})` }} />
-                      ) : (
-                        <div className={`aspect-[16/10] w-full bg-gradient-to-br from-[#0B3D2E] via-[#0E4A2D] to-[#1A5630]`} />
-                      )}
-                      <div className="p-5">
-                        <h3 className={`text-white text-lg font-semibold`}>{f.title}</h3>
-                        <p className="text-white/70 text-sm mt-2">{f.desc}</p>
-                      </div>
-
-                      {/* Ground glow under active card */}
-                      {isActive && (
-                        <div className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 w-[55%] h-6 rounded-full blur-md" style={{ background: 'radial-gradient(ellipse at center, rgba(134,194,50,0.35), rgba(134,194,50,0))' }} />
-                      )}
-                    </motion.article>
+                  <motion.article
+                    className={`relative rounded-xl overflow-hidden bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md hover:border-[#86C232]/40`}
+                    style={{ opacity, zIndex }}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    animate={{ scale, rotateY, x, y }}
+                    transition={{ duration: 0.45, ease: [0.2, 0.9, 0.3, 1] }}
+                  >
+                    {f.img ? (
+                      <div className={`aspect-[16/10] w-full bg-cover bg-center`} style={{ backgroundImage: `url(${f.img})` }} />
+                    ) : (
+                      <div className={`aspect-[16/10] w-full bg-gradient-to-br from-[#0B3D2E] via-[#0E4A2D] to-[#1A5630]`} />
+                    )}
+                    <div className="p-5">
+                      <h3 className={`text-white text-lg font-semibold`}>{f.title}</h3>
+                      <p className="text-white/70 text-sm mt-2">{f.desc}</p>
+                    </div>
 
                     {isActive && (
-                      <div className="mt-3 flex justify-center">
-                        <Button size="sm" className="bg-[#86C232] hover:bg-[#76b028] text-black font-semibold" onClick={handleChangeAI}>
-                          Change AI
-                        </Button>
-                      </div>
+                      <div className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 w-[55%] h-6 rounded-full blur-md" style={{ background: 'radial-gradient(ellipse at center, rgba(134,194,50,0.35), rgba(134,194,50,0))' }} />
                     )}
-                  </div>
+                  </motion.article>
+
+                  {isActive && (
+                    <div className="mt-3 flex justify-center">
+                      <Button size="sm" className="bg-[#86C232] hover:bg-[#76b028] text-black font-semibold" onClick={handleChangeAI}>
+                        Change AI
+                      </Button>
+                    </div>
+                  )}
                 </SwiperSlide>
               );
             })}
