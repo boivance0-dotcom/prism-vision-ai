@@ -4,6 +4,7 @@ import SearchBar from '@/components/SearchBar';
 import AIModesSlider from '@/components/AIModesSlider';
 import forestHeroBg from '@/assets/forest-hero-bg.jpg';
 import { useParallax } from '@/lib/hooks/useParallax';
+import HeroShowcase from '@/components/HeroShowcase';
 
 const Index = () => {
   const [started, setStarted] = useState(false);
@@ -57,12 +58,7 @@ const Index = () => {
               {/* Experience State */}
               {started && (
                 <div className="animate-hero-in parallax-item" data-speed="1">
-                  <div className="max-w-4xl mx-auto">
-                    <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
-                  </div>
-                  <div className="mt-10 md:mt-12 lg:mt-14">
-                    <AIModesSlider selectedMode="forest" onModeChange={() => {}} className="md:max-w-5xl mx-auto hover-lift" />
-                  </div>
+                  <HeroShowcase />
                 </div>
               )}
             </div>
