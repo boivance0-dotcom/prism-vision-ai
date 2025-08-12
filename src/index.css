@@ -327,14 +327,14 @@
 
 @layer components {
   .cta-outline-white {
-    @apply inline-flex items-center justify-center rounded-full border border-white text-white font-semibold transition transform;
-    padding: 12px 24px; /* base; overridden below for spec */
+    @apply inline-flex items-center justify-center rounded-full border-2 border-white/80 text-white font-semibold transition transform bg-white/10 backdrop-blur-sm shadow-[0_8px_24px_rgba(0,0,0,0.35)];
+    padding: 14px 28px;
   }
   .cta-outline-white--lg {
     padding: 14px 38px;
   }
   .cta-outline-white:hover {
-    @apply bg-white text-slate-800 scale-105;
+    @apply bg-white/90 text-slate-900 scale-105 shadow-[0_12px_40px_rgba(0,0,0,0.45)];
   }
   .cta-outline-white:focus-visible {
     @apply outline-none ring-4 ring-white/30;
