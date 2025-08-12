@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Settings } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -33,11 +34,14 @@ const Navbar: React.FC = () => {
           <span className="sr-only">Nature AI Home</span>
         </Link>
 
-        {/* Right: About us, Contact, Log in */}
+        {/* Right: About us, Contact, Log in, Settings */}
         <div className="flex items-center justify-end gap-6 text-[14px] tracking-[0.08em] uppercase">
           <a href="#about" className="text-white/80 hover:text-white/100 transition-colors rounded px-1">About us</a>
           <a href="#contact" className="text-white/80 hover:text-white/100 transition-colors rounded px-1">Contact</a>
           <a href="#login" className="inline-flex items-center rounded-full border border-white/70 px-4 py-2 text-white font-medium transition-all hover:bg-white hover:text-slate-900 hover:shadow-[0_8px_24px_rgba(0,0,0,0.35)]">Log in</a>
+          <button aria-label="Settings" className="h-10 w-10 grid place-items-center rounded-full border border-white/30 text-white/90 hover:text-white hover:bg-white/10 transition-colors">
+            <Settings className="h-5 w-5" />
+          </button>
         </div>
       </nav>
     </header>
