@@ -48,6 +48,7 @@ const FeatureCarousel: React.FC = () => {
   return (
     <section className="relative w-full py-20">
       <div className="max-w-6xl mx-auto px-6">
+        <h3 className="text-white/95 text-xl font-semibold mb-4">Explore other AI's</h3>
         <Swiper
           modules={[Navigation, Pagination, Keyboard, Autoplay, A11y]}
           slidesPerView={'auto'}
