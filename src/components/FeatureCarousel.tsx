@@ -9,14 +9,29 @@ const features = [
   },
   {
     title: 'Climate Intelligence',
-    desc: 'Predictive analytics for resilient planning and risk.',
+    desc: 'Advanced climate modeling and environmental impact analysis.',
     img: '/images/ai-climate-1920.webp'
   },
   {
-    title: 'Exploration Studio',
-    desc: 'Create and explore nature scenarios with powerful tools.',
+    title: 'Wildlife Analytics',
+    desc: 'Species tracking and biodiversity conservation insights.',
     img: '/images/ai-explore-1920.webp'
-  }
+  },
+  {
+    title: 'Energy Systems',
+    desc: 'Renewable energy optimization and smart grid analysis.',
+    img: ''
+  },
+  {
+    title: 'Marine Research',
+    desc: 'Ocean health monitoring and marine conservation.',
+    img: ''
+  },
+  {
+    title: 'ESG Analytics',
+    desc: 'Corporate sustainability metrics and environmental compliance.',
+    img: ''
+  },
 ];
 
 const FeatureCarousel: React.FC = () => {
@@ -26,7 +41,11 @@ const FeatureCarousel: React.FC = () => {
         {features.map((f, i) => (
           <motion.article key={f.title} className="rounded-xl overflow-hidden bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md tilt-hover hover:border-[#86C232]/40"
             initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6, delay: i * 0.05 }}>
-            <div className="aspect-[16/10] w-full bg-cover bg-center" style={{ backgroundImage: `url(${f.img})` }} />
+            {f.img ? (
+              <div className="aspect-[16/10] w-full bg-cover bg-center" style={{ backgroundImage: `url(${f.img})` }} />
+            ) : (
+              <div className="aspect-[16/10] w-full bg-gradient-to-br from-[#0B3D2E] via-[#0E4A2D] to-[#1A5630]" />
+            )}
             <div className="p-5">
               <h3 className="text-white text-lg font-semibold">{f.title}</h3>
               <p className="text-white/70 text-sm mt-2">{f.desc}</p>
