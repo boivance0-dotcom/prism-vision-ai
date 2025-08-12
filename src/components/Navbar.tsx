@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import SearchBar from '@/components/SearchBar';
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -12,11 +11,6 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleSearch = (query: string) => {
-    // TODO: wire to global search route
-    console.log('Navbar search:', query);
-  };
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -25,7 +19,7 @@ const Navbar: React.FC = () => {
       role="banner"
     >
       <nav
-        className={`mx-auto max-w-7xl grid grid-cols-3 items-center px-4 md:px-8 ${
+        className={`mx-auto max-w-7xl flex items-center justify-between px-4 md:px-8 ${
           scrolled ? 'h-16' : 'h-20 md:h-22'
         }`}
         aria-label="Primary"
@@ -38,13 +32,6 @@ const Navbar: React.FC = () => {
           <span className="text-white/95 font-semibold tracking-wide hidden sm:inline">Nature AI</span>
           <span className="sr-only">Nature AI Home</span>
         </Link>
-
-        {/* Center: Search Bar */}
-        <div className="flex justify-center">
-          <div className="w-full max-w-xl">
-            <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
-          </div>
-        </div>
 
         {/* Right: Only About us and Contact */}
         <div className="flex items-center justify-end gap-6 text-[14px] tracking-[0.08em] uppercase">
