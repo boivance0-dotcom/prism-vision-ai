@@ -2,11 +2,13 @@ import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
+const forestHeroBgUrl = 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg';
+
 const features = [
   { title: 'Wildlife AI', desc: 'Track biodiversity and animal habitats.', img: '/images/ai-explore-1920.webp' },
   { title: 'Climate AI', desc: 'Climate trends and renewable energy insights.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg' },
   { title: 'Marine AI', desc: 'Protect oceans and marine ecosystems.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg' },
-  { title: 'Forest AI', desc: 'Monitor deforestation and forest health.', img: '/images/ai-forest-1920.webp' },
+  { title: 'Forest AI', desc: 'Monitor deforestation and forest health.', img: forestHeroBgUrl },
   { title: 'Research AI', desc: 'Discover papers, datasets, and findings.', img: '' },
   { title: 'Career AI', desc: 'Explore roles, skills, and opportunities.', img: '' },
   { title: 'Education AI', desc: 'Learn with curated courses and tutorials.', img: '' },
@@ -15,7 +17,8 @@ const features = [
 const EASE: any = [0.2, 0.9, 0.3, 1];
 
 const FeatureCarousel: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const defaultActive = useMemo(() => Math.max(0, features.findIndex(f => f.title === 'Forest AI')), []);
+  const [activeIndex, setActiveIndex] = useState<number>(defaultActive);
 
   const itemCount = features.length;
   const stepAngle = 360 / itemCount;
@@ -45,7 +48,7 @@ const FeatureCarousel: React.FC = () => {
         <h3 className="text-white/95 text-xl font-semibold mb-6 text-center">Explore other AI's</h3>
 
         <div className="relative" style={{ perspective: 2000 }}>
-          <motion.div className="relative mx-auto" style={{ width: '100%', height: cardHeight + 220 }}>
+          <motion.div className="relative mx-auto" style={{ width: '100%', height: cardHeight + 260 }}>
             <div className="pointer-events-none absolute inset-0 flex items-center justify-between">
               <div className="pointer-events-auto pl-1 sm:pl-3">
                 <button
@@ -81,7 +84,7 @@ const FeatureCarousel: React.FC = () => {
                 );
                 const depthT = 1 - Math.min(norm / 180, 1);
                 const scale = 0.85 + depthT * 0.25;
-                const opacity = 0.35 + depthT * 0.65;
+                const opacity = 0.45 + depthT * 0.55; // keep a bit brighter overall for visibility
                 const isActive = index === activeIndex;
                 const zIndex = 10 + Math.round(depthT * 100);
 
@@ -91,7 +94,6 @@ const FeatureCarousel: React.FC = () => {
                     className="absolute left-1/2 top-0"
                     style={{
                       width: cardWidth,
-                      height: cardHeight,
                       transformStyle: 'preserve-3d',
                       transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
                       marginLeft: -cardWidth / 2,
@@ -104,20 +106,28 @@ const FeatureCarousel: React.FC = () => {
                       animate={{ scale }}
                       transition={{ duration: 0.45, ease: EASE }}
                     >
-                      <img
-                        src={f.img || '/placeholder.svg'}
-                        onError={(e) => {
-                          // @ts-ignore
-                          e.currentTarget.src = '/placeholder.svg';
-                        }}
-                        alt={f.title}
-                        className="w-full h-full object-cover"
-                      />
+                      <div style={{ width: cardWidth, height: cardHeight }}>
+                        <img
+                          src={f.img || '/placeholder.svg'}
+                          onError={(e) => {
+                            // @ts-ignore
+                            e.currentTarget.src = '/placeholder.svg';
+                          }}
+                          alt={f.title}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
 
                       {isActive && (
                         <div className="pointer-events-none absolute inset-0 ring-2 ring-[#86C232]/70 rounded-xl" />
                       )}
                     </motion.article>
+
+                    {/* Caption below each card */}
+                    <div className="mt-2 text-center">
+                      <p className="text-white/90 text-sm font-medium">{f.title}</p>
+                    </div>
                   </div>
                 );
               })}
