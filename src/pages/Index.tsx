@@ -119,7 +119,7 @@ const Index = () => {
                   </div>
 
                   {/* Cards shown only after start */}
-                  <div className="mt-12 reveal-on-scroll reveal-up" data-duration="600ms" data-delay="120ms">
+                  <div key="feature-cards" className="mt-12 reveal-on-scroll reveal-up" data-duration="600ms" data-delay="120ms">
                     <FeatureCarousel />
                   </div>
                 </div>
