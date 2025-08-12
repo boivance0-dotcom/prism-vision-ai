@@ -20,13 +20,12 @@ const FeatureCarousel: React.FC = () => {
   const itemCount = features.length;
   const stepAngle = 360 / itemCount;
 
-  // Responsive ring radius and card size
   const { radius, cardWidth, cardHeight } = useMemo(() => {
     const isSmall = typeof window !== 'undefined' ? window.innerWidth < 640 : false;
     const isMedium = typeof window !== 'undefined' ? window.innerWidth >= 640 && window.innerWidth < 1024 : false;
     const baseWidth = isSmall ? 220 : isMedium ? 260 : 300;
-    const baseHeight = Math.round(baseWidth * 0.625); // 16:10 approx 0.625
-    const r = isSmall ? 360 : isMedium ? 420 : 520; // ring radius
+    const baseHeight = Math.round(baseWidth * 0.625);
+    const r = isSmall ? 260 : isMedium ? 340 : 420;
     return { radius: r, cardWidth: baseWidth, cardHeight: baseHeight };
   }, []);
 
@@ -45,14 +44,8 @@ const FeatureCarousel: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6">
         <h3 className="text-white/95 text-xl font-semibold mb-6 text-center">Explore other AI's</h3>
 
-        {/* 3D ring container */}
         <div className="relative" style={{ perspective: 2000 }}>
-          {/* Ring viewport */}
-          <motion.div
-            className="relative mx-auto"
-            style={{ width: '100%', height: cardHeight + 140 }}
-          >
-            {/* Navigation */}
+          <motion.div className="relative mx-auto" style={{ width: '100%', height: cardHeight + 220 }}>
             <div className="pointer-events-none absolute inset-0 flex items-center justify-between">
               <div className="pointer-events-auto pl-1 sm:pl-3">
                 <button
@@ -74,24 +67,23 @@ const FeatureCarousel: React.FC = () => {
               </div>
             </div>
 
-            {/* Ring stage: preserve-3d so children keep depth; rotate to bring active to front */}
             <motion.div
-              className="absolute left-1/2 top-10 -translate-x-1/2 will-change-transform"
+              className="absolute left-1/2 top-12 -translate-x-1/2 will-change-transform z-20"
               style={{ transformStyle: 'preserve-3d' as any }}
               animate={{ rotateY: rotateYDeg }}
               transition={{ duration: 0.6, ease: EASE }}
             >
               {features.map((f, index) => {
                 const angle = index * stepAngle;
-                // Depth-based scaling/opacity using angle distance from front (0deg)
                 const norm = Math.min(
                   Math.abs(((angle + rotateYDeg) % 360 + 360) % 360),
                   Math.abs((((angle + rotateYDeg) % 360 + 360) % 360) - 360)
                 );
-                const depthT = 1 - Math.min(norm / 180, 1); // 1 at front, 0 at back
-                const scale = 0.85 + depthT * 0.25; // 0.85..1.10
-                const opacity = 0.35 + depthT * 0.65; // 0.35..1.0
+                const depthT = 1 - Math.min(norm / 180, 1);
+                const scale = 0.85 + depthT * 0.25;
+                const opacity = 0.35 + depthT * 0.65;
                 const isActive = index === activeIndex;
+                const zIndex = 10 + Math.round(depthT * 100);
 
                 return (
                   <div
@@ -103,11 +95,12 @@ const FeatureCarousel: React.FC = () => {
                       transformStyle: 'preserve-3d',
                       transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
                       marginLeft: -cardWidth / 2,
+                      zIndex,
                     }}
                   >
                     <motion.article
                       className="relative rounded-xl overflow-hidden border border-white/15 bg-[rgba(7,16,12,0.65)] shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md"
-                      style={{ opacity }}
+                      style={{ opacity, backfaceVisibility: 'hidden' as any }}
                       animate={{ scale }}
                       transition={{ duration: 0.45, ease: EASE }}
                     >
@@ -117,7 +110,6 @@ const FeatureCarousel: React.FC = () => {
                         <div className="w-full h-full bg-gradient-to-br from-[#0B3D2E] via-[#0E4A2D] to-[#1A5630]" />
                       )}
 
-                      {/* subtle highlight ring on active */}
                       {isActive && (
                         <div className="pointer-events-none absolute inset-0 ring-2 ring-[#86C232]/70 rounded-xl" />
                       )}
@@ -129,7 +121,6 @@ const FeatureCarousel: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Active details + Change AI */}
         <div className="mt-6 text-center">
           <h4 className="text-white text-lg font-semibold">{features[activeIndex].title}</h4>
           <p className="text-white/70 text-sm mt-1">{features[activeIndex].desc}</p>
