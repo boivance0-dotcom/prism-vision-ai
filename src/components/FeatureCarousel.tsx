@@ -143,7 +143,7 @@ const FeatureCarousel: React.FC = () => {
         </div>
 
         {/* Enhanced active details */}
-        <div className="mt-8 text-center">
+        <div className="mt-2 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs tracking-wider uppercase">
             Active
           </div>
