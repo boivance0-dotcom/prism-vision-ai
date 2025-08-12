@@ -143,18 +143,18 @@ const FeatureCarousel: React.FC = () => {
         </div>
 
         {/* Enhanced active details */}
-        <div className="mt-2 text-center">
+        <div className="mt-0 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs tracking-wider uppercase">
             Active
           </div>
-          <h4 className="mt-3 font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#C8FF70] via-[#86C232] to-[#6BAF1F]" style={{ fontSize: 'clamp(1.25rem, 3.6vw, 2rem)' }}>
+          <h4 className="mt-2 font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#C8FF70] via-[#86C232] to-[#6BAF1F]" style={{ fontSize: 'clamp(1.25rem, 3.6vw, 2rem)' }}>
             {features[activeIndex].title}
           </h4>
-          <div className="mt-2 mx-auto h-px w-20 bg-gradient-to-r from-transparent via-[#86C232] to-transparent opacity-80" />
-          <p className="mt-2 text-white/85 text-sm md:text-base max-w-xl mx-auto">
+          <div className="mt-1 mx-auto h-px w-20 bg-gradient-to-r from-transparent via-[#86C232] to-transparent opacity-80" />
+          <p className="mt-1 text-white/85 text-sm md:text-base max-w-xl mx-auto">
             {features[activeIndex].desc}
           </p>
-          <div className="mt-4 flex justify-center">
+          <div className="mt-2 flex justify-center">
             <Button size="sm" className="bg-[#86C232] hover:bg-[#76b028] text-black font-semibold shadow-[0_8px_24px_rgba(134,194,50,0.35)]" onClick={handleChangeAI}>
               Change AI
             </Button>
