@@ -113,6 +113,11 @@ const Index = () => {
                       <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
                     </motion.div>
                   </div>
+
+                  {/* Cards shown only after start */}
+                  <div className="mt-12 reveal-on-scroll reveal-up" data-duration="600ms" data-delay="120ms">
+                    <FeatureCarousel />
+                  </div>
                 </div>
               )}
             </div>
@@ -127,13 +132,7 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Additional sections */}
-      <div className="reveal-on-scroll reveal-up" data-duration="600ms" data-delay="120ms">
-        <FeatureCarousel />
-      </div>
-      <div className="reveal-on-scroll reveal-up" data-duration="600ms" data-delay="200ms">
-        <Testimonials />
-      </div>
+      {/* No cards on initial landing; cards appear after Start Experience */}
 
       {/* Footer */}
       <footer className="border-t border-border/50 bg-background">
