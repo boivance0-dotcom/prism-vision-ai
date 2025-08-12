@@ -68,7 +68,7 @@ const Index = () => {
                       What do you want to explore?
                     </h2>
                     <p className="mt-3 text-white/90 text-base md:text-lg">
-                      Ask about forests, climate, wildlife or sustainability. Our AI will guide you.
+                      Explore forests, ecosystems, wildlife, and the rhythms of nature — our AI will guide you.
                     </p>
                     <div className="mt-6">
                       <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
