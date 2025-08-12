@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Leaf, Trees, Bird, Globe, Zap, Droplets } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Leaf, Trees, Bird, Globe, Droplets, Briefcase, GraduationCap, Microscope } from 'lucide-react';
 
 interface AIMode {
   id: string;
@@ -12,12 +12,13 @@ interface AIMode {
 }
 
 const aiModes: AIMode[] = [
-  { id: 'climate', name: 'Climate Intelligence', description: 'Advanced climate modeling and environmental impact analysis', icon: <Globe className="h-7 w-7" />, gradient: 'from-primary/8 to-accent/8', status: 'beta' },
-  { id: 'forest', name: 'Forest Monitoring', description: 'Ecosystem health assessment and conservation strategies', icon: <Trees className="h-7 w-7" />, gradient: 'from-primary/10 to-primary/5', status: 'active' },
-  { id: 'wildlife', name: 'Wildlife Analytics', description: 'Species tracking and biodiversity conservation insights', icon: <Bird className="h-7 w-7" />, gradient: 'from-accent/8 to-primary/6', status: 'active' },
-  { id: 'energy', name: 'Energy Systems', description: 'Renewable energy optimization and smart grid analysis', icon: <Zap className="h-7 w-7" />, gradient: 'from-primary/6 to-accent/10', status: 'soon' },
-  { id: 'ocean', name: 'Marine Research', description: 'Ocean health monitoring and marine conservation', icon: <Droplets className="h-7 w-7" />, gradient: 'from-accent/6 to-primary/8', status: 'beta' },
-  { id: 'sustainability', name: 'ESG Analytics', description: 'Corporate sustainability metrics and environmental compliance', icon: <Leaf className="h-7 w-7" />, gradient: 'from-primary/8 to-accent/6', status: 'active' },
+  { id: 'wildlife', name: 'Wildlife AI', description: 'Species tracking and biodiversity conservation insights', icon: <Bird className="h-7 w-7" />, gradient: 'from-accent/8 to-primary/6', status: 'active' },
+  { id: 'climate', name: 'Climate AI', description: 'Advanced climate modeling and environmental impact analysis', icon: <Globe className="h-7 w-7" />, gradient: 'from-primary/8 to-accent/8', status: 'active' },
+  { id: 'marine', name: 'Marine AI', description: 'Ocean health monitoring and marine conservation', icon: <Droplets className="h-7 w-7" />, gradient: 'from-accent/6 to-primary/8', status: 'active' },
+  { id: 'forest', name: 'Forest AI', description: 'Ecosystem health assessment and conservation strategies', icon: <Trees className="h-7 w-7" />, gradient: 'from-primary/10 to-primary/5', status: 'active' },
+  { id: 'research', name: 'Research AI', description: 'Data-driven research assistance and knowledge synthesis', icon: <Microscope className="h-7 w-7" />, gradient: 'from-primary/8 to-accent/6', status: 'beta' },
+  { id: 'career', name: 'Career AI', description: 'Personalized career insights and guidance', icon: <Briefcase className="h-7 w-7" />, gradient: 'from-primary/6 to-accent/10', status: 'beta' },
+  { id: 'education', name: 'Education AI', description: 'Adaptive learning and educational support', icon: <GraduationCap className="h-7 w-7" />, gradient: 'from-accent/6 to-primary/8', status: 'active' },
 ];
 
 interface AIModesSliderProps {
