@@ -10,7 +10,7 @@ import AnimatedGradient from '@/components/AnimatedGradient';
 import FeatureCarousel from '@/components/FeatureCarousel';
 import Testimonials from '@/components/Testimonials';
 import { motion, useReducedMotion } from 'framer-motion';
-import NatureTopicCards from '@/components/NatureTopicCards';
+
 
 const Index = () => {
   const [started, setStarted] = useState(false);
@@ -114,8 +114,7 @@ const Index = () => {
                       <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
                     </motion.div>
 
-                    {/* Nature topic cards under search */}
-                    <NatureTopicCards />
+
                   </div>
 
                   {/* Cards shown only after start */}

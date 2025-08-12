@@ -8,33 +8,38 @@ import 'swiper/css/pagination';
 
 const features = [
   {
-    title: 'Forest Monitoring',
-    desc: 'Ecosystem health assessment and conservation strategies.',
-    img: '/images/ai-forest-1920.webp'
-  },
-  {
-    title: 'Climate Intelligence',
-    desc: 'Advanced climate modeling and environmental impact analysis.',
+    title: 'Climate AI',
+    desc: 'For climate trends & renewable energy insights.',
     img: '/images/ai-climate-1920.webp'
   },
   {
-    title: 'Wildlife Analytics',
-    desc: 'Species tracking and biodiversity conservation insights.',
+    title: 'Wildlife AI',
+    desc: 'Tracks endangered species & biodiversity.',
     img: '/images/ai-explore-1920.webp'
   },
   {
-    title: 'Energy Systems',
-    desc: 'Renewable energy optimization and smart grid analysis.',
+    title: 'Forest AI',
+    desc: 'Monitors deforestation & forest health.',
+    img: '/images/ai-forest-1920.webp'
+  },
+  {
+    title: 'Marine AI',
+    desc: 'Protects oceans & marine ecosystems.',
     img: ''
   },
   {
-    title: 'Marine Research',
-    desc: 'Ocean health monitoring and marine conservation.',
+    title: 'Air Quality AI',
+    desc: 'Predicts and monitors city air quality.',
     img: ''
   },
   {
-    title: 'ESG Analytics',
-    desc: 'Corporate sustainability metrics and environmental compliance.',
+    title: 'Disaster Response AI',
+    desc: 'Real-time disaster detection & response.',
+    img: ''
+  },
+  {
+    title: 'Agriculture AI',
+    desc: 'Optimizes farming & crop health.',
     img: ''
   },
 ];
