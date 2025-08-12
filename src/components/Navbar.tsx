@@ -33,10 +33,11 @@ const Navbar: React.FC = () => {
           <span className="sr-only">Nature AI Home</span>
         </Link>
 
-        {/* Right: Only About us and Contact */}
+        {/* Right: About us, Contact, Log in */}
         <div className="flex items-center justify-end gap-6 text-[14px] tracking-[0.08em] uppercase">
           <a href="#about" className="text-white/90 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#86C232] rounded px-1">About us</a>
           <a href="#contact" className="text-white/90 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#86C232] rounded px-1">Contact</a>
+          <a href="#login" className="inline-flex items-center rounded-full border border-white px-4 py-2 text-white font-medium hover:bg-white hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#86C232]">Log in</a>
         </div>
       </nav>
     </header>
