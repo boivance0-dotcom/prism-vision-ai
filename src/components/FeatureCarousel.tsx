@@ -101,7 +101,7 @@ const FeatureCarousel: React.FC = () => {
               return (
                 <SwiperSlide key={f.title} className={`${slideWidth} transition-[width] duration-300`}>
                   <motion.article
-                    className={`rounded-xl overflow-hidden bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md tilt-hover hover:border-[#86C232]/40 transition-transform duration-300 ${isActive ? 'border-[#86C232]/60 shadow-[0_12px_50px_rgba(134,194,50,0.25)] scale-[1.02]' : ''}`}
+                    className={`rounded-xl overflow-hidden bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md tilt-hover hover:border-[#86C232]/40 transition-transform transition-opacity duration-300 ${isActive ? 'opacity-100 border-[#86C232]/60 shadow-[0_12px_50px_rgba(134,194,50,0.25)] scale-[1.02]' : 'opacity-60'}`}
                     initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
