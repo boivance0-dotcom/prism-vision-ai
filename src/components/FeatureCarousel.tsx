@@ -8,38 +8,38 @@ import 'swiper/css/pagination';
 
 const features = [
   {
-    title: 'Climate AI',
-    desc: 'For climate trends & renewable energy insights.',
-    img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg'
-  },
-  {
     title: 'Wildlife AI',
-    desc: 'Tracks endangered species & biodiversity.',
+    desc: 'Track biodiversity and animal habitats.',
     img: '/images/ai-explore-1920.webp'
   },
   {
-    title: 'Forest AI',
-    desc: 'Monitors deforestation & forest health.',
-    img: '/images/ai-forest-1920.webp'
+    title: 'Climate AI',
+    desc: 'Climate trends and renewable energy insights.',
+    img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg'
   },
   {
     title: 'Marine AI',
-    desc: 'Protects oceans & marine ecosystems.',
+    desc: 'Protect oceans and marine ecosystems.',
     img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg'
   },
   {
-    title: 'Air Quality AI',
-    desc: 'Predicts and monitors city air quality.',
+    title: 'Forest AI',
+    desc: 'Monitor deforestation and forest health.',
+    img: '/images/ai-forest-1920.webp'
+  },
+  {
+    title: 'Research AI',
+    desc: 'Discover papers, datasets, and findings.',
     img: ''
   },
   {
-    title: 'Disaster Response AI',
-    desc: 'Real-time disaster detection & response.',
+    title: 'Career AI',
+    desc: 'Explore roles, skills, and opportunities.',
     img: ''
   },
   {
-    title: 'Agriculture AI',
-    desc: 'Optimizes farming & crop health.',
+    title: 'Education AI',
+    desc: 'Learn with curated courses and tutorials.',
     img: ''
   },
 ];
