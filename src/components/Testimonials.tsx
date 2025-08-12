@@ -13,7 +13,7 @@ const Testimonials: React.FC = () => {
         <h3 className="text-white/95 text-xl font-semibold mb-6">What users are saying</h3>
         <div className="grid md:grid-cols-3 gap-6">
           {testimonials.map((t) => (
-            <article key={t.name} className="rounded-xl p-5 bg-white/5 border border-white/10 backdrop-blur-sm transition-transform duration-300 hover:scale-[1.02] hover:shadow-[0_18px_48px_rgba(0,0,0,0.5)]">
+            <article key={t.name} className="rounded-xl p-5 bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md transition-transform duration-300 hover:scale-[1.02] hover:border-[#86C232]/40">
               <p className="text-white/90">“{t.quote}”</p>
               <div className="mt-4 text-white/70 text-sm">— {t.name}</div>
             </article>
