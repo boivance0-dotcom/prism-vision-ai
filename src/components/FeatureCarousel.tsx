@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 const forestHeroBgUrl = 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg';
 
 const features = [
+  { title: 'Nature AI', desc: 'Immersive nature intelligence for curious minds.', img: forestHeroBgUrl },
   { title: 'Wildlife AI', desc: 'Track biodiversity and animal habitats.', img: '/images/ai-explore-1920.webp' },
   { title: 'Climate AI', desc: 'Climate trends and renewable energy insights.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg' },
   { title: 'Marine AI', desc: 'Protect oceans and marine ecosystems.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg' },
@@ -17,7 +18,7 @@ const features = [
 const EASE: any = [0.2, 0.9, 0.3, 1];
 
 const FeatureCarousel: React.FC = () => {
-  const defaultActive = useMemo(() => Math.max(0, features.findIndex(f => f.title === 'Forest AI')), []);
+  const defaultActive = useMemo(() => Math.max(0, features.findIndex(f => f.title === 'Nature AI')), []);
   const [activeIndex, setActiveIndex] = useState<number>(defaultActive);
 
   const itemCount = features.length;
@@ -84,7 +85,7 @@ const FeatureCarousel: React.FC = () => {
                 );
                 const depthT = 1 - Math.min(norm / 180, 1);
                 const scale = 0.85 + depthT * 0.25;
-                const opacity = 0.45 + depthT * 0.55; // keep a bit brighter overall for visibility
+                const opacity = 0.45 + depthT * 0.55;
                 const isActive = index === activeIndex;
                 const zIndex = 10 + Math.round(depthT * 100);
 
@@ -124,7 +125,6 @@ const FeatureCarousel: React.FC = () => {
                       )}
                     </motion.article>
 
-                    {/* Caption below each card */}
                     <div className="mt-2 text-center">
                       <p className="text-white/90 text-sm font-medium">{f.title}</p>
                     </div>
@@ -135,11 +135,20 @@ const FeatureCarousel: React.FC = () => {
           </motion.div>
         </div>
 
-        <div className="mt-6 text-center">
-          <h4 className="text-white text-lg font-semibold">{features[activeIndex].title}</h4>
-          <p className="text-white/70 text-sm mt-1">{features[activeIndex].desc}</p>
-          <div className="mt-3 flex justify-center">
-            <Button size="sm" className="bg-[#86C232] hover:bg-[#76b028] text-black font-semibold" onClick={handleChangeAI}>
+        {/* Enhanced active details */}
+        <div className="mt-8 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs tracking-wider uppercase">
+            Active
+          </div>
+          <h4 className="mt-3 font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-[#C8FF70] via-[#86C232] to-[#6BAF1F]" style={{ fontSize: 'clamp(1.25rem, 3.6vw, 2rem)' }}>
+            {features[activeIndex].title}
+          </h4>
+          <div className="mt-2 mx-auto h-px w-20 bg-gradient-to-r from-transparent via-[#86C232] to-transparent opacity-80" />
+          <p className="mt-2 text-white/85 text-sm md:text-base max-w-xl mx-auto">
+            {features[activeIndex].desc}
+          </p>
+          <div className="mt-4 flex justify-center">
+            <Button size="sm" className="bg-[#86C232] hover:bg-[#76b028] text-black font-semibold shadow-[0_8px_24px_rgba(134,194,50,0.35)]" onClick={handleChangeAI}>
               Change AI
             </Button>
           </div>
