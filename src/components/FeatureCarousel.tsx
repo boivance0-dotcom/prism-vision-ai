@@ -130,7 +130,7 @@ const FeatureCarousel: React.FC = () => {
 
                     {showCaption && (
                       <div className="mt-2 text-center">
-                        <span className="inline-block px-3 py-1 rounded-full bg-black/40 border border-white/10 text-transparent bg-clip-text bg-gradient-to-r from-[#C8FF70] via-[#86C232] to-[#6BAF1F] font-semibold text-xs md:text-sm drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
+                        <span className="inline-block px-3 py-1 rounded-full bg-black/70 backdrop-blur-sm border border-white/15 text-white font-semibold text-xs md:text-sm shadow-[0_4px_16px_rgba(0,0,0,0.45)]">
                           {f.title}
                         </span>
                       </div>
