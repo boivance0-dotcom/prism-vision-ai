@@ -9,6 +9,7 @@ import HeroShowcase from '@/components/HeroShowcase';
 import AnimatedGradient from '@/components/AnimatedGradient';
 import FeatureCarousel from '@/components/FeatureCarousel';
 import Testimonials from '@/components/Testimonials';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const Index = () => {
   const [started, setStarted] = useState(false);
@@ -16,6 +17,9 @@ const Index = () => {
 
   useParallax('.parallax-item');
   useReveal('.reveal-on-scroll');
+
+  const prefersReducedMotion = useReducedMotion();
+  const EASE: any = [0.2, 0.9, 0.3, 1];
 
   const handleSearch = (query: string) => {
     console.log(`Searching:`, query);
@@ -48,15 +52,34 @@ const Index = () => {
               {/* Initial State */}
               {!started && (
                 <div className="text-center animate-scale-fade-in parallax-item" data-speed="1">
-                  <h1 className="hero-title-clean" style={{ animationDelay: '80ms' }}>Nature Makes Us Happy</h1>
-                  <p className="mt-5 inline-block max-w-[720px] bg-black/80 text-white px-6 py-3 rounded-lg text-base md:text-xl font-medium tracking-wide shadow-[0_8px_30px_rgba(0,0,0,0.55)]" style={{ animationDelay: '160ms' }}>
+                  <motion.h1
+                    className="hero-title-clean"
+                    initial={prefersReducedMotion ? false : { x: -50, opacity: 0 }}
+                    animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
+                  >
+                    Nature Makes Us Happy
+                  </motion.h1>
+
+                  <motion.p
+                    className="mt-5 inline-block max-w-[720px] bg-black/80 text-white px-6 py-3 rounded-lg text-base md:text-xl font-medium tracking-wide shadow-[0_8px_30px_rgba(0,0,0,0.55)]"
+                    initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
+                    animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: EASE, delay: 0.4 }}
+                  >
                     Immersive nature intelligence for curious minds.
-                  </p>
-                  <div className="mt-8" style={{ animationDelay: '220ms' }}>
+                  </motion.p>
+
+                  <motion.div
+                    className="mt-8"
+                    initial={prefersReducedMotion ? false : { y: 30, opacity: 0 }}
+                    animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: EASE, delay: 0.9 }}
+                  >
                     <button onClick={startExperience} className="cta-outline-white cta-outline-white--lg hover-lift">
                       Start Experience
                     </button>
-                  </div>
+                  </motion.div>
                 </div>
               )}
 
@@ -64,15 +87,31 @@ const Index = () => {
               {started && (
                 <div className="animate-hero-in parallax-item" data-speed="1">
                   <div className="max-w-3xl mx-auto text-center">
-                    <h2 className="text-white font-extrabold leading-tight" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)', letterSpacing: '-0.01em', textShadow: '0 10px 20px rgba(0,0,0,0.45)' }}>
+                    <motion.h2
+                      className="text-white font-extrabold leading-tight"
+                      style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)', letterSpacing: '-0.01em', textShadow: '0 10px 20px rgba(0,0,0,0.45)' }}
+                      initial={prefersReducedMotion ? false : { x: -50, opacity: 0 }}
+                      animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
+                      transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
+                    >
                       What do you want to explore?
-                    </h2>
-                    <p className="mt-3 text-white/90 text-base md:text-lg">
+                    </motion.h2>
+                    <motion.p
+                      className="mt-3 text-white/90 text-base md:text-lg"
+                      initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
+                      animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
+                      transition={{ duration: 0.6, ease: EASE, delay: 0.4 }}
+                    >
                       Explore forests, ecosystems, wildlife, and the rhythms of nature — our AI will guide you.
-                    </p>
-                    <div className="mt-6">
+                    </motion.p>
+                    <motion.div
+                      className="mt-6"
+                      initial={prefersReducedMotion ? false : { scale: 0.95, opacity: 0 }}
+                      animate={prefersReducedMotion ? {} : { scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.5, ease: EASE, delay: 0.8 }}
+                    >
                       <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               )}
