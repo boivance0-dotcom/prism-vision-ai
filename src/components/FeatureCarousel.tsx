@@ -25,7 +25,7 @@ const FeatureCarousel: React.FC = () => {
     const isMedium = typeof window !== 'undefined' ? window.innerWidth >= 640 && window.innerWidth < 1024 : false;
     const baseWidth = isSmall ? 220 : isMedium ? 260 : 300;
     const baseHeight = Math.round(baseWidth * 0.625);
-    const r = isSmall ? 260 : isMedium ? 340 : 420;
+    const r = isSmall ? 220 : isMedium ? 280 : 320;
     return { radius: r, cardWidth: baseWidth, cardHeight: baseHeight };
   }, []);
 
@@ -68,7 +68,7 @@ const FeatureCarousel: React.FC = () => {
             </div>
 
             <motion.div
-              className="absolute left-1/2 top-12 -translate-x-1/2 will-change-transform z-20"
+              className="absolute left-1/2 top-12 -translate-x-1/2 will-change-transform z-50"
               style={{ transformStyle: 'preserve-3d' as any }}
               animate={{ rotateY: rotateYDeg }}
               transition={{ duration: 0.6, ease: EASE }}
@@ -99,16 +99,20 @@ const FeatureCarousel: React.FC = () => {
                     }}
                   >
                     <motion.article
-                      className="relative rounded-xl overflow-hidden border border-white/15 bg-[rgba(7,16,12,0.65)] shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md"
+                      className="relative rounded-xl overflow-hidden border border-white/15 bg-gradient-to-br from-[#0B3D2E] via-[#0E4A2D] to-[#1A5630] shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md"
                       style={{ opacity, backfaceVisibility: 'hidden' as any }}
                       animate={{ scale }}
                       transition={{ duration: 0.45, ease: EASE }}
                     >
-                      {f.img ? (
-                        <div className="w-full h-full bg-cover bg-center" style={{ backgroundImage: `url(${f.img})` }} />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-[#0B3D2E] via-[#0E4A2D] to-[#1A5630]" />
-                      )}
+                      <img
+                        src={f.img || '/placeholder.svg'}
+                        onError={(e) => {
+                          // @ts-ignore
+                          e.currentTarget.src = '/placeholder.svg';
+                        }}
+                        alt={f.title}
+                        className="w-full h-full object-cover"
+                      />
 
                       {isActive && (
                         <div className="pointer-events-none absolute inset-0 ring-2 ring-[#86C232]/70 rounded-xl" />
