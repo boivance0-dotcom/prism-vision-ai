@@ -24,7 +24,7 @@ const FeatureCarousel: React.FC = () => {
     <section className="relative w-full py-20">
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
         {features.map((f, i) => (
-          <motion.article key={f.title} className="rounded-xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-md tilt-hover"
+          <motion.article key={f.title} className="rounded-xl overflow-hidden bg-white/5 border border-white/10 backdrop-blur-sm tilt-hover"
             initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.6, delay: i * 0.05 }}>
             <div className="aspect-[16/10] w-full bg-cover bg-center" style={{ backgroundImage: `url(${f.img})` }} />
             <div className="p-5">
