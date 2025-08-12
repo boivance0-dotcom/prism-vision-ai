@@ -6,11 +6,11 @@ import SettingsSheet from '@/components/SettingsSheet';
 const Navbar: React.FC = () => {
   return (
     <header
-      className={"fixed top-0 left-0 right-0 z-50 bg-transparent"}
+      className={"fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/60 shadow-[0_6px_24px_rgba(0,0,0,0.35)]"}
       role="banner"
     >
       <nav
-        className={"mx-auto max-w-7xl flex items-center justify-between px-4 md:px-8 h-20 md:h-22"}
+        className={"mx-auto max-w-7xl flex items-center justify-between px-4 md:px-8 h-16"}
         aria-label="Primary"
       >
         {/* Left: Logo + Company Name */}
