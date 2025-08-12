@@ -22,13 +22,15 @@ const Index = () => {
   const startExperience = () => setStarted(true);
 
   return (
-    <div className="min-h-screen">
+    <div className="relative z-10 min-h-screen">
+      {/* Global overlay for readability across the whole landing page */}
+      <div className="fixed inset-0 bg-black/40 pointer-events-none z-[5]" />
       {/* Hero Section with Nature Background */}
       <div className="relative min-h-screen overflow-hidden">
         {/* Fixed Background Image with cinematic treatment */}
         <div
           className="fixed-bg hero-image-filter"
-          style={{ backgroundImage: `url(${forestHeroBg})` }}
+          style={{ backgroundImage: `url(${forestHeroBg})`, zIndex: 0 as unknown as number }}
           aria-hidden
         />
         <AnimatedGradient />
