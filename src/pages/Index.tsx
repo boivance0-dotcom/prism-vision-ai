@@ -25,9 +25,9 @@ const Index = () => {
     <div className="min-h-screen">
       {/* Hero Section with Nature Background */}
       <div className="relative min-h-screen overflow-hidden">
-        {/* Background Image with cinematic treatment */}
+        {/* Fixed Background Image with cinematic treatment */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-image-filter parallax-item"
+          className="fixed-bg hero-image-filter parallax-item"
           data-speed="0.6"
           style={{ backgroundImage: `url(${forestHeroBg})` }}
           aria-hidden
