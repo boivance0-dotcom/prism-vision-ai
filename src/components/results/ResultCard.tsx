@@ -28,14 +28,15 @@ export interface ResultItem {
   endangered?: boolean;
 }
 
-const ResultCard: React.FC<{ item: ResultItem; onView: (item: ResultItem) => void }>
-= ({ item, onView }) => {
+const ResultCard: React.FC<{ item: ResultItem; onView: (item: ResultItem) => void; accentColor?: string }>
+= ({ item, onView, accentColor = '#86C232' }) => {
   const confidencePct = Math.round((item.confidence ?? 0.9) * 100);
   const border = STATUS_BORDER[item.health ?? 'healthy'];
 
   return (
     <article
       className={`group relative rounded-xl p-5 bg-[rgba(7,16,12,0.65)] border ${border} shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md hover:shadow-[0_24px_72px_rgba(0,0,0,0.6)] transition-transform duration-300 hover:-translate-y-2 overflow-hidden`}
+      style={{ boxShadow: `0 20px 60px rgba(0,0,0,0.45)` }}
     >
       {/* background micro-motion */}
       <div className="pointer-events-none absolute -inset-6 bg-[url('/placeholder.svg')] bg-center bg-cover opacity-0 group-hover:opacity-[0.06] scale-110 blur-md transition-all" />
@@ -68,7 +69,8 @@ const ResultCard: React.FC<{ item: ResultItem; onView: (item: ResultItem) => voi
         </div>
         <button
           onClick={() => onView(item)}
-          className="relative z-10 inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#86C232] text-black text-xs font-semibold hover:bg-[#76b028] transition-colors shadow-[0_8px_24px_rgba(134,194,50,0.35)]"
+          className="relative z-10 inline-flex items-center gap-2 px-3 py-1 rounded-md text-black text-xs font-semibold transition-opacity hover:opacity-90"
+          style={{ backgroundColor: accentColor, boxShadow: `0 8px 24px ${accentColor}55` }}
         >
           {item.type === 'alert' ? 'Monitor Area' : 'View Details'}
         </button>

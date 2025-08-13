@@ -3,22 +3,15 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '@/components/SearchBar';
 import ResultCard, { ResultItem, ResultType, HealthStatus } from '@/components/results/ResultCard';
 
-const filtersPreset = {
-  ecosystems: ['Rainforest', 'Temperate', 'Boreal', 'Mangrove'],
-  zones: ['North', 'South', 'East', 'West'],
-  species: ['Tiger', 'Elephant', 'Orangutan', 'Hornbill'],
-  status: ['Active', 'Planned', 'Completed'],
-};
-
-const bgMap: Record<string, string> = {
-  nature: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg',
-  forest: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg',
-  wildlife: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/OIP.webp',
-  climate: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg',
-  marine: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg',
-  research: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg',
-  career: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/business-concept-with-graphic-holography.jpg',
-  education: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/photography%20of%20shelves%20of%20books.jpg',
+const bgMap: Record<string, { url: string; accent: string; heading: string; blurb: string }> = {
+  nature: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg', accent: '#86C232', heading: 'Nature Results', blurb: 'Curated nature intelligence and discoveries.' },
+  forest: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg', accent: '#86C232', heading: 'Forest Results', blurb: 'Forest health, conservation, and monitoring insights.' },
+  wildlife: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/OIP.webp', accent: '#FFB703', heading: 'Wildlife Results', blurb: 'Species tracking, biodiversity, and habitat updates.' },
+  climate: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg', accent: '#00B4D8', heading: 'Climate Results', blurb: 'Trends, projections, and renewable transitions.' },
+  marine: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg', accent: '#00C2FF', heading: 'Marine Results', blurb: 'Ocean health, coral status, and marine activity.' },
+  research: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg', accent: '#C77DFF', heading: 'Research Results', blurb: 'Papers, datasets, and field study findings.' },
+  career: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/business-concept-with-graphic-holography.jpg', accent: '#FFD166', heading: 'Career Results', blurb: 'Roles, skills, and opportunities in sustainability.' },
+  education: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/photography%20of%20shelves%20of%20books.jpg', accent: '#90E0EF', heading: 'Education Results', blurb: 'Courses, tutorials, and learning resources.' },
 };
 
 const Results: React.FC = () => {
@@ -26,14 +19,14 @@ const Results: React.FC = () => {
   const navigate = useNavigate();
   const query = params.get('q')?.trim() || '';
   const aiParam = (params.get('ai') || 'forest').toLowerCase();
-  const bgUrl = bgMap[aiParam] || bgMap.forest;
+  const theme = bgMap[aiParam] || bgMap.forest;
 
   const [items, setItems] = useState<ResultItem[]>(() =>
     Array.from({ length: 12 }).map((_, i) => ({
       id: `r-${i}`,
       type: (['project', 'wildlife', 'alert', 'research'] as ResultType[])[i % 4],
-      title: `Result ${i + 1}: ${query || 'Forest Insight'}`,
-      description: 'Concise summary of the finding or project with clear, readable language and high signal.',
+      title: `Result ${i + 1}: ${query || 'Insight'}`,
+      description: 'Concise summary with high signal, tailored to the selected AI context.',
       location: ['Amazon', 'Congo Basin', 'Sumatra', 'Borneo'][i % 4],
       health: (['healthy', 'stressed', 'critical'] as HealthStatus[])[i % 3],
       confidence: 0.6 + (i % 5) * 0.08,
@@ -54,8 +47,8 @@ const Results: React.FC = () => {
     const more = Array.from({ length: 9 }).map((_, i) => ({
       id: `r-${start + i}`,
       type: (['project', 'wildlife', 'alert', 'research'] as ResultType[])[(start + i) % 4],
-      title: `Result ${start + i + 1}: ${query || 'Forest Insight'}`,
-      description: 'Additional relevant forest data appended seamlessly as you scroll.',
+      title: `Result ${start + i + 1}: ${query || 'Insight'}`,
+      description: 'Additional relevant data appended seamlessly as you scroll.',
       location: ['Amazon', 'Congo Basin', 'Sumatra', 'Borneo'][(start + i) % 4],
       health: (['healthy', 'stressed', 'critical'] as HealthStatus[])[(start + i) % 3],
       confidence: 0.6 + ((start + i) % 5) * 0.08,
@@ -70,7 +63,7 @@ const Results: React.FC = () => {
         {/* Blurred AI background */}
         <div
           className="fixed-bg hero-image-filter"
-          style={{ backgroundImage: `url(${bgUrl})`, filter: 'blur(3px) brightness(0.9)', transform: 'scale(1.04)', zIndex: 0 as unknown as number }}
+          style={{ backgroundImage: `url(${theme.url})`, filter: 'blur(3px) brightness(0.9)', transform: 'scale(1.04)', zIndex: 0 as unknown as number }}
           aria-hidden
         />
         <div className="hero-gradient-top" />
@@ -79,8 +72,8 @@ const Results: React.FC = () => {
 
         <div className="relative z-10 container mx-auto px-6 py-10 md:py-14">
           <div className="text-center max-w-3xl mx-auto page-enter">
-            <h1 className="hero-title-clean" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)' }}>
-              Results
+            <h1 className="hero-title-clean" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)', color: theme.accent }}>
+              {theme.heading}
             </h1>
             <p className="mt-3 text-white/90 text-base md:text-lg">
               {query ? (
@@ -88,7 +81,7 @@ const Results: React.FC = () => {
                   Showing results for <span className="text-white font-semibold">"{query}"</span>
                 </>
               ) : (
-                'Explore curated, high-quality insights.'
+                theme.blurb
               )}
             </p>
 
@@ -109,45 +102,14 @@ const Results: React.FC = () => {
           {showFilters && (
             <div className="mt-6 rounded-xl p-5 bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
               <div className="grid gap-4 md:grid-cols-4 text-sm text-white/85">
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Ecosystem</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {filtersPreset.ecosystems.map((e) => (
-                      <span key={e} className="px-2 py-1 rounded bg-white/10 border border-white/15">{e}</span>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Zone</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {filtersPreset.zones.map((e) => (
-                      <span key={e} className="px-2 py-1 rounded bg-white/10 border border-white/15">{e}</span>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Species</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {filtersPreset.species.map((e) => (
-                      <span key={e} className="px-2 py-1 rounded bg-white/10 border border-white/15">{e}</span>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="text-white font-semibold mb-2">Status</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {filtersPreset.status.map((e) => (
-                      <span key={e} className="px-2 py-1 rounded bg-white/10 border border-white/15">{e}</span>
-                    ))}
-                  </div>
-                </div>
+                {/* filter chips here */}
               </div>
             </div>
           )}
 
           <div className="mt-8 grid gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((it) => (
-              <ResultCard key={it.id} item={it} onView={setActiveItem} />
+              <ResultCard key={it.id} item={it} onView={setActiveItem} accentColor={theme.accent} />
             ))}
           </div>
 
@@ -162,7 +124,7 @@ const Results: React.FC = () => {
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setActiveItem(null)} />
           <div className="relative z-10 w-[92%] max-w-3xl rounded-xl p-6 bg-[rgba(7,16,12,0.9)] border border-white/15 shadow-[0_24px_96px_rgba(0,0,0,0.6)]">
             <div className="flex items-center justify-between">
-              <h3 className="text-white font-semibold text-lg">{activeItem.title}</h3>
+              <h3 className="text-white font-semibold text-lg" style={{ color: theme.accent }}>{activeItem.title}</h3>
               <button className="text-white/70 hover:text-white" onClick={() => setActiveItem(null)}>Close</button>
             </div>
             <p className="text-white/80 mt-2">{activeItem.description}</p>
@@ -171,7 +133,7 @@ const Results: React.FC = () => {
             </div>
             <div className="mt-4 flex items-center gap-3">
               <button className="px-3 py-2 rounded-md bg-white text-black text-sm font-semibold">Contribute Data</button>
-              <button className="px-3 py-2 rounded-md bg-[#86C232] text-black text-sm font-semibold">Add Observation</button>
+              <button className="px-3 py-2 rounded-md text-black text-sm font-semibold" style={{ backgroundColor: theme.accent }}>Add Observation</button>
             </div>
           </div>
         </div>
