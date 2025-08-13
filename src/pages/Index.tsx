@@ -11,6 +11,10 @@ import FeatureCarousel from '@/components/FeatureCarousel';
 import Testimonials from '@/components/Testimonials';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import ForestHealthMap from '@/components/ForestHealthMap';
+import TrendChart from '@/components/TrendChart';
+import ThreatAnalysis from '@/components/ThreatAnalysis';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 
 
 const Index = () => {
@@ -32,6 +36,9 @@ const Index = () => {
   const startExperience = () => setStarted(true);
 
   const forestHeroBgUrl = 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg';
+
+  const before = 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop';
+  const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
 
   return (
     <div className="relative z-10 min-h-screen">
@@ -125,6 +132,22 @@ const Index = () => {
                   {/* Cards shown only after start */}
                   <div key="feature-cards" className="mt-12 reveal-on-scroll reveal-up" data-duration="600ms" data-delay="120ms">
                     <FeatureCarousel />
+                  </div>
+
+                  {/* Forest AI Dashboard below slider (compact) */}
+                  <div className="mt-6">
+                    <div className="grid gap-6 lg:grid-cols-3">
+                      <div className="lg:col-span-2 grid gap-6">
+                        <ForestHealthMap />
+                        <TrendChart />
+                      </div>
+                      <div className="lg:col-span-1">
+                        <ThreatAnalysis />
+                      </div>
+                    </div>
+                    <div className="mt-6">
+                      <BeforeAfterSlider beforeSrc={before} afterSrc={after} alt="Deforestation comparison" />
+                    </div>
                   </div>
                 </div>
               )}
