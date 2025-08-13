@@ -10,7 +10,7 @@ const features = [
   { title: 'Climate AI', desc: 'Climate trends and renewable energy insights.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg' },
   { title: 'Marine AI', desc: 'Protect oceans and marine ecosystems.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg' },
   { title: 'Forest AI', desc: 'Monitor deforestation and forest health.', img: forestHeroBgUrl },
-  { title: 'Research AI', desc: 'Discover papers, datasets, and findings.', img: '' },
+  { title: 'Research AI', desc: 'Discover papers, datasets, and findings.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg' },
   { title: 'Career AI', desc: 'Explore roles, skills, and opportunities.', img: '' },
   { title: 'Education AI', desc: 'Learn with curated courses and tutorials.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/photography%20of%20shelves%20of%20books.jpg' },
 ];
