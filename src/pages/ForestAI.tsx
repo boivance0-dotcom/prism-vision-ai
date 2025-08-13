@@ -22,13 +22,13 @@ const ForestAI: React.FC = () => {
             <p className="mt-2 text-white/85 max-w-3xl">Live forest health monitoring, satellite comparisons, and AI-driven threat analysis.</p>
           </div>
 
-          {/* Slider at top */}
-          <div className="mt-6">
+          {/* Slider at top (compact) */}
+          <div className="mt-4 max-w-5xl mx-auto transform origin-top scale-90 md:scale-95">
             <FeatureCarousel />
           </div>
 
           {/* Dashboard below slider */}
-          <div className="mt-2 grid gap-6 lg:grid-cols-3">
+          <div className="mt-0 grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2 grid gap-6">
               <ForestHealthMap />
               <TrendChart />
