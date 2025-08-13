@@ -1,0 +1,95 @@
+import React, { useMemo, useState } from 'react';
+
+export type ZoneStatus = 'healthy' | 'stressed' | 'critical';
+
+const STATUS_COLOR: Record<ZoneStatus, string> = {
+  healthy: '#3CB371',
+  stressed: '#F0AD4E',
+  critical: '#E15241',
+};
+
+const Legend: React.FC = () => (
+  <div className="flex items-center gap-3 text-xs text-white/80">
+    <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded" style={{ background: STATUS_COLOR.healthy }} /> Healthy</div>
+    <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded" style={{ background: STATUS_COLOR.stressed }} /> Stressed</div>
+    <div className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded" style={{ background: STATUS_COLOR.critical }} /> Critical</div>
+  </div>
+);
+
+interface Zone {
+  id: string;
+  x: number;
+  y: number;
+  status: ZoneStatus;
+}
+
+const generateZones = (): Zone[] => {
+  const zones: Zone[] = [];
+  let id = 0;
+  for (let row = 0; row < 6; row++) {
+    for (let col = 0; col < 10; col++) {
+      const r = Math.random();
+      const status: ZoneStatus = r > 0.7 ? 'critical' : r > 0.4 ? 'stressed' : 'healthy';
+      zones.push({ id: `z-${id++}`, x: col, y: row, status });
+    }
+  }
+  return zones;
+};
+
+const ForestHealthMap: React.FC = () => {
+  const [zones, setZones] = useState<Zone[]>(() => generateZones());
+  const [hover, setHover] = useState<Zone | null>(null);
+
+  const counts = useMemo(() => zones.reduce((acc, z) => ({ ...acc, [z.status]: (acc[z.status] || 0) + 1 }), {} as Record<ZoneStatus, number>), [zones]);
+
+  const handleClick = (zone: Zone) => {
+    const next: ZoneStatus = zone.status === 'healthy' ? 'stressed' : zone.status === 'stressed' ? 'critical' : 'healthy';
+    setZones((prev) => prev.map((z) => (z.id === zone.id ? { ...z, status: next } : z)));
+  };
+
+  const width = 600;
+  const height = 300;
+  const cellW = width / 10;
+  const cellH = height / 6;
+
+  return (
+    <div className="rounded-xl p-5 bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="text-white/95 font-semibold">Forest Health Index</h3>
+        <Legend />
+      </div>
+      <div className="relative">
+        {hover && (
+          <div className="absolute -top-2 left-2 text-xs text-white/90 bg-black/60 border border-white/15 px-2 py-1 rounded">
+            Zone {hover.id.replace('z-', '')}: {hover.status}
+          </div>
+        )}
+        <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto">
+          {zones.map((z) => (
+            <rect
+              key={z.id}
+              x={z.x * cellW + 2}
+              y={z.y * cellH + 2}
+              width={cellW - 4}
+              height={cellH - 4}
+              rx={6}
+              fill={STATUS_COLOR[z.status]}
+              opacity={0.9}
+              onMouseEnter={() => setHover(z)}
+              onMouseLeave={() => setHover(null)}
+              onClick={() => handleClick(z)}
+              className="cursor-pointer transition-transform hover:scale-[1.02]"
+            />
+          ))}
+        </svg>
+      </div>
+      <div className="mt-3 grid grid-cols-3 gap-3 text-xs text-white/85">
+        <div className="rounded bg-black/40 border border-white/10 px-3 py-2">Healthy: <span className="font-semibold">{counts.healthy || 0}</span></div>
+        <div className="rounded bg-black/40 border border-white/10 px-3 py-2">Stressed: <span className="font-semibold">{counts.stressed || 0}</span></div>
+        <div className="rounded bg-black/40 border border-white/10 px-3 py-2">Critical: <span className="font-semibold">{counts.critical || 0}</span></div>
+      </div>
+    </div>
+  );
+};
+
+export default ForestHealthMap;
