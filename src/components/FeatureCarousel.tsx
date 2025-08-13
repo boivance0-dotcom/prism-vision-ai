@@ -1,28 +1,38 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const forestHeroBgUrl = 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg';
 
 const features = [
-  { title: 'Nature AI', desc: 'Immersive nature intelligence for curious minds.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg' },
-  { title: 'Wildlife AI', desc: 'Track biodiversity and animal habitats.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/OIP.webp' },
-  { title: 'Climate AI', desc: 'Climate trends and renewable energy insights.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg' },
-  { title: 'Marine AI', desc: 'Protect oceans and marine ecosystems.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg' },
-  { title: 'Forest AI', desc: 'Monitor deforestation and forest health.', img: forestHeroBgUrl },
-  { title: 'Research AI', desc: 'Discover papers, datasets, and findings.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg' },
-  { title: 'Career AI', desc: 'Explore roles, skills, and opportunities.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/business-concept-with-graphic-holography.jpg' },
-  { title: 'Education AI', desc: 'Learn with curated courses and tutorials.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/photography%20of%20shelves%20of%20books.jpg' },
+  { title: 'Nature AI', slug: 'nature', desc: 'Immersive nature intelligence for curious minds.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg' },
+  { title: 'Wildlife AI', slug: 'wildlife', desc: 'Track biodiversity and animal habitats.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/OIP.webp' },
+  { title: 'Climate AI', slug: 'climate', desc: 'Climate trends and renewable energy insights.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg' },
+  { title: 'Marine AI', slug: 'marine', desc: 'Protect oceans and marine ecosystems.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg' },
+  { title: 'Forest AI', slug: 'forest', desc: 'Monitor deforestation and forest health.', img: forestHeroBgUrl },
+  { title: 'Research AI', slug: 'research', desc: 'Discover papers, datasets, and findings.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg' },
+  { title: 'Career AI', slug: 'career', desc: 'Explore roles, skills, and opportunities.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/business-concept-with-graphic-holography.jpg' },
+  { title: 'Education AI', slug: 'education', desc: 'Learn with curated courses and tutorials.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/photography%20of%20shelves%20of%20books.jpg' },
 ];
 
 const EASE: any = [0.2, 0.9, 0.3, 1];
 
-const FeatureCarousel: React.FC = () => {
-  const defaultActive = useMemo(() => Math.max(0, features.findIndex(f => f.title === 'Nature AI')), []);
-  const [activeIndex, setActiveIndex] = useState<number>(defaultActive);
+const titleToIndex = (title?: string) => {
+  if (!title) return 0;
+  const i = features.findIndex((f) => f.title.toLowerCase() === title.toLowerCase());
+  return i >= 0 ? i : 0;
+};
 
+const FeatureCarousel: React.FC<{ initialTitle?: string }> = ({ initialTitle }) => {
+  const [activeIndex, setActiveIndex] = useState<number>(titleToIndex(initialTitle));
   const itemCount = features.length;
   const stepAngle = 360 / itemCount;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setActiveIndex(titleToIndex(initialTitle));
+  }, [initialTitle]);
 
   const { radius, cardWidth, cardHeight } = useMemo(() => {
     const isSmall = typeof window !== 'undefined' ? window.innerWidth < 640 : false;
@@ -40,7 +50,7 @@ const FeatureCarousel: React.FC = () => {
 
   const handleChangeAI = () => {
     const active = features[activeIndex];
-    console.log('Change AI for:', active?.title);
+    if (active?.slug) navigate(`/ai/${active.slug}`);
   };
 
   return (
@@ -89,7 +99,6 @@ const FeatureCarousel: React.FC = () => {
                 const isActive = index === activeIndex;
                 const zIndex = 10 + Math.round(depthT * 100);
 
-                // Show captions only for center and immediate neighbors
                 const showCaption = norm <= (stepAngle + 5);
 
                 return (
@@ -142,7 +151,6 @@ const FeatureCarousel: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Enhanced active details */}
         <div className="-mt-2 md:-mt-3 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-white/80 text-xs tracking-wider uppercase">
             Active
