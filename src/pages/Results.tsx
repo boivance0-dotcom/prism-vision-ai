@@ -10,10 +10,23 @@ const filtersPreset = {
   status: ['Active', 'Planned', 'Completed'],
 };
 
+const bgMap: Record<string, string> = {
+  nature: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg',
+  forest: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg',
+  wildlife: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/OIP.webp',
+  climate: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg',
+  marine: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg',
+  research: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg',
+  career: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/business-concept-with-graphic-holography.jpg',
+  education: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/photography%20of%20shelves%20of%20books.jpg',
+};
+
 const Results: React.FC = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const query = params.get('q')?.trim() || '';
+  const aiParam = (params.get('ai') || 'forest').toLowerCase();
+  const bgUrl = bgMap[aiParam] || bgMap.forest;
 
   const [items, setItems] = useState<ResultItem[]>(() =>
     Array.from({ length: 12 }).map((_, i) => ({
@@ -33,7 +46,7 @@ const Results: React.FC = () => {
 
   const handleSearch = (next: string) => {
     if (!next) return;
-    navigate(`/results?q=${encodeURIComponent(next)}`);
+    navigate(`/results?q=${encodeURIComponent(next)}&ai=${encodeURIComponent(aiParam)}`);
   };
 
   const loadMore = () => {
@@ -54,6 +67,12 @@ const Results: React.FC = () => {
   return (
     <div className="relative z-10 min-h-screen">
       <div className="relative min-h-[60vh] overflow-hidden">
+        {/* Blurred AI background */}
+        <div
+          className="fixed-bg hero-image-filter"
+          style={{ backgroundImage: `url(${bgUrl})`, filter: 'blur(3px) brightness(0.9)', transform: 'scale(1.04)', zIndex: 0 as unknown as number }}
+          aria-hidden
+        />
         <div className="hero-gradient-top" />
         <div className="hero-gradient-bottom" />
         <div className="hero-vignette" />
@@ -138,7 +157,6 @@ const Results: React.FC = () => {
         </div>
       </div>
 
-      {/* Details modal */}
       {activeItem && (
         <div className="fixed inset-0 z-50 grid place-items-center">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setActiveItem(null)} />
