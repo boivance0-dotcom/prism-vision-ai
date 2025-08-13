@@ -3,6 +3,7 @@ import ForestHealthMap from '@/components/ForestHealthMap';
 import TrendChart from '@/components/TrendChart';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import ThreatAnalysis from '@/components/ThreatAnalysis';
+import FeatureCarousel from '@/components/FeatureCarousel';
 
 const ForestAI: React.FC = () => {
   const before = 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop';
@@ -21,7 +22,13 @@ const ForestAI: React.FC = () => {
             <p className="mt-2 text-white/85 max-w-3xl">Live forest health monitoring, satellite comparisons, and AI-driven threat analysis.</p>
           </div>
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-3">
+          {/* Slider at top */}
+          <div className="mt-6">
+            <FeatureCarousel />
+          </div>
+
+          {/* Dashboard below slider */}
+          <div className="mt-2 grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2 grid gap-6">
               <ForestHealthMap />
               <TrendChart />
