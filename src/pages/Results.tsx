@@ -1,25 +1,13 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '@/components/SearchBar';
+import ResultCard, { ResultItem, ResultType, HealthStatus } from '@/components/results/ResultCard';
 
-const ResultCard: React.FC<{ title: string; snippet: string; url?: string }> = ({ title, snippet, url }) => {
-  return (
-    <article className="rounded-xl p-5 bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md hover:border-[#86C232]/40 transition-colors">
-      <h3 className="text-white font-semibold text-lg leading-snug">
-        {url ? (
-          <a href={url} target="_blank" rel="noreferrer" className="hover:underline">
-            {title}
-          </a>
-        ) : (
-          title
-        )}
-      </h3>
-      <p className="text-white/70 mt-2 text-sm leading-relaxed">{snippet}</p>
-      {url && (
-        <p className="text-xs text-white/50 mt-3 truncate">{url}</p>
-      )}
-    </article>
-  );
+const filtersPreset = {
+  ecosystems: ['Rainforest', 'Temperate', 'Boreal', 'Mangrove'],
+  zones: ['North', 'South', 'East', 'West'],
+  species: ['Tiger', 'Elephant', 'Orangutan', 'Hornbill'],
+  status: ['Active', 'Planned', 'Completed'],
 };
 
 const Results: React.FC = () => {
@@ -27,18 +15,41 @@ const Results: React.FC = () => {
   const navigate = useNavigate();
   const query = params.get('q')?.trim() || '';
 
+  const [items, setItems] = useState<ResultItem[]>(() =>
+    Array.from({ length: 12 }).map((_, i) => ({
+      id: `r-${i}`,
+      type: (['project', 'wildlife', 'alert', 'research'] as ResultType[])[i % 4],
+      title: `Result ${i + 1}: ${query || 'Forest Insight'}`,
+      description: 'Concise summary of the finding or project with clear, readable language and high signal.',
+      location: ['Amazon', 'Congo Basin', 'Sumatra', 'Borneo'][i % 4],
+      health: (['healthy', 'stressed', 'critical'] as HealthStatus[])[i % 3],
+      confidence: 0.6 + (i % 5) * 0.08,
+      endangered: i % 5 === 0,
+    }))
+  );
+
+  const [showFilters, setShowFilters] = useState(false);
+  const [activeItem, setActiveItem] = useState<ResultItem | null>(null);
+
   const handleSearch = (next: string) => {
     if (!next) return;
     navigate(`/results?q=${encodeURIComponent(next)}`);
   };
 
-  // Placeholder results for design; wire to real data later
-  const placeholder = Array.from({ length: 9 }).map((_, i) => ({
-    title: `Insight ${i + 1} on "${query || 'Nature'}"`,
-    snippet:
-      'High-level overview with accurate, concise information. This area presents a brief, readable summary that helps users quickly assess relevance.',
-    url: undefined,
-  }));
+  const loadMore = () => {
+    const start = items.length;
+    const more = Array.from({ length: 9 }).map((_, i) => ({
+      id: `r-${start + i}`,
+      type: (['project', 'wildlife', 'alert', 'research'] as ResultType[])[(start + i) % 4],
+      title: `Result ${start + i + 1}: ${query || 'Forest Insight'}`,
+      description: 'Additional relevant forest data appended seamlessly as you scroll.',
+      location: ['Amazon', 'Congo Basin', 'Sumatra', 'Borneo'][(start + i) % 4],
+      health: (['healthy', 'stressed', 'critical'] as HealthStatus[])[(start + i) % 3],
+      confidence: 0.6 + ((start + i) % 5) * 0.08,
+      endangered: (start + i) % 5 === 0,
+    }));
+    setItems((prev) => [...prev, ...more]);
+  };
 
   return (
     <div className="relative z-10 min-h-screen">
@@ -67,28 +78,86 @@ const Results: React.FC = () => {
             </div>
 
             <div className="mt-4 flex items-center justify-center gap-3 text-xs text-white/70">
+              <button onClick={() => setShowFilters((v) => !v)} className="px-3 py-1 rounded bg-white/10 border border-white/15">
+                {showFilters ? 'Hide Filters' : 'Show Filters'}
+              </button>
               <span className="px-2 py-1 rounded bg-white/10 border border-white/15">Relevance</span>
               <span className="px-2 py-1 rounded bg-white/10 border border-white/15">Latest</span>
-              <span className="px-2 py-1 rounded bg-white/10 border border-white/15">Trusted</span>
+              <span className="px-2 py-1 rounded bg-white/10 border border-white/15">Priority</span>
             </div>
           </div>
 
-          <div className="mt-10 grid gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {placeholder.map((r, idx) => (
-              <ResultCard key={idx} title={r.title} snippet={r.snippet} url={r.url} />
+          {showFilters && (
+            <div className="mt-6 rounded-xl p-5 bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
+              <div className="grid gap-4 md:grid-cols-4 text-sm text-white/85">
+                <div>
+                  <h4 className="text-white font-semibold mb-2">Ecosystem</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {filtersPreset.ecosystems.map((e) => (
+                      <span key={e} className="px-2 py-1 rounded bg-white/10 border border-white/15">{e}</span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold mb-2">Zone</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {filtersPreset.zones.map((e) => (
+                      <span key={e} className="px-2 py-1 rounded bg-white/10 border border-white/15">{e}</span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold mb-2">Species</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {filtersPreset.species.map((e) => (
+                      <span key={e} className="px-2 py-1 rounded bg-white/10 border border-white/15">{e}</span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold mb-2">Status</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {filtersPreset.status.map((e) => (
+                      <span key={e} className="px-2 py-1 rounded bg-white/10 border border-white/15">{e}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="mt-8 grid gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((it) => (
+              <ResultCard key={it.id} item={it} onView={setActiveItem} />
             ))}
           </div>
 
           <div className="mt-10 text-center">
-            <button
-              onClick={() => handleSearch(query)}
-              className="cta-outline-white hover-lift"
-            >
-              Load more
-            </button>
+            <button onClick={loadMore} className="cta-outline-white hover-lift">Load more</button>
           </div>
         </div>
       </div>
+
+      {/* Details modal */}
+      {activeItem && (
+        <div className="fixed inset-0 z-50 grid place-items-center">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setActiveItem(null)} />
+          <div className="relative z-10 w-[92%] max-w-3xl rounded-xl p-6 bg-[rgba(7,16,12,0.9)] border border-white/15 shadow-[0_24px_96px_rgba(0,0,0,0.6)]">
+            <div className="flex items-center justify-between">
+              <h3 className="text-white font-semibold text-lg">{activeItem.title}</h3>
+              <button className="text-white/70 hover:text-white" onClick={() => setActiveItem(null)}>Close</button>
+            </div>
+            <p className="text-white/80 mt-2">{activeItem.description}</p>
+            <div className="mt-4 h-48 rounded-lg bg-black/30 border border-white/10 grid place-items-center text-white/60">
+              Interactive map and media placeholder
+            </div>
+            <div className="mt-4 flex items-center gap-3">
+              <button className="px-3 py-2 rounded-md bg-white text-black text-sm font-semibold">Contribute Data</button>
+              <button className="px-3 py-2 rounded-md bg-[#86C232] text-black text-sm font-semibold">Add Observation</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
