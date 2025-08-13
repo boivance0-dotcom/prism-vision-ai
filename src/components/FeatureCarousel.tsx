@@ -6,7 +6,7 @@ const forestHeroBgUrl = 'https://raw.githubusercontent.com/varunsingh3545/search
 
 const features = [
   { title: 'Nature AI', desc: 'Immersive nature intelligence for curious minds.', img: forestHeroBgUrl },
-  { title: 'Wildlife AI', desc: 'Track biodiversity and animal habitats.', img: '/images/ai-explore-1920.webp' },
+  { title: 'Wildlife AI', desc: 'Track biodiversity and animal habitats.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/OIP.webp' },
   { title: 'Climate AI', desc: 'Climate trends and renewable energy insights.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg' },
   { title: 'Marine AI', desc: 'Protect oceans and marine ecosystems.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg' },
   { title: 'Forest AI', desc: 'Monitor deforestation and forest health.', img: forestHeroBgUrl },
