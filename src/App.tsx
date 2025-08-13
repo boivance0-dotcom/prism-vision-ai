@@ -19,7 +19,7 @@ const App = () => (
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/" element={<ForestAI />} />
+          <Route path="/" element={<Index />} />
           <Route path="/results" element={<Results />} />
           <Route path="/forest-ai" element={<ForestAI />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

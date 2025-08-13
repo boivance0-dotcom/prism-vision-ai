@@ -5,6 +5,8 @@ import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import ThreatAnalysis from '@/components/ThreatAnalysis';
 import FeatureCarousel from '@/components/FeatureCarousel';
 
+const forestHeroBgUrl = 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg';
+
 const ForestAI: React.FC = () => {
   const before = 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop';
   const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
@@ -12,6 +14,12 @@ const ForestAI: React.FC = () => {
   return (
     <div className="relative z-10 min-h-screen">
       <div className="relative overflow-hidden">
+        {/* Fixed Background Image with cinematic treatment */}
+        <div
+          className="fixed-bg hero-image-filter"
+          style={{ backgroundImage: `url(${forestHeroBgUrl})`, zIndex: 0 as unknown as number }}
+          aria-hidden
+        />
         <div className="hero-gradient-top" />
         <div className="hero-gradient-bottom" />
         <div className="hero-vignette" />
