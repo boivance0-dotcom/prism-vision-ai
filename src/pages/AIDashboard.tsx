@@ -1,10 +1,11 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import FeatureCarousel from '@/components/FeatureCarousel';
 import ForestHealthMap from '@/components/ForestHealthMap';
 import TrendChart from '@/components/TrendChart';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import ThreatAnalysis from '@/components/ThreatAnalysis';
+import SearchBar from '@/components/SearchBar';
 
 const bgMap: Record<string, string> = {
   nature: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg',
@@ -30,11 +31,17 @@ const titleMap: Record<string, string> = {
 
 const AIDashboard: React.FC = () => {
   const { slug = 'forest' } = useParams();
+  const navigate = useNavigate();
   const bgUrl = bgMap[slug] || bgMap.forest;
   const aiTitle = titleMap[slug] || 'Forest AI';
 
   const before = 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop';
   const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
+
+  const handleSearch = (q: string) => {
+    if (!q) return;
+    navigate(`/results?q=${encodeURIComponent(q)}&ai=${encodeURIComponent(slug)}`);
+  };
 
   return (
     <div className="relative z-10 min-h-screen">
@@ -50,13 +57,16 @@ const AIDashboard: React.FC = () => {
         <div className="hero-vignette" />
 
         <div className="relative z-10 container mx-auto px-6 py-10 md:py-14">
-          <div className="page-enter text-center">
+          <div className="page-enter text-center max-w-4xl mx-auto">
             <h1 className="hero-title-clean" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)' }}>{aiTitle} Dashboard</h1>
             <p className="mt-2 text-white/85 max-w-3xl mx-auto">Live insights, monitoring, and AI-driven analysis.</p>
+            <div className="mt-5">
+              <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
+            </div>
           </div>
 
           {/* Slider at top (compact), initialized to this AI */}
-          <div className="mt-4 max-w-5xl mx-auto transform origin-top scale-90 md:scale-95">
+          <div className="mt-6 max-w-5xl mx-auto transform origin-top scale-90 md:scale-95">
             <FeatureCarousel initialTitle={aiTitle} />
           </div>
 
