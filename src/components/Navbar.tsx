@@ -14,12 +14,12 @@ const Navbar: React.FC = () => {
         aria-label="Primary"
       >
         {/* Left: Logo + Company Name */}
-        <Link to="/" className="flex items-center gap-3 rounded hover:opacity-90 focus-visible:underline" >
+        <Link to="/forest-ai" className="flex items-center gap-3 rounded hover:opacity-90 focus-visible:underline" >
           <div className="h-10 w-10 md:h-12 md:w-12 rounded bg-white/10 border border-white/20 flex items-center justify-center text-white font-bold">
-            NA
+            FA
           </div>
-          <span className="text-white/95 font-semibold tracking-wide hidden sm:inline">Nature AI</span>
-          <span className="sr-only">Nature AI Home</span>
+          <span className="text-white/95 font-semibold tracking-wide hidden sm:inline">Forest AI</span>
+          <span className="sr-only">Forest AI Home</span>
         </Link>
 
         {/* Right: About us, Contact, Log in, Settings */}
