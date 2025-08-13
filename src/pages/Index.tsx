@@ -10,11 +10,13 @@ import AnimatedGradient from '@/components/AnimatedGradient';
 import FeatureCarousel from '@/components/FeatureCarousel';
 import Testimonials from '@/components/Testimonials';
 import { motion, useReducedMotion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 
 const Index = () => {
   const [started, setStarted] = useState(false);
   const experienceRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
 
   useParallax('.parallax-item');
   useReveal('.reveal-on-scroll');
@@ -23,7 +25,8 @@ const Index = () => {
   const EASE: any = [0.2, 0.9, 0.3, 1];
 
   const handleSearch = (query: string) => {
-    console.log(`Searching:`, query);
+    if (!query) return;
+    navigate(`/results?q=${encodeURIComponent(query)}`);
   };
 
   const startExperience = () => setStarted(true);
