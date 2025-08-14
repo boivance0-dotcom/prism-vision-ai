@@ -60,6 +60,8 @@ const Index = () => {
         {/* Accent glow decorations */}
         <div className="pointer-events-none absolute -top-24 -left-24 w-[520px] h-[520px] rounded-full opacity-[0.1] blur-3xl" style={{ background: 'var(--accent,#86C232)' }} />
         <div className="pointer-events-none absolute -bottom-24 -right-24 w-[560px] h-[560px] rounded-full opacity-[0.08] blur-3xl" style={{ background: 'var(--accent,#86C232)' }} />
+        {/* Localized readability scrim behind hero content */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_420px_at_50%_30%,rgba(0,0,0,0.45),transparent_70%)]" />
 
         {/* Matte and readability overlays */}
         <div className="hero-gradient-top" />
@@ -132,23 +134,22 @@ const Index = () => {
               {started && (
                 <div className="animate-hero-in parallax-item mt-16 md:mt-24" data-speed="1">
                   <div className="max-w-3xl mx-auto text-center">
-                    <motion.h2
-                      className="font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/80"
-                      style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)', letterSpacing: '-0.02em', textShadow: '0 8px 28px rgba(0,0,0,0.6)' }}
+                    <motion.div
+                      className="inline-block text-left rounded-lg bg-black/55 border border-white/15 backdrop-blur-sm px-5 py-4"
                       initial={prefersReducedMotion ? false : { x: -50, opacity: 0 }}
                       animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
                       transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
                     >
-                      What do you want to explore?
-                    </motion.h2>
-                    <motion.p
-                      className="mt-3 text-white/90 text-base md:text-lg"
-                      initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
-                      animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
-                      transition={{ duration: 0.6, ease: EASE, delay: 0.4 }}
-                    >
-                      Explore forests, ecosystems, wildlife, and the rhythms of nature — our AI will guide you.
-                    </motion.p>
+                      <h2
+                        className="font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/80"
+                        style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)', letterSpacing: '-0.02em', textShadow: '0 8px 28px rgba(0,0,0,0.6)' }}
+                      >
+                        What do you want to explore?
+                      </h2>
+                      <p className="mt-2 text-white/95 text-base md:text-lg">
+                        Explore forests, ecosystems, wildlife, and the rhythms of nature — our AI will guide you.
+                      </p>
+                    </motion.div>
                     <motion.div
                       className="mt-6"
                       initial={prefersReducedMotion ? false : { scale: 0.95, opacity: 0 }}
