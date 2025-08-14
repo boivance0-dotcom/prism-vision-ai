@@ -102,7 +102,13 @@ const Index = () => {
                     animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.9 }}
                   >
-                    <button onClick={startExperience} className="px-5 md:px-6 py-3 rounded-lg bg-[var(--accent,#86C232)] text-black font-semibold shadow-[0_12px_32px_rgba(134,194,50,0.35)] hover:opacity-90 transition">Start Experience</button>
+                    <button
+                      onClick={startExperience}
+                      aria-label="Start Experience"
+                      className="px-6 md:px-7 py-3.5 md:py-4 rounded-xl bg-[var(--accent,#86C232)] text-black font-bold tracking-wide shadow-[0_14px_36px_rgba(134,194,50,0.55)] ring-1 ring-white/25 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 transition"
+                    >
+                      Start Experience
+                    </button>
                     <Link to="/ai/forest" className="px-5 md:px-6 py-3 rounded-lg border border-white/20 text-white/95 hover:bg-white/10 transition">Explore Forest AI</Link>
                   </motion.div>
 
