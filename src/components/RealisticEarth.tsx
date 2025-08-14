@@ -21,7 +21,7 @@ const RealisticEarth: React.FC = () => {
         0.1,
         1000
       );
-      camera.position.z = 3.5;
+      camera.position.z = 4;
 
       // Renderer setup with professional quality
       const renderer = new THREE.WebGLRenderer({ 
@@ -34,15 +34,15 @@ const RealisticEarth: React.FC = () => {
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.0;
+      renderer.toneMappingExposure = 0.8;
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       mountRef.current.appendChild(renderer.domElement);
 
       // Professional lighting setup
-      const ambientLight = new THREE.AmbientLight(0x101010, 0.1);
+      const ambientLight = new THREE.AmbientLight(0x080808, 0.05);
       scene.add(ambientLight);
 
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
       directionalLight.position.set(5, 3, 5);
       directionalLight.castShadow = true;
       directionalLight.shadow.mapSize.width = 2048;
@@ -52,20 +52,20 @@ const RealisticEarth: React.FC = () => {
       scene.add(directionalLight);
 
       // Subtle fill light
-      const fillLight = new THREE.DirectionalLight(0x4a90e2, 0.3);
+      const fillLight = new THREE.DirectionalLight(0x4a90e2, 0.2);
       fillLight.position.set(-5, -3, -5);
       scene.add(fillLight);
 
-      // Create realistic starfield
+      // Create realistic starfield with fewer stars
       const starsGeometry = new THREE.BufferGeometry();
-      const starsCount = 20000;
+      const starsCount = 3000; // Much fewer stars
       const positions = new Float32Array(starsCount * 3);
       const colors = new Float32Array(starsCount * 3);
       const sizes = new Float32Array(starsCount);
 
       for (let i = 0; i < starsCount * 3; i += 3) {
         // Realistic star distribution
-        const radius = 20 + Math.random() * 80;
+        const radius = 30 + Math.random() * 70;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos(Math.random() * 2 - 1);
 
@@ -76,19 +76,16 @@ const RealisticEarth: React.FC = () => {
         // Realistic star colors
         const starType = Math.random();
         let color;
-        if (starType < 0.75) {
+        if (starType < 0.8) {
           // White stars (most common)
-          const temp = 0.95 + Math.random() * 0.05;
+          const temp = 0.9 + Math.random() * 0.1;
           color = new THREE.Color(temp, temp, temp);
-        } else if (starType < 0.9) {
+        } else if (starType < 0.95) {
           // Blue-white stars
-          color = new THREE.Color(0.9, 0.9, 1.0);
-        } else if (starType < 0.98) {
-          // Yellow stars
-          color = new THREE.Color(1.0, 0.95, 0.8);
+          color = new THREE.Color(0.8, 0.8, 1.0);
         } else {
-          // Red stars
-          color = new THREE.Color(1.0, 0.8, 0.8);
+          // Yellow stars
+          color = new THREE.Color(1.0, 0.9, 0.7);
         }
         
         colors[i] = color.r;
@@ -97,28 +94,26 @@ const RealisticEarth: React.FC = () => {
 
         // Realistic star sizes
         const brightness = Math.random();
-        sizes[i / 3] = 0.005 + brightness * 0.02;
+        sizes[i / 3] = 0.003 + brightness * 0.01;
       }
 
       starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
       starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-      // Create simple, realistic star texture
+      // Create simple star texture
       const starCanvas = document.createElement('canvas');
-      starCanvas.width = 32;
-      starCanvas.height = 32;
+      starCanvas.width = 16;
+      starCanvas.height = 16;
       const starCtx = starCanvas.getContext('2d')!;
       
-      // Simple, realistic star
-      const gradient = starCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+      const gradient = starCtx.createRadialGradient(8, 8, 0, 8, 8, 8);
       gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-      gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.8)');
-      gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
+      gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.6)');
       gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
       
       starCtx.fillStyle = gradient;
-      starCtx.fillRect(0, 0, 32, 32);
+      starCtx.fillRect(0, 0, 16, 16);
       
       const starTexture = new THREE.CanvasTexture(starCanvas);
 
@@ -126,7 +121,7 @@ const RealisticEarth: React.FC = () => {
         size: 1,
         vertexColors: true,
         transparent: true,
-        opacity: 0.8,
+        opacity: 0.6,
         sizeAttenuation: true,
         blending: THREE.AdditiveBlending,
         map: starTexture,
@@ -135,6 +130,62 @@ const RealisticEarth: React.FC = () => {
 
       const stars = new THREE.Points(starsGeometry, starsMaterial);
       scene.add(stars);
+
+      // Create floating asteroids/rocks
+      const asteroidGroup = new THREE.Group();
+      const asteroidCount = 15;
+      
+      for (let i = 0; i < asteroidCount; i++) {
+        // Random asteroid size
+        const size = 0.02 + Math.random() * 0.08;
+        
+        // Create irregular asteroid geometry
+        const asteroidGeometry = new THREE.DodecahedronGeometry(size, 0);
+        // Distort the geometry to make it more irregular
+        const positions = asteroidGeometry.attributes.position;
+        for (let j = 0; j < positions.count; j++) {
+          const x = positions.getX(j);
+          const y = positions.getY(j);
+          const z = positions.getZ(j);
+          
+          const distortion = 0.1 + Math.random() * 0.2;
+          positions.setXYZ(j, x * distortion, y * distortion, z * distortion);
+        }
+        
+        // Create asteroid material
+        const asteroidMaterial = new THREE.MeshPhongMaterial({
+          color: new THREE.Color(0.3 + Math.random() * 0.4, 0.3 + Math.random() * 0.4, 0.3 + Math.random() * 0.4),
+          shininess: 5,
+          specular: 0x111111
+        });
+        
+        const asteroid = new THREE.Mesh(asteroidGeometry, asteroidMaterial);
+        
+        // Position asteroids around Earth
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 2 + Math.random() * 3;
+        const height = (Math.random() - 0.5) * 2;
+        
+        asteroid.position.set(
+          Math.cos(angle) * distance,
+          height,
+          Math.sin(angle) * distance
+        );
+        
+        // Random rotation
+        asteroid.rotation.set(
+          Math.random() * Math.PI,
+          Math.random() * Math.PI,
+          Math.random() * Math.PI
+        );
+        
+        asteroid.castShadow = true;
+        asteroid.receiveShadow = true;
+        
+        asteroidGroup.add(asteroid);
+      }
+      
+      scene.add(asteroidGroup);
 
       // Create Earth with professional materials
       const earthGeometry = new THREE.SphereGeometry(1, 256, 256);
@@ -223,7 +274,7 @@ const RealisticEarth: React.FC = () => {
       const atmosphereMaterial = new THREE.MeshPhongMaterial({
         color: 0x4a90e2,
         transparent: true,
-        opacity: 0.1,
+        opacity: 0.08,
         side: THREE.BackSide
       });
       const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
@@ -241,6 +292,20 @@ const RealisticEarth: React.FC = () => {
         
         // Star field rotation
         stars.rotation.y += 0.0001;
+        
+        // Asteroid rotation and movement
+        asteroidGroup.children.forEach((asteroid, index) => {
+          asteroid.rotation.x += 0.002 + Math.random() * 0.003;
+          asteroid.rotation.y += 0.003 + Math.random() * 0.002;
+          asteroid.rotation.z += 0.001 + Math.random() * 0.002;
+          
+          // Slow orbital movement around Earth
+          const time = Date.now() * 0.0001;
+          const originalAngle = index * (Math.PI * 2 / asteroidCount);
+          const distance = 2 + Math.sin(index) * 0.5;
+          asteroid.position.x = Math.cos(originalAngle + time) * distance;
+          asteroid.position.z = Math.sin(originalAngle + time) * distance;
+        });
 
         renderer.render(scene, camera);
       };
@@ -250,8 +315,8 @@ const RealisticEarth: React.FC = () => {
       // Professional camera animation
       anime.default({
         targets: camera.position,
-        z: [4, 3.2],
-        duration: 5000,
+        z: [4, 3.5],
+        duration: 6000,
         easing: 'easeOutQuart',
         delay: 1000
       });
