@@ -38,11 +38,11 @@ const RealisticEarth: React.FC = () => {
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       mountRef.current.appendChild(renderer.domElement);
 
-      // Enhanced lighting setup
-      const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+      // Enhanced lighting setup for space feel
+      const ambientLight = new THREE.AmbientLight(0x202020, 0.2);
       scene.add(ambientLight);
 
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
       directionalLight.position.set(5, 3, 5);
       directionalLight.castShadow = true;
       directionalLight.shadow.mapSize.width = 2048;
@@ -52,7 +52,7 @@ const RealisticEarth: React.FC = () => {
       scene.add(directionalLight);
 
       // Fill light for better illumination
-      const fillLight = new THREE.DirectionalLight(0x4a90e2, 0.6);
+      const fillLight = new THREE.DirectionalLight(0x4a90e2, 0.8);
       fillLight.position.set(-5, -3, -5);
       scene.add(fillLight);
 
@@ -119,7 +119,7 @@ const RealisticEarth: React.FC = () => {
         size: 1,
         vertexColors: true,
         transparent: true,
-        opacity: 0.9,
+        opacity: 1.0,
         sizeAttenuation: true,
         blending: THREE.AdditiveBlending,
         map: starTexture
@@ -216,7 +216,7 @@ const RealisticEarth: React.FC = () => {
       const atmosphereMaterial1 = new THREE.MeshPhongMaterial({
         color: 0x4a90e2,
         transparent: true,
-        opacity: 0.15,
+        opacity: 0.25,
         side: THREE.BackSide
       });
       const atmosphere1 = new THREE.Mesh(atmosphereGeometry1, atmosphereMaterial1);
@@ -226,7 +226,7 @@ const RealisticEarth: React.FC = () => {
       const atmosphereMaterial2 = new THREE.MeshPhongMaterial({
         color: 0x4a90e2,
         transparent: true,
-        opacity: 0.05,
+        opacity: 0.1,
         side: THREE.BackSide
       });
       const atmosphere2 = new THREE.Mesh(atmosphereGeometry2, atmosphereMaterial2);
@@ -306,8 +306,8 @@ const RealisticEarth: React.FC = () => {
       anime.default({
         targets: [atmosphere1.material, atmosphere2.material],
         opacity: [
-          { value: [0.15, 0.05], duration: 2000 },
-          { value: [0.05, 0.15], duration: 2000 }
+          { value: [0.25, 0.1], duration: 2000 },
+          { value: [0.1, 0.25], duration: 2000 }
         ],
         easing: 'easeInOutSine',
         loop: true,
@@ -317,7 +317,7 @@ const RealisticEarth: React.FC = () => {
       // Animate star twinkling
       anime.default({
         targets: stars.material,
-        opacity: [0.9, 1.2, 0.9],
+        opacity: [1.0, 1.5, 1.0],
         duration: 3000,
         easing: 'easeInOutSine',
         loop: true,
@@ -351,7 +351,7 @@ const RealisticEarth: React.FC = () => {
 
   if (error) {
     return (
-      <div className="fixed inset-0 z-0 flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-black">
+      <div className="fixed inset-0 z-0 flex items-center justify-center bg-black">
         <div className="text-white text-center">
           <h2 className="text-2xl font-bold mb-4">Earth Background</h2>
           <p className="text-gray-300">Loading Earth visualization...</p>
@@ -365,7 +365,7 @@ const RealisticEarth: React.FC = () => {
       ref={mountRef} 
       className="fixed inset-0 z-0"
       style={{ 
-        background: 'radial-gradient(ellipse at center, #0a0a2e 0%, #1a1a3a 25%, #2d1b69 50%, #1a1a3a 75%, #0a0a2e 100%)',
+        background: '#000000',
         overflow: 'hidden'
       }}
     >
