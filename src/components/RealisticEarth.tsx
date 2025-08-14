@@ -16,14 +16,14 @@ const RealisticEarth: React.FC = () => {
 
       // Camera setup
       const camera = new THREE.PerspectiveCamera(
-        75,
+        60,
         window.innerWidth / window.innerHeight,
         0.1,
         1000
       );
-      camera.position.z = 4;
+      camera.position.z = 3.5;
 
-      // Renderer setup with better quality
+      // Renderer setup with professional quality
       const renderer = new THREE.WebGLRenderer({ 
         antialias: true,
         alpha: true,
@@ -34,15 +34,15 @@ const RealisticEarth: React.FC = () => {
       renderer.shadowMap.enabled = true;
       renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
-      renderer.toneMappingExposure = 1.2;
+      renderer.toneMappingExposure = 1.0;
       renderer.outputColorSpace = THREE.SRGBColorSpace;
       mountRef.current.appendChild(renderer.domElement);
 
-      // Enhanced lighting setup for space feel
-      const ambientLight = new THREE.AmbientLight(0x202020, 0.2);
+      // Professional lighting setup
+      const ambientLight = new THREE.AmbientLight(0x101010, 0.1);
       scene.add(ambientLight);
 
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
       directionalLight.position.set(5, 3, 5);
       directionalLight.castShadow = true;
       directionalLight.shadow.mapSize.width = 2048;
@@ -51,21 +51,21 @@ const RealisticEarth: React.FC = () => {
       directionalLight.shadow.camera.far = 50;
       scene.add(directionalLight);
 
-      // Fill light for better illumination
-      const fillLight = new THREE.DirectionalLight(0x4a90e2, 0.8);
+      // Subtle fill light
+      const fillLight = new THREE.DirectionalLight(0x4a90e2, 0.3);
       fillLight.position.set(-5, -3, -5);
       scene.add(fillLight);
 
-      // Create realistic stars with proper distribution
+      // Create realistic starfield
       const starsGeometry = new THREE.BufferGeometry();
-      const starsCount = 15000;
+      const starsCount = 20000;
       const positions = new Float32Array(starsCount * 3);
       const colors = new Float32Array(starsCount * 3);
       const sizes = new Float32Array(starsCount);
 
       for (let i = 0; i < starsCount * 3; i += 3) {
-        // Create more realistic star distribution
-        const radius = 25 + Math.random() * 75;
+        // Realistic star distribution
+        const radius = 20 + Math.random() * 80;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos(Math.random() * 2 - 1);
 
@@ -73,84 +73,52 @@ const RealisticEarth: React.FC = () => {
         positions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
         positions[i + 2] = radius * Math.cos(phi);
 
-        // Create realistic star colors based on temperature
+        // Realistic star colors
         const starType = Math.random();
         let color;
-        if (starType < 0.7) {
-          // White/blue-white stars (most common)
-          const temp = 0.9 + Math.random() * 0.1;
-          color = new THREE.Color(temp, temp, 1.0);
-        } else if (starType < 0.85) {
+        if (starType < 0.75) {
+          // White stars (most common)
+          const temp = 0.95 + Math.random() * 0.05;
+          color = new THREE.Color(temp, temp, temp);
+        } else if (starType < 0.9) {
+          // Blue-white stars
+          color = new THREE.Color(0.9, 0.9, 1.0);
+        } else if (starType < 0.98) {
           // Yellow stars
-          color = new THREE.Color(1.0, 0.9 + Math.random() * 0.1, 0.7 + Math.random() * 0.3);
-        } else if (starType < 0.95) {
-          // Orange stars
-          color = new THREE.Color(1.0, 0.6 + Math.random() * 0.3, 0.3 + Math.random() * 0.3);
+          color = new THREE.Color(1.0, 0.95, 0.8);
         } else {
           // Red stars
-          color = new THREE.Color(1.0, 0.3 + Math.random() * 0.3, 0.3 + Math.random() * 0.3);
+          color = new THREE.Color(1.0, 0.8, 0.8);
         }
         
         colors[i] = color.r;
         colors[i + 1] = color.g;
         colors[i + 2] = color.b;
 
-        // Realistic star sizes based on brightness
+        // Realistic star sizes
         const brightness = Math.random();
-        sizes[i / 3] = 0.01 + brightness * 0.15;
+        sizes[i / 3] = 0.005 + brightness * 0.02;
       }
 
       starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
       starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-      // Create realistic star texture with proper star shape
+      // Create simple, realistic star texture
       const starCanvas = document.createElement('canvas');
-      starCanvas.width = 64;
-      starCanvas.height = 64;
+      starCanvas.width = 32;
+      starCanvas.height = 32;
       const starCtx = starCanvas.getContext('2d')!;
       
-      // Create realistic star with cross pattern
-      starCtx.fillStyle = 'rgba(0, 0, 0, 0)';
-      starCtx.fillRect(0, 0, 64, 64);
-      
-      // Main star glow
-      const gradient = starCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
+      // Simple, realistic star
+      const gradient = starCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
       gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-      gradient.addColorStop(0.1, 'rgba(255, 255, 255, 0.9)');
-      gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.6)');
-      gradient.addColorStop(0.6, 'rgba(255, 255, 255, 0.2)');
+      gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.8)');
+      gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
       gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
       
       starCtx.fillStyle = gradient;
-      starCtx.fillRect(0, 0, 64, 64);
-      
-      // Add star spikes for realism
-      starCtx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
-      starCtx.lineWidth = 1;
-      
-      // Vertical spike
-      starCtx.beginPath();
-      starCtx.moveTo(32, 8);
-      starCtx.lineTo(32, 56);
-      starCtx.stroke();
-      
-      // Horizontal spike
-      starCtx.beginPath();
-      starCtx.moveTo(8, 32);
-      starCtx.lineTo(56, 32);
-      starCtx.stroke();
-      
-      // Diagonal spikes
-      starCtx.beginPath();
-      starCtx.moveTo(12, 12);
-      starCtx.lineTo(52, 52);
-      starCtx.stroke();
-      
-      starCtx.beginPath();
-      starCtx.moveTo(52, 12);
-      starCtx.lineTo(12, 52);
-      starCtx.stroke();
+      starCtx.fillRect(0, 0, 32, 32);
       
       const starTexture = new THREE.CanvasTexture(starCanvas);
 
@@ -158,7 +126,7 @@ const RealisticEarth: React.FC = () => {
         size: 1,
         vertexColors: true,
         transparent: true,
-        opacity: 1.0,
+        opacity: 0.8,
         sizeAttenuation: true,
         blending: THREE.AdditiveBlending,
         map: starTexture,
@@ -168,14 +136,13 @@ const RealisticEarth: React.FC = () => {
       const stars = new THREE.Points(starsGeometry, starsMaterial);
       scene.add(stars);
 
-      // Create Earth with enhanced materials and textures
+      // Create Earth with professional materials
       const earthGeometry = new THREE.SphereGeometry(1, 256, 256);
       
-      // Enhanced Earth material with better colors
       const earthMaterial = new THREE.MeshPhongMaterial({
         color: 0x4a90e2,
-        shininess: 30,
-        specular: 0x333333
+        shininess: 20,
+        specular: 0x222222
       });
 
       const earth = new THREE.Mesh(earthGeometry, earthMaterial);
@@ -183,7 +150,7 @@ const RealisticEarth: React.FC = () => {
       earth.receiveShadow = true;
       scene.add(earth);
 
-      // Load high-quality Earth textures
+      // Load professional Earth textures
       const textureLoader = new THREE.TextureLoader();
       
       // Earth surface texture
@@ -204,7 +171,7 @@ const RealisticEarth: React.FC = () => {
         'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_normal_2048.jpg',
         (bumpMap) => {
           earthMaterial.bumpMap = bumpMap;
-          earthMaterial.bumpScale = 0.05;
+          earthMaterial.bumpScale = 0.03;
           earthMaterial.needsUpdate = true;
         },
         undefined,
@@ -226,12 +193,12 @@ const RealisticEarth: React.FC = () => {
         }
       );
 
-      // Enhanced cloud layer with texture
-      const cloudsGeometry = new THREE.SphereGeometry(1.02, 256, 256);
+      // Professional cloud layer
+      const cloudsGeometry = new THREE.SphereGeometry(1.01, 256, 256);
       const cloudsMaterial = new THREE.MeshPhongMaterial({
         color: 0xffffff,
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.3,
         blending: THREE.AdditiveBlending
       });
 
@@ -251,117 +218,42 @@ const RealisticEarth: React.FC = () => {
         }
       );
 
-      // Enhanced atmosphere glow with multiple layers
-      const atmosphereGeometry1 = new THREE.SphereGeometry(1.1, 128, 128);
-      const atmosphereMaterial1 = new THREE.MeshPhongMaterial({
-        color: 0x4a90e2,
-        transparent: true,
-        opacity: 0.25,
-        side: THREE.BackSide
-      });
-      const atmosphere1 = new THREE.Mesh(atmosphereGeometry1, atmosphereMaterial1);
-      scene.add(atmosphere1);
-
-      const atmosphereGeometry2 = new THREE.SphereGeometry(1.2, 128, 128);
-      const atmosphereMaterial2 = new THREE.MeshPhongMaterial({
+      // Subtle atmosphere
+      const atmosphereGeometry = new THREE.SphereGeometry(1.05, 128, 128);
+      const atmosphereMaterial = new THREE.MeshPhongMaterial({
         color: 0x4a90e2,
         transparent: true,
         opacity: 0.1,
         side: THREE.BackSide
       });
-      const atmosphere2 = new THREE.Mesh(atmosphereGeometry2, atmosphereMaterial2);
-      scene.add(atmosphere2);
+      const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+      scene.add(atmosphere);
 
-      // Add orbital ring with better material
-      const ringGeometry = new THREE.RingGeometry(1.3, 1.4, 128);
-      const ringMaterial = new THREE.MeshBasicMaterial({
-        color: 0x4a90e2,
-        transparent: true,
-        opacity: 0.3,
-        side: THREE.DoubleSide
-      });
-      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-      ring.rotation.x = Math.PI / 2;
-      scene.add(ring);
-
-      // Add second orbital ring for more depth
-      const ring2Geometry = new THREE.RingGeometry(1.5, 1.6, 128);
-      const ring2Material = new THREE.MeshBasicMaterial({
-        color: 0x4a90e2,
-        transparent: true,
-        opacity: 0.15,
-        side: THREE.DoubleSide
-      });
-      const ring2 = new THREE.Mesh(ring2Geometry, ring2Material);
-      ring2.rotation.x = Math.PI / 2;
-      scene.add(ring2);
-
-      // Animation setup with enhanced effects
+      // Animation setup
       const animate = () => {
         requestAnimationFrame(animate);
 
         // Earth rotation
-        earth.rotation.y += 0.002;
+        earth.rotation.y += 0.001;
         
-        // Cloud rotation (faster)
-        clouds.rotation.y += 0.003;
+        // Cloud rotation
+        clouds.rotation.y += 0.0015;
         
         // Star field rotation
-        stars.rotation.y += 0.0003;
+        stars.rotation.y += 0.0001;
 
         renderer.render(scene, camera);
       };
 
       animate();
 
-      // Enhanced camera animation with anime.js
+      // Professional camera animation
       anime.default({
         targets: camera.position,
-        z: [4, 2.5],
-        x: [0, 0.2, -0.2, 0],
-        y: [0, 0.1, -0.1, 0],
-        duration: 4000,
+        z: [4, 3.2],
+        duration: 5000,
         easing: 'easeOutQuart',
-        delay: 500
-      });
-
-      // Animate orbital rings
-      anime.default({
-        targets: ring.rotation,
-        z: [0, Math.PI * 2],
-        duration: 20000,
-        easing: 'linear',
-        loop: true
-      });
-
-      anime.default({
-        targets: ring2.rotation,
-        z: [0, -Math.PI * 2],
-        duration: 30000,
-        easing: 'linear',
-        loop: true
-      });
-
-      // Animate atmosphere pulsing
-      anime.default({
-        targets: [atmosphere1.material, atmosphere2.material],
-        opacity: [
-          { value: [0.25, 0.1], duration: 2000 },
-          { value: [0.1, 0.25], duration: 2000 }
-        ],
-        easing: 'easeInOutSine',
-        loop: true,
-        direction: 'alternate'
-      });
-
-      // Animate star twinkling
-      anime.default({
-        targets: stars.material,
-        opacity: [1.0, 1.5, 1.0],
-        duration: 3000,
-        easing: 'easeInOutSine',
-        loop: true,
-        direction: 'alternate'
+        delay: 1000
       });
 
       // Handle window resize
@@ -410,14 +302,10 @@ const RealisticEarth: React.FC = () => {
       }}
     >
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
           <div className="text-white text-center">
-            <div className="relative">
-              <div className="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin mx-auto mb-4"></div>
-              <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-purple-500 rounded-full animate-spin mx-auto" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
-            </div>
-            <p className="text-lg font-medium">Loading Earth...</p>
-            <p className="text-sm text-gray-400 mt-2">Preparing stunning visualization</p>
+            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-sm text-gray-300">Loading...</p>
           </div>
         </div>
       )}
