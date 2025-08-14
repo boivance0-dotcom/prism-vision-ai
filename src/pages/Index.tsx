@@ -97,19 +97,21 @@ const Index = () => {
                   </motion.div>
 
                   <motion.div
-                    className="mt-8 flex items-center justify-center gap-3 md:gap-4"
+                    className="mt-8 flex items-center justify-center"
                     initial={prefersReducedMotion ? false : { y: 30, opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.9 }}
                   >
-                    <button
-                      onClick={startExperience}
-                      aria-label="Start Experience"
-                      className="px-6 md:px-7 py-3.5 md:py-4 rounded-xl bg-[var(--accent,#86C232)] text-black font-bold tracking-wide shadow-[0_14px_36px_rgba(134,194,50,0.55)] ring-1 ring-white/25 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 transition"
-                    >
-                      Start Experience
-                    </button>
-                    <Link to="/ai/forest" className="px-5 md:px-6 py-3 rounded-lg border border-white/20 text-white/95 hover:bg-white/10 transition">Explore Forest AI</Link>
+                    <div className="inline-flex items-center gap-3 md:gap-4 rounded-xl bg-black/65 border border-white/15 backdrop-blur-sm px-4 py-3">
+                      <button
+                        onClick={startExperience}
+                        aria-label="Start Experience"
+                        className="px-6 md:px-7 py-3.5 md:py-4 rounded-xl bg-[var(--accent,#86C232)] text-black font-extrabold tracking-wide text-[15px] md:text-[16px] shadow-[0_16px_40px_rgba(134,194,50,0.65)] ring-1 ring-white/40 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 transition"
+                      >
+                        Start Experience
+                      </button>
+                      <Link to="/ai/forest" className="px-5 md:px-6 py-3 rounded-lg border border-white/30 text-white/95 hover:bg-white/10 transition">Explore Forest AI</Link>
+                    </div>
                   </motion.div>
 
                   {/* Quick benefits strip */}
