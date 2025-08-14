@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import Results from "./pages/Results";
 import ForestAI from "./pages/ForestAI";
 import AIDashboard from "./pages/AIDashboard";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/results" element={<Results />} />
           <Route path="/forest-ai" element={<ForestAI />} />
           <Route path="/ai/:slug" element={<AIDashboard />} />
+          <Route path="/login" element={<Login />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
