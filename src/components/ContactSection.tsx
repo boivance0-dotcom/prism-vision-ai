@@ -36,7 +36,7 @@ const ContactSection: React.FC<{ companyName?: string; accentColor?: string }> =
                   <div>hello@{companyName.toLowerCase().replace(/\s+/g, '')}.ai</div>
                   <div className="text-white/60 text-xs">+1 (555) 012-3456</div>
                 </div>
-                <a href="#" className="px-3 py-1 rounded-md text-black text-xs font-semibold" style={{ backgroundColor: accent }}>Email us</a>
+                <a href="#" className="px-3 py-1 rounded-md text-white text-xs font-semibold ring-1 ring-white/40 hover:brightness-105 transition" style={{ backgroundColor: accent, textShadow: '0 1px 0 rgba(0,0,0,0.65), 0 0 8px rgba(0,0,0,0.35)' }}>Email us</a>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@ const ContactSection: React.FC<{ companyName?: string; accentColor?: string }> =
               <textarea className="bg-black/30 border border-white/10 rounded-md px-3 py-2 text-white/90 outline-none focus:border-white/20 min-h-[120px]" placeholder="How can we help?" required />
             </div>
             <div className="flex items-center gap-3">
-              <button className="px-4 py-2 rounded-md text-black font-semibold" style={{ backgroundColor: accent }}>Send</button>
+              <button className="px-4 py-2 rounded-md text-white font-semibold ring-1 ring-white/40 hover:brightness-105 transition" style={{ backgroundColor: accent, textShadow: '0 1px 0 rgba(0,0,0,0.65), 0 0 8px rgba(0,0,0,0.35)' }}>Send</button>
               {sent && <span className="text-white/80 text-sm">Thanks! We will get back to you.</span>}
             </div>
           </form>
