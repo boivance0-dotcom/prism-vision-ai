@@ -23,7 +23,7 @@ import RealisticEarth from '@/components/RealisticEarth';
 const Index = () => {
   const [started, setStarted] = useState(false);
   const [earthAnimationComplete, setEarthAnimationComplete] = useState(false);
-  const [showContent, setShowContent] = useState(false);
+  const [showContent, setShowContent] = useState(true); // Show content immediately
   const experienceRef = useRef<HTMLDivElement | null>(null);
   const earthRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
@@ -46,48 +46,12 @@ const Index = () => {
   const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
 
   useEffect(() => {
-    // Import anime.js dynamically to avoid build issues
-    const loadAnime = async () => {
-      try {
-        const anime = await import('animejs');
-        
-        // Initial Earth entry animation
-        if (earthRef.current) {
-          anime.default({
-            targets: earthRef.current,
-            scale: [0, 1],
-            opacity: [0, 1],
-            duration: 3000,
-            easing: 'easeOutElastic(1, 0.5)',
-            delay: 500,
-            complete: () => {
-              setEarthAnimationComplete(true);
-              // Start content reveal after Earth animation
-              setTimeout(() => {
-                setShowContent(true);
-                if (contentRef.current) {
-                  anime.default({
-                    targets: contentRef.current,
-                    translateY: [50, 0],
-                    opacity: [0, 1],
-                    duration: 2000,
-                    easing: 'easeOutQuart',
-                    delay: 500
-                  });
-                }
-              }, 1000);
-            }
-          });
-        }
-      } catch (error) {
-        console.error('Failed to load anime.js:', error);
-        // Fallback: show content immediately
-        setEarthAnimationComplete(true);
-        setTimeout(() => setShowContent(true), 1000);
-      }
-    };
+    // Start Earth animation after a short delay
+    const timer = setTimeout(() => {
+      setEarthAnimationComplete(true);
+    }, 1000);
 
-    loadAnime();
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -101,13 +65,12 @@ const Index = () => {
         <div 
           ref={earthRef}
           className="relative z-20 container mx-auto px-6 py-16 min-h-screen flex flex-col justify-center items-center"
-          style={{ opacity: 0, transform: 'scale(0)' }}
         >
           {/* Main Heading with Entry Animation */}
           <motion.div
             className="text-center"
-            initial={{ opacity: 0, y: 50 }}
-            animate={earthAnimationComplete ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, y: 50, scale: 0.8 }}
+            animate={earthAnimationComplete ? { opacity: 1, y: 0, scale: 1 } : { opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 1.5, ease: EASE, delay: 0.5 }}
           >
             <motion.h1
@@ -129,7 +92,7 @@ const Index = () => {
             <motion.div
               className="mt-8 max-w-4xl mx-auto"
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={earthAnimationComplete ? { opacity: 1, scale: 1 } : {}}
+              animate={earthAnimationComplete ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: EASE, delay: 1.5 }}
             >
               <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-2xl">
@@ -162,7 +125,7 @@ const Index = () => {
             <motion.div
               className="mt-8"
               initial={{ opacity: 0, y: 30 }}
-              animate={earthAnimationComplete ? { opacity: 1, y: 0 } : {}}
+              animate={earthAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: EASE, delay: 2.5 }}
             >
               <button
@@ -180,7 +143,6 @@ const Index = () => {
       <div 
         ref={contentRef}
         className="relative z-10 bg-gradient-to-b from-black via-gray-900 to-black"
-        style={{ opacity: 0, transform: 'translateY(50px)' }}
       >
         {showContent && (
           <>
