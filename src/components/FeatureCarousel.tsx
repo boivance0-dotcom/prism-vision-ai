@@ -89,11 +89,13 @@ const FeatureCarousel: React.FC<{ initialTitle?: string }> = ({ initialTitle }) 
             onTouchMove={(e) => onPointerMove(e.touches[0].clientX)}
             onTouchEnd={onPointerUp}
           >
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-between">
+            <div className="pointer-events-none absolute inset-0 z-50 flex items-center justify-between">
               <div className="pointer-events-auto pl-1 sm:pl-3">
                 <button
                   aria-label="Previous"
                   onClick={prev}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onTouchStart={(e) => e.stopPropagation()}
                   className="h-10 w-10 grid place-items-center rounded-full bg-black/50 text-white hover:bg-black/70 border border-white/20 transition"
                 >
                   ‹
@@ -103,6 +105,8 @@ const FeatureCarousel: React.FC<{ initialTitle?: string }> = ({ initialTitle }) 
                 <button
                   aria-label="Next"
                   onClick={next}
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onTouchStart={(e) => e.stopPropagation()}
                   className="h-10 w-10 grid place-items-center rounded-full bg-black/50 text-white hover:bg-black/70 border border-white/20 transition"
                 >
                   ›
@@ -111,7 +115,7 @@ const FeatureCarousel: React.FC<{ initialTitle?: string }> = ({ initialTitle }) 
             </div>
 
             <motion.div
-              className="absolute left-1/2 top-12 -translate-x-1/2 will-change-transform z-50"
+              className="absolute left-1/2 top-12 -translate-x-1/2 will-change-transform z-40"
               style={{ transformStyle: 'preserve-3d' as any }}
               animate={{ rotateY: rotateYDeg }}
               transition={{ duration: 0.6, ease: EASE }}
