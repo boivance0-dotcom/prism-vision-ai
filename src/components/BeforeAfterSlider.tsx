@@ -22,9 +22,9 @@ const BeforeAfterSlider: React.FC<{ beforeSrc: string; afterSrc: string; alt?: s
         onMouseMove={handleMove}
         onTouchMove={handleMove}
       >
-        <img src={beforeSrc} alt={alt || 'Before'} className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+        <img src={beforeSrc} alt={alt || 'Before'} className="absolute inset-0 w-full h-full object-cover" draggable={false} decoding="async" fetchpriority="high" />
         <div className="absolute inset-0" style={{ width: `${pos * 100}%`, overflow: 'hidden' }}>
-          <img src={afterSrc} alt={alt || 'After'} className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+          <img src={afterSrc} alt={alt || 'After'} className="absolute inset-0 w-full h-full object-cover" draggable={false} decoding="async" fetchpriority="high" />
         </div>
         <div className="absolute inset-y-0" style={{ left: `${pos * 100}%` }}>
           <div className="w-0.5 h-full bg-white/80 shadow-[0_0_12px_rgba(255,255,255,0.6)]" />

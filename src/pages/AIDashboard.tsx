@@ -40,12 +40,24 @@ const mapWeights: Record<string, { title: string; weights: { healthy?: number; s
   education: { title: 'Study Areas Index', weights: { healthy: 6, stressed: 2, critical: 2 } },
 };
 
+const chartCfg: Record<string, { title: string; values?: number[] }> = {
+  forest: { title: '12-Month Forest Health Trend' },
+  wildlife: { title: 'Species Activity Trend' },
+  climate: { title: 'CO2/Temperature Trend' },
+  marine: { title: 'Coastal Vegetation Trend' },
+  nature: { title: 'Ecosystem Vitality Trend' },
+  research: { title: 'Publications Trend' },
+  career: { title: 'Opportunities Trend' },
+  education: { title: 'Learning Engagement Trend' },
+};
+
 const AIDashboard: React.FC = () => {
   const { slug = 'forest' } = useParams();
   const navigate = useNavigate();
   const bgUrl = bgMap[slug] || bgMap.forest;
   const aiTitle = titleMap[slug] || 'Forest AI';
   const mapCfg = mapWeights[slug] || mapWeights.forest;
+  const trend = chartCfg[slug] || chartCfg.forest;
 
   const before = 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop';
   const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
@@ -86,7 +98,7 @@ const AIDashboard: React.FC = () => {
           <div className="mt-0 grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2 grid gap-6">
               <ForestHealthMap title={mapCfg.title} statusWeights={mapCfg.weights} />
-              <TrendChart />
+              <TrendChart title={trend.title} values={trend.values} />
             </div>
             <div className="lg:col-span-1">
               <ThreatAnalysis />

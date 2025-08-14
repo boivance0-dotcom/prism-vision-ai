@@ -162,6 +162,8 @@ const FeatureCarousel: React.FC<{ initialTitle?: string }> = ({ initialTitle }) 
                           alt={f.title}
                           className="w-full h-full object-cover"
                           loading="lazy"
+                          decoding="async"
+                          fetchpriority="high"
                         />
                       </div>
 
