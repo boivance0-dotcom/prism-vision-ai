@@ -16,6 +16,8 @@ import TrendChart from '@/components/TrendChart';
 import ThreatAnalysis from '@/components/ThreatAnalysis';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import AboutSection from '@/components/AboutSection';
+import ContactSection from '@/components/ContactSection';
+import Footer from '@/components/Footer';
 
 
 const Index = () => {
@@ -158,6 +160,9 @@ const Index = () => {
           {/* About us */}
           <AboutSection />
 
+          {/* Contact us */}
+          <ContactSection />
+
           {/* Bottom brand marker */}
           <div className="pb-6 text-left">
             <span className="inline-block text-white/80 text-xs tracking-widest uppercase px-2 py-1 bg-black/20 rounded-md backdrop-blur">
@@ -167,16 +172,8 @@ const Index = () => {
         </div>
       </div>
 
-      {/* No cards on initial landing; cards appear after Start Experience */}
-
       {/* Footer */}
-      <footer className="border-t border-border/50 bg-background">
-        <div className="container mx-auto px-6 py-8">
-          <div className="text-center text-muted-foreground">
-            <p>&copy; 2024 Nature AI Intelligence. Advanced environmental research platform.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -7,6 +7,8 @@ import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import ThreatAnalysis from '@/components/ThreatAnalysis';
 import SearchBar from '@/components/SearchBar';
 import AboutSection from '@/components/AboutSection';
+import ContactSection from '@/components/ContactSection';
+import Footer from '@/components/Footer';
 
 const bgMap: Record<string, string> = {
   nature: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=3840&h=2160&fit=crop&auto=format',
@@ -157,9 +159,12 @@ const AIDashboard: React.FC = () => {
             <BeforeAfterSlider beforeSrc={viewer.before} afterSrc={viewer.after} alt={viewer.alt} accentColor={accent} theme={slug} />
           </div>
 
-          {/* About us */}
+          {/* About + Contact */}
           <AboutSection accentColor={accent} />
+          <ContactSection accentColor={accent} />
         </div>
+
+        <Footer />
       </div>
     </div>
   );
