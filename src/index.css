@@ -467,3 +467,21 @@
 .ai-theme .card:hover {
   box-shadow: 0 16px 48px var(--accent);
 }
+
+/* Earth Component Animations */
+@keyframes earth-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.earth-spin {
+  animation: earth-spin 20s linear infinite;
+}
+
+.earth-ring {
+  animation: earth-spin 30s linear infinite reverse;
+}

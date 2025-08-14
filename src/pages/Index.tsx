@@ -21,6 +21,8 @@ import Footer from '@/components/Footer';
 import SatelliteGallery from '@/components/SatelliteGallery';
 import Earth3D from '@/components/Earth3D';
 import EarthCSS from '@/components/EarthCSS';
+import EarthSimple from '@/components/EarthSimple';
+import EarthFallback from '@/components/EarthFallback';
 
 
 const Index = () => {
@@ -85,7 +87,7 @@ const Index = () => {
                     transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
                   >
                     <div className="relative">
-                      <EarthCSS className="w-full h-[500px] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_80px_rgba(0,0,0,0.6)]" />
+                      <EarthFallback className="w-full h-[500px] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_80px_rgba(0,0,0,0.6)]" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
                     </div>
                   </motion.div>
@@ -165,7 +167,7 @@ const Index = () => {
                     transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
                   >
                     <div className="relative">
-                      <EarthCSS className="w-full h-[300px] rounded-xl overflow-hidden border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)]" />
+                      <EarthFallback className="w-full h-[300px] rounded-xl overflow-hidden border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)]" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
                     </div>
                   </motion.div>
