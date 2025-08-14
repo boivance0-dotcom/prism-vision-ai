@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -53,13 +53,42 @@ const FeatureCarousel: React.FC<{ initialTitle?: string }> = ({ initialTitle }) 
     if (active?.slug) navigate(`/ai/${active.slug}`);
   };
 
+  // Basic swipe support
+  const dragState = useRef<{ down: boolean; startX: number; lastX: number }>({ down: false, startX: 0, lastX: 0 });
+  const onPointerDown = (x: number) => {
+    dragState.current = { down: true, startX: x, lastX: x };
+  };
+  const onPointerMove = (x: number) => {
+    if (!dragState.current.down) return;
+    dragState.current.lastX = x;
+  };
+  const onPointerUp = () => {
+    const { down, startX, lastX } = dragState.current;
+    dragState.current.down = false;
+    const delta = lastX - startX;
+    const threshold = 40; // px
+    if (Math.abs(delta) > threshold) {
+      if (delta < 0) next(); else prev();
+    }
+  };
+
   return (
     <section className="relative w-full py-20">
       <div className="max-w-6xl mx-auto px-6">
         <h3 className="text-white/95 text-xl font-semibold mb-6 text-center">Explore other AI's</h3>
 
         <div className="relative" style={{ perspective: 2200 }}>
-          <motion.div className="relative mx-auto" style={{ width: '100%', height: cardHeight + 260 }}>
+          <motion.div
+            className="relative mx-auto cursor-grab active:cursor-grabbing"
+            style={{ width: '100%', height: cardHeight + 260 }}
+            onMouseDown={(e) => onPointerDown(e.clientX)}
+            onMouseMove={(e) => onPointerMove(e.clientX)}
+            onMouseUp={onPointerUp}
+            onMouseLeave={onPointerUp}
+            onTouchStart={(e) => onPointerDown(e.touches[0].clientX)}
+            onTouchMove={(e) => onPointerMove(e.touches[0].clientX)}
+            onTouchEnd={onPointerUp}
+          >
             <div className="pointer-events-none absolute inset-0 flex items-center justify-between">
               <div className="pointer-events-auto pl-1 sm:pl-3">
                 <button
