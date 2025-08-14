@@ -56,15 +56,16 @@ const RealisticEarth: React.FC = () => {
       fillLight.position.set(-5, -3, -5);
       scene.add(fillLight);
 
-      // Create enhanced stars with proper star shapes
+      // Create realistic stars with proper distribution
       const starsGeometry = new THREE.BufferGeometry();
-      const starsCount = 12000;
+      const starsCount = 15000;
       const positions = new Float32Array(starsCount * 3);
       const colors = new Float32Array(starsCount * 3);
       const sizes = new Float32Array(starsCount);
 
       for (let i = 0; i < starsCount * 3; i += 3) {
-        const radius = 30 + Math.random() * 70;
+        // Create more realistic star distribution
+        const radius = 25 + Math.random() * 75;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos(Math.random() * 2 - 1);
 
@@ -72,46 +73,84 @@ const RealisticEarth: React.FC = () => {
         positions[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
         positions[i + 2] = radius * Math.cos(phi);
 
-        // Create different star colors (white, blue-white, yellow, red)
+        // Create realistic star colors based on temperature
         const starType = Math.random();
         let color;
-        if (starType < 0.6) {
-          color = new THREE.Color(0xffffff); // White stars
-        } else if (starType < 0.8) {
-          color = new THREE.Color(0x4a90e2); // Blue-white stars
+        if (starType < 0.7) {
+          // White/blue-white stars (most common)
+          const temp = 0.9 + Math.random() * 0.1;
+          color = new THREE.Color(temp, temp, 1.0);
+        } else if (starType < 0.85) {
+          // Yellow stars
+          color = new THREE.Color(1.0, 0.9 + Math.random() * 0.1, 0.7 + Math.random() * 0.3);
         } else if (starType < 0.95) {
-          color = new THREE.Color(0xffd700); // Yellow stars
+          // Orange stars
+          color = new THREE.Color(1.0, 0.6 + Math.random() * 0.3, 0.3 + Math.random() * 0.3);
         } else {
-          color = new THREE.Color(0xff6b6b); // Red stars
+          // Red stars
+          color = new THREE.Color(1.0, 0.3 + Math.random() * 0.3, 0.3 + Math.random() * 0.3);
         }
         
         colors[i] = color.r;
         colors[i + 1] = color.g;
         colors[i + 2] = color.b;
 
-        // Different star sizes for depth
-        sizes[i / 3] = 0.02 + Math.random() * 0.08;
+        // Realistic star sizes based on brightness
+        const brightness = Math.random();
+        sizes[i / 3] = 0.01 + brightness * 0.15;
       }
 
       starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
       starsGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
       starsGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-      // Create star texture for proper star shapes
+      // Create realistic star texture with proper star shape
       const starCanvas = document.createElement('canvas');
-      starCanvas.width = 32;
-      starCanvas.height = 32;
+      starCanvas.width = 64;
+      starCanvas.height = 64;
       const starCtx = starCanvas.getContext('2d')!;
       
-      // Create radial gradient for star
-      const gradient = starCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+      // Create realistic star with cross pattern
+      starCtx.fillStyle = 'rgba(0, 0, 0, 0)';
+      starCtx.fillRect(0, 0, 64, 64);
+      
+      // Main star glow
+      const gradient = starCtx.createRadialGradient(32, 32, 0, 32, 32, 32);
       gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-      gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.8)');
-      gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.3)');
+      gradient.addColorStop(0.1, 'rgba(255, 255, 255, 0.9)');
+      gradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.6)');
+      gradient.addColorStop(0.6, 'rgba(255, 255, 255, 0.2)');
       gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
       
       starCtx.fillStyle = gradient;
-      starCtx.fillRect(0, 0, 32, 32);
+      starCtx.fillRect(0, 0, 64, 64);
+      
+      // Add star spikes for realism
+      starCtx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+      starCtx.lineWidth = 1;
+      
+      // Vertical spike
+      starCtx.beginPath();
+      starCtx.moveTo(32, 8);
+      starCtx.lineTo(32, 56);
+      starCtx.stroke();
+      
+      // Horizontal spike
+      starCtx.beginPath();
+      starCtx.moveTo(8, 32);
+      starCtx.lineTo(56, 32);
+      starCtx.stroke();
+      
+      // Diagonal spikes
+      starCtx.beginPath();
+      starCtx.moveTo(12, 12);
+      starCtx.lineTo(52, 52);
+      starCtx.stroke();
+      
+      starCtx.beginPath();
+      starCtx.moveTo(52, 12);
+      starCtx.lineTo(12, 52);
+      starCtx.stroke();
       
       const starTexture = new THREE.CanvasTexture(starCanvas);
 
@@ -122,7 +161,8 @@ const RealisticEarth: React.FC = () => {
         opacity: 1.0,
         sizeAttenuation: true,
         blending: THREE.AdditiveBlending,
-        map: starTexture
+        map: starTexture,
+        depthWrite: false
       });
 
       const stars = new THREE.Points(starsGeometry, starsMaterial);
