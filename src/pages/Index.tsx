@@ -106,7 +106,8 @@ const Index = () => {
                       <button
                         onClick={startExperience}
                         aria-label="Start Experience"
-                        className="px-6 md:px-7 py-3.5 md:py-4 rounded-xl bg-[var(--accent,#86C232)] text-black font-extrabold tracking-wide text-[15px] md:text-[16px] shadow-[0_16px_40px_rgba(134,194,50,0.65)] ring-1 ring-white/40 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 transition"
+                        className="px-6 md:px-7 py-3.5 md:py-4 rounded-xl bg-[var(--accent,#86C232)] text-white font-extrabold tracking-wide text-[15px] md:text-[16px] shadow-[0_16px_40px_rgba(134,194,50,0.65)] ring-1 ring-white/40 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 transition"
+                        style={{ textShadow: '0 1px 0 rgba(0,0,0,0.65), 0 0 10px rgba(0,0,0,0.35)' }}
                       >
                         Start Experience
                       </button>
