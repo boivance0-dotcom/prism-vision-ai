@@ -134,14 +134,8 @@ const AIDashboard: React.FC = () => {
         <div className="hero-vignette" />
 
         <div className="relative z-10 container mx-auto px-6 py-10 md:py-14">
-          <div className="page-enter text-center max-w-4xl mx-auto">
-            <h1 className="hero-title-clean theme-heading" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)' }}>{aiTitle} Dashboard</h1>
-            <p className="mt-2 text-white/85 max-w-3xl mx-auto">Live insights, monitoring, and AI-driven analysis.</p>
-            <div className="mt-5">
-              <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
-            </div>
-          </div>
-
+          {/* Removed heading text to show only the AI image background */}
+          
           {/* Slider at top (compact), initialized to this AI */}
           <div className="mt-6 max-w-5xl mx-auto transform origin-top scale-90 md:scale-95">
             <FeatureCarousel initialTitle={aiTitle} />
