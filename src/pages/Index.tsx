@@ -139,7 +139,7 @@ const Index = () => {
                     animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
                   >
-                    Earth Intelligence, Beautifully Rendered
+                    Earth Intelligence, Beautifully Rendered ✨
                   </motion.h1>
 
                   <motion.div
