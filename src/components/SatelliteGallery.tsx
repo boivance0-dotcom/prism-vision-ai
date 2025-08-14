@@ -12,7 +12,14 @@ const SatelliteGallery: React.FC<{ images: GalleryImage[]; accentColor?: string;
   return (
     <section className="rounded-2xl p-5 bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-white/95 font-semibold" style={{ color: accentColor }}>{title}</h3>
+        <h3 className="text-white/95 font-semibold">
+          <span
+            className="inline-block rounded-md bg-black/60 border border-white/15 px-2 py-1"
+            style={{ color: accentColor, textShadow: '0 1px 0 rgba(0,0,0,0.8), 0 0 12px rgba(0,0,0,0.45)' }}
+          >
+            {title}
+          </span>
+        </h3>
         <span className="text-xs text-white/70">Auto-refreshed daily</span>
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
