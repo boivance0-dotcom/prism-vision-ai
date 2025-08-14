@@ -60,10 +60,10 @@ const Results: React.FC = () => {
   return (
     <div className="relative z-10 min-h-screen">
       <div className="relative min-h-[60vh] overflow-hidden">
-        {/* Blurred AI background */}
+        {/* Themed AI background (no blur) */}
         <div
           className="fixed-bg hero-image-filter"
-          style={{ backgroundImage: `url(${theme.url})`, filter: 'blur(3px) brightness(0.9)', transform: 'scale(1.04)', zIndex: 0 as unknown as number }}
+          style={{ backgroundImage: `url(${theme.url})`, zIndex: 0 as unknown as number }}
           aria-hidden
         />
         <div className="hero-gradient-top" />
