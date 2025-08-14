@@ -19,6 +19,7 @@ import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import SatelliteGallery from '@/components/SatelliteGallery';
+import Earth3D from '@/components/Earth3D';
 
 
 const Index = () => {
@@ -71,10 +72,23 @@ const Index = () => {
         <div className="relative z-10 container mx-auto px-6 py-16 min-h-screen flex flex-col page-enter">
           <div className="flex-1 grid place-items-center">
             {/* Stack the two states and animate between them */}
-            <div className="relative w-full max-w-5xl mx-auto">
+            <div className="relative w-full max-w-7xl mx-auto">
               {/* Initial State */}
               {!started && (
                 <div className="text-center animate-scale-fade-in parallax-item" data-speed="1">
+                  {/* Earth 3D Component - Prominently Featured */}
+                  <motion.div
+                    className="mb-8 mx-auto max-w-2xl"
+                    initial={prefersReducedMotion ? false : { scale: 0.8, opacity: 0 }}
+                    animate={prefersReducedMotion ? {} : { scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
+                  >
+                    <div className="relative">
+                      <Earth3D className="w-full h-[500px] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_80px_rgba(0,0,0,0.6)]" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                    </div>
+                  </motion.div>
+
                   <motion.h1
                     className="font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/80 drop-shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
                     style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 8px 32px rgba(0,0,0,0.75)' }}
@@ -142,6 +156,19 @@ const Index = () => {
               {/* Experience State */}
               {started && (
                 <div className="animate-hero-in parallax-item mt-16 md:mt-24" data-speed="1">
+                  {/* Earth 3D Component in Experience State */}
+                  <motion.div
+                    className="mb-8 mx-auto max-w-xl"
+                    initial={prefersReducedMotion ? false : { scale: 0.8, opacity: 0 }}
+                    animate={prefersReducedMotion ? {} : { scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
+                  >
+                    <div className="relative">
+                      <Earth3D className="w-full h-[300px] rounded-xl overflow-hidden border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)]" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                    </div>
+                  </motion.div>
+
                   <div className="max-w-3xl mx-auto text-center">
                     <motion.div
                       className="inline-block text-left rounded-lg bg-black/55 border border-white/15 backdrop-blur-sm px-5 py-4"
