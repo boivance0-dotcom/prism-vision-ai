@@ -67,13 +67,21 @@ const Index = () => {
                 <div className="text-center animate-scale-fade-in parallax-item" data-speed="1">
 
                   <motion.h1
-                    className="font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/80 drop-shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
-                    style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 8px 32px rgba(0,0,0,0.75)' }}
+                    className="font-black leading-[0.9] text-transparent bg-clip-text bg-gradient-to-br from-white via-blue-50 to-blue-100 drop-shadow-[0_25px_100px_rgba(0,0,0,0.8)]"
+                    style={{ 
+                      fontSize: 'clamp(2.5rem, 7vw, 5rem)', 
+                      letterSpacing: '-0.03em', 
+                      textShadow: '0 10px 40px rgba(0,0,0,0.9)',
+                      fontFeatureSettings: '"liga" 1, "kern" 1'
+                    }}
                     initial={prefersReducedMotion ? false : { x: -50, opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
                   >
-                    Earth Intelligence, Beautifully Rendered ✨
+                    <span className="block">Earth Intelligence</span>
+                    <span className="block text-4xl md:text-5xl lg:text-6xl font-light tracking-wider text-blue-200/90" style={{ letterSpacing: '0.1em' }}>
+                      Beautifully Rendered
+                    </span>
                   </motion.h1>
 
                   <motion.div
