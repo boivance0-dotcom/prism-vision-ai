@@ -10,7 +10,7 @@ import SearchBar from '@/components/SearchBar';
 const bgMap: Record<string, string> = {
   nature: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg',
   forest: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg',
-  wildlife: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/OIP.webp',
+  wildlife: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=90&w=1920&h=1080&fit=crop&auto=format',
   climate: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg',
   marine: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg',
   research: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg',
