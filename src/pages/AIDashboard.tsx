@@ -29,11 +29,23 @@ const titleMap: Record<string, string> = {
   education: 'Education AI',
 };
 
+const mapWeights: Record<string, { title: string; weights: { healthy?: number; stressed?: number; critical?: number } }> = {
+  forest: { title: 'Forest Health Index', weights: { healthy: 6, stressed: 3, critical: 1 } },
+  wildlife: { title: 'Habitat Health Index', weights: { healthy: 5, stressed: 3, critical: 2 } },
+  climate: { title: 'Vegetation Stress Index', weights: { healthy: 4, stressed: 4, critical: 2 } },
+  marine: { title: 'Coastal Canopy Index', weights: { healthy: 5, stressed: 2, critical: 3 } },
+  nature: { title: 'Ecosystem Health Index', weights: { healthy: 6, stressed: 2, critical: 2 } },
+  research: { title: 'Field Sites Index', weights: { healthy: 5, stressed: 3, critical: 2 } },
+  career: { title: 'Regions of Interest', weights: { healthy: 5, stressed: 3, critical: 2 } },
+  education: { title: 'Study Areas Index', weights: { healthy: 6, stressed: 2, critical: 2 } },
+};
+
 const AIDashboard: React.FC = () => {
   const { slug = 'forest' } = useParams();
   const navigate = useNavigate();
   const bgUrl = bgMap[slug] || bgMap.forest;
   const aiTitle = titleMap[slug] || 'Forest AI';
+  const mapCfg = mapWeights[slug] || mapWeights.forest;
 
   const before = 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop';
   const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
@@ -73,7 +85,7 @@ const AIDashboard: React.FC = () => {
           {/* Dashboard below slider */}
           <div className="mt-0 grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2 grid gap-6">
-              <ForestHealthMap />
+              <ForestHealthMap title={mapCfg.title} statusWeights={mapCfg.weights} />
               <TrendChart />
             </div>
             <div className="lg:col-span-1">

@@ -23,21 +23,40 @@ interface Zone {
   status: ZoneStatus;
 }
 
-const generateZones = (): Zone[] => {
+interface ForestHealthMapProps {
+  title?: string;
+  statusWeights?: Partial<Record<ZoneStatus, number>>;
+}
+
+const chooseStatus = (r: number, w: Required<Record<ZoneStatus, number>>): ZoneStatus => {
+  const total = w.healthy + w.stressed + w.critical;
+  const pHealthy = w.healthy / total;
+  const pStressed = w.stressed / total;
+  if (r < pHealthy) return 'healthy';
+  if (r < pHealthy + pStressed) return 'stressed';
+  return 'critical';
+};
+
+const generateZones = (weights?: Partial<Record<ZoneStatus, number>>): Zone[] => {
   const zones: Zone[] = [];
   let id = 0;
+  const w: Required<Record<ZoneStatus, number>> = {
+    healthy: weights?.healthy ?? 6,
+    stressed: weights?.stressed ?? 3,
+    critical: weights?.critical ?? 1,
+  };
   for (let row = 0; row < 6; row++) {
     for (let col = 0; col < 10; col++) {
       const r = Math.random();
-      const status: ZoneStatus = r > 0.7 ? 'critical' : r > 0.4 ? 'stressed' : 'healthy';
+      const status = chooseStatus(r, w);
       zones.push({ id: `z-${id++}`, x: col, y: row, status });
     }
   }
   return zones;
 };
 
-const ForestHealthMap: React.FC = () => {
-  const [zones, setZones] = useState<Zone[]>(() => generateZones());
+const ForestHealthMap: React.FC<ForestHealthMapProps> = ({ title = 'Forest Health Index', statusWeights }) => {
+  const [zones, setZones] = useState<Zone[]>(() => generateZones(statusWeights));
   const [hover, setHover] = useState<Zone | null>(null);
 
   const counts = useMemo(() => zones.reduce((acc, z) => ({ ...acc, [z.status]: (acc[z.status] || 0) + 1 }), {} as Record<ZoneStatus, number>), [zones]);
@@ -55,7 +74,7 @@ const ForestHealthMap: React.FC = () => {
   return (
     <div className="rounded-xl p-5 bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-white/95 font-semibold">Forest Health Index</h3>
+        <h3 className="text-white/95 font-semibold">{title}</h3>
         <Legend />
       </div>
       <div className="relative">
