@@ -10,26 +10,81 @@ const themeContainer: Record<string, string> = {
   education: 'bg-[rgba(16,18,20,0.7)] border-white/15 backdrop-blur-md',
 };
 
-const BeforeAfterSlider: React.FC<{ beforeSrc: string; afterSrc: string; alt?: string; accentColor?: string; theme?: string }> = ({ beforeSrc, afterSrc, alt, accentColor = '#86C232', theme = 'forest' }) => {
+interface SliderProps {
+  beforeSrc: string;
+  afterSrc: string;
+  alt?: string;
+  accentColor?: string;
+  theme?: string;
+  beforeLabel?: string;
+  afterLabel?: string;
+}
+
+const FALLBACK_IMG = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225"><rect width="100%" height="100%" fill="%23000000"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23ffffff99" font-size="16">Image unavailable</text></svg>';
+
+const BeforeAfterSlider: React.FC<SliderProps> = ({ beforeSrc, afterSrc, alt, accentColor = '#86C232', theme = 'forest', beforeLabel = 'Before', afterLabel = 'After' }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [pos, setPos] = useState(0.5);
   const [dragging, setDragging] = useState(false);
+  const [orientation, setOrientation] = useState<'vertical' | 'horizontal'>('vertical');
+  const [swapSides, setSwapSides] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const rafRef = useRef<number | null>(null);
+  const dirRef = useRef<1 | -1>(1);
 
-  const setPosFromClientX = (clientX: number) => {
+  const [beforeOk, setBeforeOk] = useState(true);
+  const [afterOk, setAfterOk] = useState(true);
+  const [beforeLoaded, setBeforeLoaded] = useState(false);
+  const [afterLoaded, setAfterLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!playing) {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+      return;
+    }
+    const step = () => {
+      setPos((p) => {
+        const next = p + (dirRef.current === 1 ? 0.006 : -0.006);
+        if (next >= 1) {
+          dirRef.current = -1;
+          return 1;
+        }
+        if (next <= 0) {
+          dirRef.current = 1;
+          return 0;
+        }
+        return next;
+      });
+      rafRef.current = requestAnimationFrame(step);
+    };
+    rafRef.current = requestAnimationFrame(step);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    };
+  }, [playing]);
+
+  const setPosFromClient = (clientX: number, clientY: number) => {
     const rect = containerRef.current?.getBoundingClientRect();
     if (!rect) return;
-    const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
-    setPos(x / rect.width);
+    if (orientation === 'vertical') {
+      const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+      setPos(x / rect.width);
+    } else {
+      const y = Math.min(Math.max(clientY - rect.top, 0), rect.height);
+      setPos(y / rect.height);
+    }
   };
 
   const onPointerDown = (e: React.PointerEvent) => {
     setDragging(true);
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
-    setPosFromClientX(e.clientX);
+    setPosFromClient(e.clientX, e.clientY);
   };
   const onPointerMove = (e: React.PointerEvent) => {
     if (!dragging) return;
-    setPosFromClientX(e.clientX);
+    setPosFromClient(e.clientX, e.clientY);
   };
   const onPointerUp = (e: React.PointerEvent) => {
     setDragging(false);
@@ -37,25 +92,38 @@ const BeforeAfterSlider: React.FC<{ beforeSrc: string; afterSrc: string; alt?: s
   };
 
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowLeft') {
-      setPos((p) => Math.max(0, p - 0.02));
-    } else if (e.key === 'ArrowRight') {
-      setPos((p) => Math.min(1, p + 0.02));
+    const step = e.shiftKey ? 0.1 : 0.02;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      setPos((p) => Math.max(0, p - step));
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      setPos((p) => Math.min(1, p + step));
     } else if (e.key.toLowerCase() === 'r') {
       setPos(0.5);
+    } else if (e.key.toLowerCase() === 'o') {
+      setOrientation((o) => (o === 'vertical' ? 'horizontal' : 'vertical'));
+    } else if (e.key.toLowerCase() === 's') {
+      setSwapSides((v) => !v);
+    } else if (e.key.toLowerCase() === ' ') {
+      e.preventDefault();
+      setPlaying((p) => !p);
     }
   };
 
   const containerClass = themeContainer[theme] || themeContainer.forest;
   const percent = Math.round(pos * 100);
 
+  const bgSrc = swapSides ? afterSrc : beforeSrc;
+  const fgSrc = swapSides ? beforeSrc : afterSrc;
+
   return (
     <div className={`rounded-xl p-5 border shadow-[0_20px_60px_rgba(0,0,0,0.45)] ${containerClass}`}>
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-white/95 font-semibold">Satellite Imagery Viewer</h3>
-        <div className="flex items-center gap-3 text-xs text-white/80">
-          <span className="hidden md:inline">Drag the divider</span>
+        <div className="flex items-center gap-2 md:gap-3 text-xs text-white/80">
           <button className="px-2 py-1 rounded-md bg-white/10 border border-white/15 hover:bg-white/15" onClick={() => setPos(0.5)} aria-label="Reset slider">Reset</button>
+          <button className="px-2 py-1 rounded-md bg-white/10 border border-white/15 hover:bg-white/15" onClick={() => setOrientation((o) => (o === 'vertical' ? 'horizontal' : 'vertical'))} aria-label="Toggle orientation">{orientation === 'vertical' ? 'Vertical' : 'Horizontal'}</button>
+          <button className="px-2 py-1 rounded-md bg-white/10 border border-white/15 hover:bg-white/15" onClick={() => setSwapSides((v) => !v)} aria-label="Swap before/after">Swap</button>
+          <button className="px-2 py-1 rounded-md bg-white/10 border border-white/15 hover:bg-white/15" onClick={() => setPlaying((p) => !p)} aria-label="Play/Pause">{playing ? 'Pause' : 'Play'}</button>
         </div>
       </div>
       <div
@@ -67,6 +135,7 @@ const BeforeAfterSlider: React.FC<{ beforeSrc: string; afterSrc: string; alt?: s
         onPointerUp={onPointerUp}
         onPointerLeave={() => setDragging(false)}
         onKeyDown={onKeyDown}
+        onDoubleClick={() => setPos(0.5)}
         tabIndex={0}
         role="slider"
         aria-valuemin={0}
@@ -74,32 +143,81 @@ const BeforeAfterSlider: React.FC<{ beforeSrc: string; afterSrc: string; alt?: s
         aria-valuenow={percent}
         aria-label="Before and after comparison slider"
       >
-        {/* Images */}
-        <img src={beforeSrc} alt={alt || 'Before'} className="absolute inset-0 w-full h-full object-cover" draggable={false} decoding="async" fetchpriority="high" />
-        <div className="absolute inset-0" style={{ width: `${pos * 100}%`, overflow: 'hidden', transition: dragging ? undefined : 'width 120ms ease-out' }}>
-          <img src={afterSrc} alt={alt || 'After'} className="absolute inset-0 w-full h-full object-cover" draggable={false} decoding="async" fetchpriority="high" />
+        {/* Background image */}
+        {!beforeLoaded && (
+          <div className="absolute inset-0 animate-pulse bg-[linear-gradient(110deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02),rgba(255,255,255,0.06))] bg-[length:200%_100%]" />
+        )}
+        <img
+          src={bgSrc}
+          alt={alt || beforeLabel}
+          className="absolute inset-0 w-full h-full object-cover"
+          draggable={false}
+          decoding="async"
+          fetchpriority="high"
+          onError={() => setBeforeOk(false)}
+          onLoad={() => setBeforeLoaded(true)}
+          style={{ opacity: beforeOk ? 1 : 0 }}
+        />
+        {!beforeOk && <img src={FALLBACK_IMG} alt="Fallback" className="absolute inset-0 w-full h-full object-cover" />}
+
+        {/* Foreground image clip */}
+        <div
+          className="absolute inset-0"
+          style={
+            orientation === 'vertical'
+              ? { width: `${pos * 100}%`, overflow: 'hidden', transition: dragging ? undefined : 'width 140ms ease-out' }
+              : { height: `${pos * 100}%`, overflow: 'hidden', transition: dragging ? undefined : 'height 140ms ease-out' }
+          }
+        >
+          {!afterLoaded && (
+            <div className="absolute inset-0 animate-pulse bg-[linear-gradient(110deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02),rgba(255,255,255,0.06))] bg-[length:200%_100%]" />
+          )}
+          <img
+            src={fgSrc}
+            alt={alt || afterLabel}
+            className="absolute inset-0 w-full h-full object-cover"
+            draggable={false}
+            decoding="async"
+            fetchpriority="high"
+            onError={() => setAfterOk(false)}
+            onLoad={() => setAfterLoaded(true)}
+            style={{ opacity: afterOk ? 1 : 0 }}
+          />
+          {!afterOk && <img src={FALLBACK_IMG} alt="Fallback" className="absolute inset-0 w-full h-full object-cover" />}
         </div>
 
         {/* Theme tint overlay for readability */}
-        <div className="pointer-events-none absolute inset-0" style={{ background: `linear-gradient(90deg, ${accentColor}14 0%, transparent 25%, transparent 75%, ${accentColor}10 100%)` }} />
+        <div className="pointer-events-none absolute inset-0" style={{ background: orientation === 'vertical' ? `linear-gradient(90deg, ${accentColor}14 0%, transparent 25%, transparent 75%, ${accentColor}10 100%)` : `linear-gradient(180deg, ${accentColor}14 0%, transparent 25%, transparent 75%, ${accentColor}10 100%)` }} />
 
-        {/* Before/After badges */}
-        <span className="absolute top-2 left-2 text-[11px] md:text-xs font-semibold text-white/90 px-2 py-1 rounded-md bg-black/40 border border-white/15">Before</span>
-        <span className="absolute top-2 right-2 text-[11px] md:text-xs font-semibold text-white/90 px-2 py-1 rounded-md bg-black/40 border border-white/15">After</span>
+        {/* Labels */}
+        <span className="absolute top-2 left-2 text-[11px] md:text-xs font-semibold text-white/90 px-2 py-1 rounded-md bg-black/40 border border-white/15">{beforeLabel}</span>
+        <span className="absolute bottom-2 right-2 text-[11px] md:text-xs font-semibold text-white/90 px-2 py-1 rounded-md bg-black/40 border border-white/15">{afterLabel}</span>
 
-        {/* Handle + divider */}
-        <div className="absolute inset-y-0" style={{ left: `${pos * 100}%`, transition: dragging ? undefined : 'left 120ms ease-out' }}>
-          <div className="w-0.5 h-full" style={{ background: '#ffffffcc', boxShadow: '0 0 12px rgba(255,255,255,0.6)' }} />
-          <div
-            className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-black text-xs font-semibold px-3 py-1 rounded-full"
-            style={{ background: '#ffffff', border: `1px solid ${accentColor}`, boxShadow: `0 6px 20px ${accentColor}44` }}
-          >
-            ↔ {percent}%
+        {/* Divider handle */}
+        {orientation === 'vertical' ? (
+          <div className="absolute inset-y-0" style={{ left: `${pos * 100}%`, transition: dragging ? undefined : 'left 140ms ease-out' }}>
+            <div className="w-0.5 h-full" style={{ background: '#ffffffcc', boxShadow: '0 0 12px rgba(255,255,255,0.6)' }} />
+            <div
+              className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 text-black text-xs font-semibold px-3 py-1 rounded-full"
+              style={{ background: '#ffffff', border: `1px solid ${accentColor}`, boxShadow: `0 6px 20px ${accentColor}44` }}
+            >
+              ↔ {percent}%
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="absolute inset-x-0" style={{ top: `${pos * 100}%`, transition: dragging ? undefined : 'top 140ms ease-out' }}>
+            <div className="h-0.5 w-full" style={{ background: '#ffffffcc', boxShadow: '0 0 12px rgba(255,255,255,0.6)' }} />
+            <div
+              className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-black text-xs font-semibold px-3 py-1 rounded-full"
+              style={{ background: '#ffffff', border: `1px solid ${accentColor}`, boxShadow: `0 6px 20px ${accentColor}44` }}
+            >
+              ↕ {percent}%
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Accessible range control */}
+      {/* Range control */}
       <div className="mt-3">
         <input
           type="range"
@@ -111,6 +229,11 @@ const BeforeAfterSlider: React.FC<{ beforeSrc: string; afterSrc: string; alt?: s
           style={{ accentColor: accentColor }}
           aria-label="Adjust comparison"
         />
+      </div>
+
+      {/* Shortcuts */}
+      <div className="mt-2 text-[11px] text-white/60">
+        Shortcuts: ←/→ or ↑/↓ to move, Shift for large steps, R reset, O toggle orientation, S swap, Space play/pause
       </div>
     </div>
   );
