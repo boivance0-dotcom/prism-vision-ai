@@ -7,7 +7,7 @@ const forestHeroBgUrl = 'https://raw.githubusercontent.com/varunsingh3545/search
 
 const features = [
   { title: 'Nature AI', slug: 'nature', desc: 'Immersive nature intelligence for curious minds.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg' },
-  { title: 'Wildlife AI', slug: 'wildlife', desc: 'Track biodiversity and animal habitats.', img: 'https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=2000&auto=format&fit=crop' },
+  { title: 'Wildlife AI', slug: 'wildlife', desc: 'Track biodiversity and animal habitats.', img: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=2000&auto=format&fit=crop' },
   { title: 'Climate AI', slug: 'climate', desc: 'Climate trends and renewable energy insights.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg' },
   { title: 'Marine AI', slug: 'marine', desc: 'Protect oceans and marine ecosystems.', img: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg' },
   { title: 'Forest AI', slug: 'forest', desc: 'Monitor deforestation and forest health.', img: forestHeroBgUrl },
