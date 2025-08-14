@@ -84,9 +84,9 @@ const viewerImages: Record<string, { before: string; after: string; alt: string 
     alt: 'Marine habitat comparison',
   },
   nature: {
-    before: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=90&w=1920&h=1080&fit=crop&auto=format',
-    after: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=90&w=1920&h=1080&fit=crop&auto=format',
-    alt: 'Nature comparison',
+    before: 'https://source.unsplash.com/1920x1080/?bali,rice-terrace',
+    after: 'https://source.unsplash.com/1920x1080/?bali,temple',
+    alt: 'Bali landscape comparison',
   },
   research: {
     before: 'https://images.unsplash.com/photo-1517976487492-576ea6b2936d?q=90&w=1920&h=1080&fit=crop&auto=format',
