@@ -23,6 +23,7 @@ import Earth3D from '@/components/Earth3D';
 import EarthCSS from '@/components/EarthCSS';
 import EarthSimple from '@/components/EarthSimple';
 import EarthFallback from '@/components/EarthFallback';
+import EarthBackground from '@/components/EarthBackground';
 
 
 const Index = () => {
@@ -43,34 +44,22 @@ const Index = () => {
 
   const startExperience = () => setStarted(true);
 
-  const forestHeroBgUrl = 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg';
-
   const before = 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop';
   const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
 
   return (
     <div className="relative z-10 min-h-screen">
 
-      {/* Hero Section with Nature Background */}
+      {/* Hero Section with Earth and Space Background */}
       <div className="relative min-h-screen overflow-hidden">
-        {/* Fixed Background Image with cinematic treatment */}
-        <div
-          className="fixed-bg hero-image-filter"
-          style={{ backgroundImage: `url(${forestHeroBgUrl})`, zIndex: 0 as unknown as number }}
-          aria-hidden
-        />
-        <AnimatedGradient />
+        {/* Earth and Space Background */}
+        <EarthBackground />
 
         {/* Accent glow decorations */}
         <div className="pointer-events-none absolute -top-24 -left-24 w-[520px] h-[520px] rounded-full opacity-[0.1] blur-3xl" style={{ background: 'var(--accent,#86C232)' }} />
         <div className="pointer-events-none absolute -bottom-24 -right-24 w-[560px] h-[560px] rounded-full opacity-[0.08] blur-3xl" style={{ background: 'var(--accent,#86C232)' }} />
         {/* Localized readability scrim behind hero content */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_420px_at_50%_30%,rgba(0,0,0,0.45),transparent_70%)]" />
-
-        {/* Matte and readability overlays */}
-        <div className="hero-gradient-top" />
-        <div className="hero-gradient-bottom" />
-        <div className="hero-vignette" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_420px_at_50%_30%,rgba(0,0,0,0.25),transparent_70%)]" />
 
         <div className="relative z-10 container mx-auto px-6 py-16 min-h-screen flex flex-col page-enter">
           <div className="flex-1 grid place-items-center">
@@ -79,18 +68,6 @@ const Index = () => {
               {/* Initial State */}
               {!started && (
                 <div className="text-center animate-scale-fade-in parallax-item" data-speed="1">
-                  {/* Earth 3D Component - Prominently Featured */}
-                  <motion.div
-                    className="mb-8 mx-auto max-w-2xl"
-                    initial={prefersReducedMotion ? false : { scale: 0.8, opacity: 0 }}
-                    animate={prefersReducedMotion ? {} : { scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-                  >
-                    <div className="relative">
-                      <EarthFallback className="w-full h-[500px] rounded-2xl overflow-hidden border border-white/20 shadow-[0_25px_80px_rgba(0,0,0,0.6)]" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
-                    </div>
-                  </motion.div>
 
                   <motion.h1
                     className="font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/80 drop-shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
@@ -99,7 +76,7 @@ const Index = () => {
                     animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
                   >
-                    Nature Intelligence, Beautifully Rendered
+                    Earth Intelligence, Beautifully Rendered
                   </motion.h1>
 
                   <motion.div
@@ -109,7 +86,7 @@ const Index = () => {
                     transition={{ duration: 0.6, ease: EASE, delay: 0.4 }}
                   >
                     <p className="text-white/95 text-base md:text-xl font-medium tracking-wide bg-black/55 backdrop-blur-sm border border-white/15 rounded-lg px-5 py-4 shadow-[0_8px_30px_rgba(0,0,0,0.55)]">
-                      Explore forests, ecosystems, wildlife and climate signals with a sleek, theme-aware dashboard. Built for clarity. Designed to inspire.
+                      Explore our planet, monitor climate signals, and discover Earth's ecosystems with a sleek, space-themed dashboard. Built for clarity. Designed to inspire.
                     </p>
                   </motion.div>
 
@@ -128,7 +105,7 @@ const Index = () => {
                       >
                         Start Experience
                       </button>
-                      <Link to="/ai/forest" className="px-5 md:px-6 py-3 rounded-lg border border-white/30 text-white/95 hover:bg-white/10 transition">Explore Forest AI</Link>
+                      <Link to="/ai/forest" className="px-5 md:px-6 py-3 rounded-lg border border-white/30 text-white/95 hover:bg-white/10 transition">Explore Earth AI</Link>
                     </div>
                   </motion.div>
 
@@ -159,18 +136,6 @@ const Index = () => {
               {/* Experience State */}
               {started && (
                 <div className="animate-hero-in parallax-item mt-16 md:mt-24" data-speed="1">
-                  {/* Earth 3D Component in Experience State */}
-                  <motion.div
-                    className="mb-8 mx-auto max-w-xl"
-                    initial={prefersReducedMotion ? false : { scale: 0.8, opacity: 0 }}
-                    animate={prefersReducedMotion ? {} : { scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
-                  >
-                    <div className="relative">
-                      <EarthFallback className="w-full h-[300px] rounded-xl overflow-hidden border border-white/20 shadow-[0_20px_60px_rgba(0,0,0,0.5)]" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
-                    </div>
-                  </motion.div>
 
                   <div className="max-w-3xl mx-auto text-center">
                     <motion.div
@@ -186,7 +151,7 @@ const Index = () => {
                         What do you want to explore?
                       </h2>
                       <p className="mt-2 text-white/95 text-base md:text-lg">
-                        Explore forests, ecosystems, wildlife, and the rhythms of nature — our AI will guide you.
+                        Explore our planet, monitor climate signals, and discover Earth's ecosystems — our AI will guide you.
                       </p>
                     </motion.div>
                     <motion.div
