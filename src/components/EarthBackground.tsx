@@ -2,7 +2,7 @@ import React from 'react';
 
 const EarthBackground: React.FC = () => {
   return (
-    <div className="fixed inset-0 z-0">
+    <div className="fixed inset-0 z-[-1]">
       {/* Space Background */}
       <div 
         className="absolute inset-0"
@@ -50,11 +50,11 @@ const EarthBackground: React.FC = () => {
         <div className="relative">
           {/* Main Earth Sphere - Large and in background */}
           <div
-            className="w-[800px] h-[800px] rounded-full relative overflow-hidden opacity-20"
+            className="w-[800px] h-[800px] rounded-full relative overflow-hidden opacity-20 earth-spin"
             style={{
               background: 'linear-gradient(45deg, #4a90e2 0%, #357abd 25%, #2c5aa0 50%, #1e3a8a 75%, #1e40af 100%)',
               boxShadow: 'inset 0 0 100px rgba(0,0,0,0.5), 0 0 100px rgba(74, 144, 226, 0.2)',
-              animation: 'earth-spin 60s linear infinite'
+              animationDuration: '60s'
             }}
           >
             {/* Continents */}
@@ -113,10 +113,10 @@ const EarthBackground: React.FC = () => {
 
           {/* Orbital Ring */}
           <div
-            className="absolute inset-0 rounded-full border border-white/10"
+            className="absolute inset-0 rounded-full border border-white/10 earth-ring"
             style={{ 
               margin: '-20px',
-              animation: 'earth-spin 90s linear infinite reverse'
+              animationDuration: '90s'
             }}
           />
         </div>
@@ -140,17 +140,7 @@ const EarthBackground: React.FC = () => {
         />
       </div>
 
-      {/* CSS Animation */}
-      <style jsx>{`
-        @keyframes earth-spin {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-      `}</style>
+
     </div>
   );
 };

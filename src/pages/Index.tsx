@@ -48,7 +48,7 @@ const Index = () => {
   const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
 
   return (
-    <div className="relative z-10 min-h-screen">
+    <div className="relative z-0 min-h-screen">
 
       {/* Hero Section with Earth and Space Background */}
       <div className="relative min-h-screen overflow-hidden">
