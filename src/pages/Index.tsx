@@ -10,7 +10,7 @@ import AnimatedGradient from '@/components/AnimatedGradient';
 import FeatureCarousel from '@/components/FeatureCarousel';
 import Testimonials from '@/components/Testimonials';
 import { motion, useReducedMotion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import ForestHealthMap from '@/components/ForestHealthMap';
 import TrendChart from '@/components/TrendChart';
 import ThreatAnalysis from '@/components/ThreatAnalysis';
@@ -56,6 +56,10 @@ const Index = () => {
         />
         <AnimatedGradient />
 
+        {/* Accent glow decorations */}
+        <div className="pointer-events-none absolute -top-24 -left-24 w-[520px] h-[520px] rounded-full opacity-[0.1] blur-3xl" style={{ background: 'var(--accent,#86C232)' }} />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 w-[560px] h-[560px] rounded-full opacity-[0.08] blur-3xl" style={{ background: 'var(--accent,#86C232)' }} />
+
         {/* Matte and readability overlays */}
         <div className="hero-gradient-top" />
         <div className="hero-gradient-bottom" />
@@ -64,37 +68,59 @@ const Index = () => {
         <div className="relative z-10 container mx-auto px-6 py-16 min-h-screen flex flex-col page-enter">
           <div className="flex-1 grid place-items-center">
             {/* Stack the two states and animate between them */}
-            <div className="relative w-full">
+            <div className="relative w-full max-w-5xl mx-auto">
               {/* Initial State */}
               {!started && (
                 <div className="text-center animate-scale-fade-in parallax-item" data-speed="1">
                   <motion.h1
-                    className="hero-title-clean"
+                    className="font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/80 drop-shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
+                    style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', letterSpacing: '-0.02em' }}
                     initial={prefersReducedMotion ? false : { x: -50, opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
                   >
-                    Nature Makes Us Happy
+                    Nature Intelligence, Beautifully Rendered
                   </motion.h1>
 
                   <motion.p
-                    className="mt-5 inline-block max-w-[720px] bg-black/80 text-white px-6 py-3 rounded-lg text-base md:text-xl font-medium tracking-wide shadow-[0_8px_30px_rgba(0,0,0,0.55)]"
+                    className="mt-5 mx-auto max-w-[760px] text-white/90 text-base md:text-xl font-medium tracking-wide"
                     initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.4 }}
                   >
-                    Immersive nature intelligence for curious minds.
+                    Explore forests, ecosystems, wildlife and climate signals with a sleek, theme-aware dashboard. Built for clarity. Designed to inspire.
                   </motion.p>
 
                   <motion.div
-                    className="mt-8"
+                    className="mt-8 flex items-center justify-center gap-3 md:gap-4"
                     initial={prefersReducedMotion ? false : { y: 30, opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.9 }}
                   >
-                    <button onClick={startExperience} className="cta-outline-white cta-outline-white--lg hover-lift">
-                      Start Experience
-                    </button>
+                    <button onClick={startExperience} className="px-5 md:px-6 py-3 rounded-lg bg-[var(--accent,#86C232)] text-black font-semibold shadow-[0_12px_32px_rgba(134,194,50,0.35)] hover:opacity-90 transition">Start Experience</button>
+                    <Link to="/ai/forest" className="px-5 md:px-6 py-3 rounded-lg border border-white/20 text-white/95 hover:bg-white/10 transition">Explore Forest AI</Link>
+                  </motion.div>
+
+                  {/* Quick benefits strip */}
+                  <motion.div
+                    className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-4xl mx-auto"
+                    initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
+                    animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, ease: EASE, delay: 1.1 }}
+                  >
+                    <div className="rounded-xl bg-black/40 border border-white/10 px-4 py-3 text-white/85 text-sm">4K themed backgrounds</div>
+                    <div className="rounded-xl bg-black/40 border border-white/10 px-4 py-3 text-white/85 text-sm">Interactive maps & media</div>
+                    <div className="rounded-xl bg-black/40 border border-white/10 px-4 py-3 text-white/85 text-sm">Per‑AI color & layout harmony</div>
+                  </motion.div>
+
+                  {/* Search upfront for public */}
+                  <motion.div
+                    className="mt-8 max-w-xl mx-auto"
+                    initial={prefersReducedMotion ? false : { scale: 0.98, opacity: 0 }}
+                    animate={prefersReducedMotion ? {} : { scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.5, ease: EASE, delay: 1.0 }}
+                  >
+                    <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
                   </motion.div>
                 </div>
               )}
@@ -104,8 +130,8 @@ const Index = () => {
                 <div className="animate-hero-in parallax-item mt-16 md:mt-24" data-speed="1">
                   <div className="max-w-3xl mx-auto text-center">
                     <motion.h2
-                      className="text-white font-extrabold leading-tight"
-                      style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)', letterSpacing: '-0.01em', textShadow: '0 10px 20px rgba(0,0,0,0.45)' }}
+                      className="font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/80"
+                      style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)', letterSpacing: '-0.02em', textShadow: '0 10px 20px rgba(0,0,0,0.45)' }}
                       initial={prefersReducedMotion ? false : { x: -50, opacity: 0 }}
                       animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
                       transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
