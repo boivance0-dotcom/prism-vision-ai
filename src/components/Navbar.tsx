@@ -74,6 +74,9 @@ const Navbar: React.FC = () => {
 
         {/* Right: Links + Settings + Auth toggle */}
         <div className="flex items-center justify-end gap-3 md:gap-6 text-[14px] tracking-[0.08em] uppercase">
+          <span className={`hidden md:inline px-2 py-0.5 rounded-full border text-[11px] ${isLoggedIn ? 'text-white/90 border-white/30 bg-white/10' : 'text-black'} `} style={!isLoggedIn ? { backgroundColor: '#ffdd55', borderColor: '#00000022' } : undefined}>
+            {isLoggedIn ? 'Private' : 'Demo'}
+          </span>
           {!isLoggedIn ? (
             <>
               <Link to="/login" className="text-white/80 hover:text-white/100 transition-colors rounded px-1">Log in</Link>

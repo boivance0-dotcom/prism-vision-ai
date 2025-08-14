@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '@/components/SearchBar';
 import ResultCard, { ResultItem, ResultType, HealthStatus } from '@/components/results/ResultCard';
+import { useAuth } from '@/context/AuthContext';
 
 const bgMap: Record<string, { url: string; accent: string; heading: string; blurb: string; theme: string }> = {
 	nature: { url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#86C232', heading: 'Nature Results', blurb: 'Curated nature intelligence and discoveries.', theme: 'forest' },
@@ -17,6 +18,7 @@ const bgMap: Record<string, { url: string; accent: string; heading: string; blur
 const Results: React.FC = () => {
 	const [params] = useSearchParams();
 	const navigate = useNavigate();
+	const { isLoggedIn } = useAuth();
 	const query = params.get('q')?.trim() || '';
 	const aiParam = (params.get('ai') || 'forest').toLowerCase();
 	const theme = bgMap[aiParam] || bgMap.forest;
@@ -76,7 +78,7 @@ const Results: React.FC = () => {
 				<div className="relative z-10 container mx-auto px-6 py-10 md:py-14">
 					<div className="text-center max-w-3xl mx-auto page-enter">
 						<h1 className="hero-title-clean" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)', color: theme.accent }}>
-							{theme.heading}
+							{theme.heading} {isLoggedIn ? '' : '(Demo)'}
 						</h1>
 						<p className="mt-3 text-white/90 text-base md:text-lg">
 							{query ? (
@@ -112,7 +114,7 @@ const Results: React.FC = () => {
 
 					<div className="mt-8 grid gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3">
 						{items.map((it) => (
-							<ResultCard key={it.id} item={it} onView={(it) => { setActiveItem(it); setModalTab('overview'); }} accentColor={theme.accent} theme={theme.theme} />
+							<ResultCard key={it.id} item={it} onView={(it) => { setActiveItem(it); setModalTab('overview'); }} accentColor={theme.accent} theme={theme.theme} isLocked={!isLoggedIn} />
 						))}
 					</div>
 

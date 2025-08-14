@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Leaf, Activity, BookOpen, Camera, Shield } from 'lucide-react';
+import { MapPin, Leaf, Activity, BookOpen, Camera, Shield, Lock } from 'lucide-react';
 
 export type ResultType = 'project' | 'wildlife' | 'alert' | 'research';
 export type HealthStatus = 'healthy' | 'stressed' | 'critical';
@@ -59,8 +59,8 @@ const themeStyles: Record<string, { base: string; microBg?: string }> = {
 	},
 };
 
-const ResultCard: React.FC<{ item: ResultItem; onView: (item: ResultItem) => void; accentColor?: string; theme?: string }>
-= ({ item, onView, accentColor = '#86C232', theme = 'forest' }) => {
+const ResultCard: React.FC<{ item: ResultItem; onView: (item: ResultItem) => void; accentColor?: string; theme?: string; isLocked?: boolean }>
+= ({ item, onView, accentColor = '#86C232', theme = 'forest', isLocked = false }) => {
 	const confidencePct = Math.round((item.confidence ?? 0.9) * 100);
 	const border = STATUS_BORDER[item.health ?? 'healthy'];
 	const themeBase = themeStyles[theme]?.base || themeStyles.forest.base;
@@ -71,7 +71,6 @@ const ResultCard: React.FC<{ item: ResultItem; onView: (item: ResultItem) => voi
 			className={`group relative rounded-xl p-5 ${themeBase} border ${border} shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md hover:shadow-[0_24px_72px_rgba(0,0,0,0.6)] transition-transform duration-300 hover:-translate-y-2 overflow-hidden`}
 			style={{ boxShadow: `0 20px 60px rgba(0,0,0,0.45)` }}
 		>
-			{/* background micro-motion */}
 			<div className={`pointer-events-none absolute -inset-6 ${microBg} bg-center bg-cover opacity-0 group-hover:opacity-[0.08] scale-110 blur-md transition-all`} />
 
 			<div className="relative z-10 flex items-center gap-2 text-white/90 text-xs">
@@ -102,17 +101,22 @@ const ResultCard: React.FC<{ item: ResultItem; onView: (item: ResultItem) => voi
 				</div>
 				<button
 					onClick={() => onView(item)}
-					className="relative z-10 inline-flex items-center gap-2 px-3 py-1 rounded-md text-black text-xs font-semibold transition-opacity hover:opacity-90"
+					className={`relative z-10 inline-flex items-center gap-2 px-3 py-1 rounded-md text-black text-xs font-semibold transition-opacity hover:opacity-90 ${isLocked ? 'opacity-70' : ''}`}
 					style={{ backgroundColor: accentColor, boxShadow: `0 8px 24px ${accentColor}55` }}
 				>
-					{item.type === 'alert' ? 'Monitor Area' : 'View Details'}
+					{isLocked ? (<><Lock className="w-3 h-3" /> Sign in</>) : (item.type === 'alert' ? 'Monitor Area' : 'View Details')}
 				</button>
 			</div>
 
-			{/* wildlife micro icons on hover */}
 			{item.type === 'wildlife' && (
 				<div className="pointer-events-none absolute right-2 bottom-2 opacity-0 group-hover:opacity-100 transition-opacity">
 					<span className="text-white/80 text-lg">🦜</span>
+				</div>
+			)}
+
+			{isLocked && (
+				<div className="absolute inset-0 rounded-xl bg-black/40 backdrop-blur-[2px] border border-white/10 z-20 grid place-items-center">
+					<div className="text-white/85 text-xs inline-flex items-center gap-1 px-2 py-1 rounded bg-white/10 border border-white/15"><Lock className="w-3 h-3" /> Private feature</div>
 				</div>
 			)}
 		</article>
