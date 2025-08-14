@@ -9,6 +9,7 @@ import SearchBar from '@/components/SearchBar';
 import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import { useAuth } from '@/context/AuthContext';
 
 const bgMap: Record<string, string> = {
   nature: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=3840&h=2160&fit=crop&auto=format',
@@ -111,6 +112,7 @@ const viewerImages: Record<string, { before: string; after: string; alt: string 
 const AIDashboard: React.FC = () => {
   const { slug = 'forest' } = useParams();
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
   const bgUrl = bgMap[slug] || bgMap.forest;
   const aiTitle = titleMap[slug] || 'Forest AI';
   const mapCfg = mapWeights[slug] || mapWeights.forest;
@@ -122,6 +124,15 @@ const AIDashboard: React.FC = () => {
     if (!q) return;
     navigate(`/results?q=${encodeURIComponent(q)}&ai=${encodeURIComponent(slug)}`);
   };
+
+  const LockOverlay = () => (
+    <div className="absolute inset-0 z-10 grid place-items-center rounded-xl bg-black/50 backdrop-blur-sm border border-white/10">
+      <div className="text-center">
+        <div className="text-white font-semibold">Sign in to access</div>
+        <a href={`/login?next=${encodeURIComponent(location.pathname + location.search)}`} className="inline-block mt-2 px-3 py-1 rounded-md text-black text-xs font-semibold" style={{ backgroundColor: accent }}>Sign in</a>
+      </div>
+    </div>
+  );
 
   return (
     <div className="relative z-10 min-h-screen ai-theme" data-theme={slug} style={{ ['--accent' as any]: accent }}>
@@ -147,16 +158,24 @@ const AIDashboard: React.FC = () => {
           {/* Dashboard below slider */}
           <div className="mt-0 grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2 grid gap-6">
-              <ForestHealthMap title={mapCfg.title} statusWeights={mapCfg.weights} theme={slug} />
-              <TrendChart title={trend.title} values={trend.values} theme={slug} />
+              <div className="relative">
+                <ForestHealthMap title={mapCfg.title} statusWeights={mapCfg.weights} theme={slug} />
+                {!isLoggedIn && <LockOverlay />}
+              </div>
+              <div className="relative">
+                <TrendChart title={isLoggedIn ? trend.title : `${trend.title} (Demo)`} values={trend.values} theme={slug} />
+                {!isLoggedIn && <LockOverlay />}
+              </div>
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 relative">
               <ThreatAnalysis theme={slug} />
+              {!isLoggedIn && <LockOverlay />}
             </div>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-6 relative">
             <BeforeAfterSlider beforeSrc={viewer.before} afterSrc={viewer.after} alt={viewer.alt} accentColor={accent} theme={slug} />
+            {!isLoggedIn && <LockOverlay />}
           </div>
 
           {/* About + Contact */}

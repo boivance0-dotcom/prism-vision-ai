@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Settings, ArrowLeft } from 'lucide-react';
 import SettingsSheet from '@/components/SettingsSheet';
 import SearchBar from '@/components/SearchBar';
+import { useAuth } from '@/context/AuthContext';
 
 const SLUG_TITLE: Record<string, string> = {
   nature: 'Nature AI',
@@ -18,6 +19,7 @@ const SLUG_TITLE: Record<string, string> = {
 const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isLoggedIn, signIn, signOut } = useAuth();
 
   const aiMatch = location.pathname.match(/^\/ai\/([^/]+)/);
   const pathAISlug = aiMatch ? aiMatch[1] : undefined;
@@ -70,9 +72,16 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Right: Links + Settings */}
+        {/* Right: Links + Settings + Auth toggle */}
         <div className="flex items-center justify-end gap-3 md:gap-6 text-[14px] tracking-[0.08em] uppercase">
-          <Link to="/login" className="text-white/80 hover:text-white/100 transition-colors rounded px-1">Log in</Link>
+          {!isLoggedIn ? (
+            <>
+              <Link to="/login" className="text-white/80 hover:text-white/100 transition-colors rounded px-1">Log in</Link>
+              <button onClick={signIn} className="hidden md:inline text-white/80 hover:text-white/100 transition-colors rounded px-1">Mock Sign In</button>
+            </>
+          ) : (
+            <button onClick={signOut} className="text-white/80 hover:text-white/100 transition-colors rounded px-1">Sign Out</button>
+          )}
           <a href="#about" className="hidden md:inline text-white/80 hover:text-white/100 transition-colors rounded px-1">About us</a>
           <a href="#contact" className="hidden md:inline text-white/80 hover:text-white/100 transition-colors rounded px-1">Contact</a>
           <SettingsSheet>

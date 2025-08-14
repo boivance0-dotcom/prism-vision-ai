@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -9,13 +10,14 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const next = params.get('next') || '/';
+  const { signIn } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate auth
     setTimeout(() => {
       setLoading(false);
+      signIn();
       navigate(next);
     }, 600);
   };
