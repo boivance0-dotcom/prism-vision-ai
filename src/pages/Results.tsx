@@ -6,7 +6,7 @@ import ResultCard, { ResultItem, ResultType, HealthStatus } from '@/components/r
 const bgMap: Record<string, { url: string; accent: string; heading: string; blurb: string }> = {
   nature: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg', accent: '#86C232', heading: 'Nature Results', blurb: 'Curated nature intelligence and discoveries.' },
   forest: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg', accent: '#86C232', heading: 'Forest Results', blurb: 'Forest health, conservation, and monitoring insights.' },
-  wildlife: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/OIP.webp', accent: '#FFB703', heading: 'Wildlife Results', blurb: 'Species tracking, biodiversity, and habitat updates.' },
+  wildlife: { url: 'https://images.unsplash.com/photo-1465101162946-4377e57745c3?q=80&w=2000&auto=format&fit=crop', accent: '#FFB703', heading: 'Wildlife Results', blurb: 'Species tracking, biodiversity, and habitat updates.' },
   climate: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg', accent: '#00B4D8', heading: 'Climate Results', blurb: 'Trends, projections, and renewable transitions.' },
   marine: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg', accent: '#00C2FF', heading: 'Marine Results', blurb: 'Ocean health, coral status, and marine activity.' },
   research: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg', accent: '#C77DFF', heading: 'Research Results', blurb: 'Papers, datasets, and field study findings.' },
