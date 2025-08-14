@@ -19,7 +19,6 @@ import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import SatelliteGallery from '@/components/SatelliteGallery';
 import RealisticEarth from '@/components/RealisticEarth';
-import * as anime from 'animejs';
 
 const Index = () => {
   const [started, setStarted] = useState(false);
@@ -47,34 +46,48 @@ const Index = () => {
   const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
 
   useEffect(() => {
-    // Initial Earth entry animation
-    if (earthRef.current) {
-      anime.default({
-        targets: earthRef.current,
-        scale: [0, 1],
-        opacity: [0, 1],
-        duration: 3000,
-        easing: 'easeOutElastic(1, 0.5)',
-        delay: 500,
-        complete: () => {
-          setEarthAnimationComplete(true);
-          // Start content reveal after Earth animation
-          setTimeout(() => {
-            setShowContent(true);
-            if (contentRef.current) {
-              anime.default({
-                targets: contentRef.current,
-                translateY: [50, 0],
-                opacity: [0, 1],
-                duration: 2000,
-                easing: 'easeOutQuart',
-                delay: 500
-              });
+    // Import anime.js dynamically to avoid build issues
+    const loadAnime = async () => {
+      try {
+        const anime = await import('animejs');
+        
+        // Initial Earth entry animation
+        if (earthRef.current) {
+          anime.default({
+            targets: earthRef.current,
+            scale: [0, 1],
+            opacity: [0, 1],
+            duration: 3000,
+            easing: 'easeOutElastic(1, 0.5)',
+            delay: 500,
+            complete: () => {
+              setEarthAnimationComplete(true);
+              // Start content reveal after Earth animation
+              setTimeout(() => {
+                setShowContent(true);
+                if (contentRef.current) {
+                  anime.default({
+                    targets: contentRef.current,
+                    translateY: [50, 0],
+                    opacity: [0, 1],
+                    duration: 2000,
+                    easing: 'easeOutQuart',
+                    delay: 500
+                  });
+                }
+              }, 1000);
             }
-          }, 1000);
+          });
         }
-      });
-    }
+      } catch (error) {
+        console.error('Failed to load anime.js:', error);
+        // Fallback: show content immediately
+        setEarthAnimationComplete(true);
+        setTimeout(() => setShowContent(true), 1000);
+      }
+    };
+
+    loadAnime();
   }, []);
 
   return (
