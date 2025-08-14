@@ -51,6 +51,17 @@ const chartCfg: Record<string, { title: string; values?: number[] }> = {
   education: { title: 'Learning Engagement Trend' },
 };
 
+const accentMap: Record<string, string> = {
+  nature: '#86C232',
+  forest: '#86C232',
+  wildlife: '#FFB703',
+  climate: '#00B4D8',
+  marine: '#00C2FF',
+  research: '#C77DFF',
+  career: '#FFD166',
+  education: '#90E0EF',
+};
+
 const viewerImages: Record<string, { before: string; after: string; alt: string }> = {
   forest: {
     before: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=1920&h=1080&fit=crop&auto=format',
@@ -102,6 +113,7 @@ const AIDashboard: React.FC = () => {
   const mapCfg = mapWeights[slug] || mapWeights.forest;
   const trend = chartCfg[slug] || chartCfg.forest;
   const viewer = viewerImages[slug] || viewerImages.forest;
+  const accent = accentMap[slug] || accentMap.forest;
 
   const handleSearch = (q: string) => {
     if (!q) return;
@@ -147,7 +159,7 @@ const AIDashboard: React.FC = () => {
           </div>
 
           <div className="mt-6">
-            <BeforeAfterSlider beforeSrc={viewer.before} afterSrc={viewer.after} alt={viewer.alt} />
+            <BeforeAfterSlider beforeSrc={viewer.before} afterSrc={viewer.after} alt={viewer.alt} accentColor={accent} />
           </div>
         </div>
       </div>
