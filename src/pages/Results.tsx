@@ -4,6 +4,7 @@ import SearchBar from '@/components/SearchBar';
 import ResultCard, { ResultItem, ResultType, HealthStatus } from '@/components/results/ResultCard';
 import ResultListItem from '@/components/results/ResultListItem';
 import { useAuth } from '@/context/AuthContext';
+import { Fish, Leaf, CloudSun, BookOpen, Briefcase, GraduationCap, PawPrint } from 'lucide-react';
 
 const bgMap: Record<string, { url: string; accent: string; heading: string; blurb: string; theme: string }> = {
 	nature: { url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#86C232', heading: 'Nature Results', blurb: 'Curated nature intelligence and discoveries.', theme: 'forest' },
@@ -16,10 +17,26 @@ const bgMap: Record<string, { url: string; accent: string; heading: string; blur
 	education: { url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#1976D2', heading: 'Education Results', blurb: 'Courses, tutorials, and learning resources.', theme: 'education' },
 };
 
+const THEME_CFG: Record<string, { tint: string; icon: React.ReactNode; chips: string[] }> = {
+  wildlife: { tint: 'bg-[rgba(35,24,12,0.65)]', icon: <PawPrint className="w-6 h-6" />, chips: ['camera trap', 'migration', 'endangered'] },
+  climate: { tint: 'bg-[rgba(10,20,28,0.65)]', icon: <CloudSun className="w-6 h-6" />, chips: ['AQI', 'CO₂', 'forecast'] },
+  marine: { tint: 'bg-[rgba(8,18,30,0.6)]', icon: <Fish className="w-6 h-6" />, chips: ['SST', 'reef', 'currents'] },
+  forest: { tint: 'bg-[rgba(7,16,12,0.65)]', icon: <Leaf className="w-6 h-6" />, chips: ['deforestation', 'carbon', 'satellite'] },
+  research: { tint: 'bg-[rgba(18,20,28,0.7)]', icon: <BookOpen className="w-6 h-6" />, chips: ['papers', 'citations', 'trends'] },
+  career: { tint: 'bg-[rgba(14,20,34,0.7)]', icon: <Briefcase className="w-6 h-6" />, chips: ['jobs', 'skills', 'demand'] },
+  education: { tint: 'bg-[rgba(16,18,20,0.7)]', icon: <GraduationCap className="w-6 h-6" />, chips: ['courses', 'progress', 'skill map'] },
+  nature: { tint: 'bg-[rgba(7,16,12,0.65)]', icon: <Leaf className="w-6 h-6" />, chips: ['ecosystem', 'wellbeing'] },
+};
+
 const SidebarWidgets: React.FC<{ ai: string; accent: string }> = ({ ai, accent }) => {
 	return (
 		<aside className="lg:col-span-1">
 			<div className="sticky top-20 grid gap-4">
+				{/* Example themed widget */}
+				<div className={`rounded-xl p-4 ${THEME_CFG[ai]?.tint || 'bg-black/40'} border border-white/10`}>
+					<h4 className="text-white/90 font-semibold inline-flex items-center gap-2">{THEME_CFG[ai]?.icon} <span>Highlights</span></h4>
+					<div className="mt-2 text-white/75 text-sm">AI-specific quick stats and links</div>
+				</div>
 				{/* AI-specific widgets placeholders (ready for backend) */}
 				{ai === 'wildlife' && (
 					<div className="rounded-xl p-4 bg-black/40 border border-white/10">
@@ -176,7 +193,16 @@ const Results: React.FC = () => {
 					<div className="mt-6 grid gap-6 lg:grid-cols-3">
 						<main className="lg:col-span-2 grid gap-4">
 							{items.map((it) => (
-								<ResultListItem key={it.id} item={it} onView={(it) => { setActiveItem(it); setModalTab('overview'); }} accentColor={theme.accent} isLocked={false} />
+								<ResultListItem
+									key={it.id}
+									item={it}
+									onView={(it) => { setActiveItem(it); setModalTab('overview'); }}
+									accentColor={theme.accent}
+									isLocked={false}
+									aiIcon={THEME_CFG[aiParam]?.icon}
+									tintClass={THEME_CFG[aiParam]?.tint}
+									chips={THEME_CFG[aiParam]?.chips}
+								/>
 							))}
 
 							{/* Pagination controls */}
