@@ -348,12 +348,7 @@ const RealisticEarth: React.FC = () => {
 
   if (error) {
     return (
-      <div className="fixed inset-0 z-0 flex items-center justify-center bg-black">
-        <div className="text-white text-center">
-          <h2 className="text-2xl font-bold mb-4">Earth Background</h2>
-          <p className="text-gray-300">Loading Earth visualization...</p>
-        </div>
-      </div>
+      <div className="fixed inset-0 z-0 bg-black" />
     );
   }
 
@@ -367,12 +362,7 @@ const RealisticEarth: React.FC = () => {
       }}
     >
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-          <div className="text-white text-center">
-            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-sm text-gray-300">Loading...</p>
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-black" />
       )}
     </div>
   );
