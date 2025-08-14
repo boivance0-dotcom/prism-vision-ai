@@ -36,6 +36,7 @@ const Results: React.FC = () => {
 
 	const [showFilters, setShowFilters] = useState(false);
 	const [activeItem, setActiveItem] = useState<ResultItem | null>(null);
+	const [modalTab, setModalTab] = useState<'overview' | 'map' | 'media'>('overview');
 
 	const handleSearch = (next: string) => {
 		if (!next) return;
@@ -111,7 +112,7 @@ const Results: React.FC = () => {
 
 					<div className="mt-8 grid gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3">
 						{items.map((it) => (
-							<ResultCard key={it.id} item={it} onView={setActiveItem} accentColor={theme.accent} theme={theme.theme} />
+							<ResultCard key={it.id} item={it} onView={(it) => { setActiveItem(it); setModalTab('overview'); }} accentColor={theme.accent} theme={theme.theme} />
 						))}
 					</div>
 
@@ -130,12 +131,69 @@ const Results: React.FC = () => {
 							<button className="text-white/70 hover:text-white" onClick={() => setActiveItem(null)}>Close</button>
 						</div>
 						<p className="text-white/80 mt-2">{activeItem.description}</p>
-						<div className="mt-4 h-48 rounded-lg bg-black/30 border border-white/10 grid place-items-center text-white/60">
-							Interactive map and media placeholder
+
+						<div className="mt-4 flex items-center gap-2 text-xs">
+							<button onClick={() => setModalTab('overview')} className={`px-2 py-1 rounded border ${modalTab === 'overview' ? 'bg-white/15 text-white border-white/25' : 'bg-white/10 text-white/80 border-white/15'}`}>Overview</button>
+							<button onClick={() => setModalTab('map')} className={`px-2 py-1 rounded border ${modalTab === 'map' ? 'bg-white/15 text-white border-white/25' : 'bg-white/10 text-white/80 border-white/15'}`}>Map</button>
+							<button onClick={() => setModalTab('media')} className={`px-2 py-1 rounded border ${modalTab === 'media' ? 'bg-white/15 text-white border-white/25' : 'bg-white/10 text-white/80 border-white/15'}`}>Media</button>
 						</div>
+
+						{modalTab === 'overview' && (
+							<div className="mt-3 grid gap-3 text-sm text-white/85">
+								<div className="grid grid-cols-2 gap-3">
+									<div className="rounded bg-black/30 border border-white/10 px-3 py-2">Type: <span className="font-semibold capitalize">{activeItem.type}</span></div>
+									<div className="rounded bg-black/30 border border-white/10 px-3 py-2">Health: <span className="font-semibold capitalize">{activeItem.health}</span></div>
+									<div className="rounded bg-black/30 border border-white/10 px-3 py-2">Location: <span className="font-semibold">{activeItem.location || 'Unknown'}</span></div>
+									<div className="rounded bg-black/30 border border-white/10 px-3 py-2">Confidence: <span className="font-semibold">{Math.round((activeItem.confidence ?? 0.9) * 100)}%</span></div>
+								</div>
+								<div className="rounded bg-black/30 border border-white/10 px-3 py-3">
+									<div className="text-white/70 text-xs mb-1">Ready for backend</div>
+									<pre className="text-[11px] text-white/80 overflow-auto">
+									{JSON.stringify({
+										endpoint: '/api/results/:id',
+										resultId: activeItem.id,
+										params: { include: ['geometry', 'media', 'metrics'] },
+									}, null, 2)}
+									</pre>
+								</div>
+							</div>
+						)}
+
+						{modalTab === 'map' && (
+							<div className="mt-3">
+								<div
+									id="result-map"
+									className="h-48 md:h-64 rounded-lg bg-black/30 border border-white/10"
+									data-endpoint="/api/results/:id/geometry"
+									data-result-id={activeItem.id}
+									data-location={activeItem.location || ''}
+								/>
+								<div className="mt-2 text-white/70 text-xs">This interactive map container is ready for a map library (Mapbox/Leaflet). Use the data-* attributes above.</div>
+							</div>
+						)}
+
+						{modalTab === 'media' && (
+							<div className="mt-3 grid gap-3 md:grid-cols-2">
+								<div className="rounded-lg overflow-hidden bg-black/30 border border-white/10">
+									<div className="aspect-video bg-white/5 grid place-items-center text-white/60 text-xs"
+										data-endpoint="/api/results/:id/media"
+										data-result-id={activeItem.id}
+									>
+										Media placeholder (image/video)
+									</div>
+								</div>
+								<div className="rounded-lg overflow-hidden bg-black/30 border border-white/10">
+									<div className="p-3 text-white/80 text-sm">
+										Random notes: high canopy density; signs of regrowth; low fire risk. Attach richer metadata from backend here.
+									</div>
+								</div>
+							</div>
+						)}
+
 						<div className="mt-4 flex items-center gap-3">
 							<button className="px-3 py-2 rounded-md bg-white text-black text-sm font-semibold">Contribute Data</button>
 							<button className="px-3 py-2 rounded-md text-black text-sm font-semibold" style={{ backgroundColor: theme.accent }}>Add Observation</button>
+							<div className="hidden" data-endpoint="/api/results/:id" data-result-id={activeItem.id} />
 						</div>
 					</div>
 				</div>
