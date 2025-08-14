@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '@/components/SearchBar';
-import ResultCard, { ResultItem, ResultType, HealthStatus } from '@/components/results/ResultCard';
-import ResultListItem from '@/components/results/ResultListItem';
+import ResultRichItem from '@/components/results/ResultRichItem';
 import { useAuth } from '@/context/AuthContext';
 import { Fish, Leaf, CloudSun, BookOpen, Briefcase, GraduationCap, PawPrint } from 'lucide-react';
 
@@ -93,21 +92,21 @@ const Results: React.FC = () => {
 	const aiParam = (params.get('ai') || 'forest').toLowerCase();
 	const theme = bgMap[aiParam] || bgMap.forest;
 
-	const [items, setItems] = useState<ResultItem[]>(() =>
+	const [items, setItems] = useState<any[]>(() =>
 		Array.from({ length: 12 }).map((_, i) => ({
 			id: `r-${i}`,
-			type: (['project', 'wildlife', 'alert', 'research'] as ResultType[])[i % 4],
+			type: (['project', 'wildlife', 'alert', 'research'] as any[])[i % 4],
 			title: `Result ${i + 1}: ${query || 'Insight'}`,
 			description: 'Concise summary with high signal, tailored to the selected AI context.',
 			location: ['Amazon', 'Congo Basin', 'Sumatra', 'Borneo'][i % 4],
-			health: (['healthy', 'stressed', 'critical'] as HealthStatus[])[i % 3],
+			health: (['healthy', 'stressed', 'critical'] as any[])[i % 3],
 			confidence: 0.6 + (i % 5) * 0.08,
 			endangered: i % 5 === 0,
 		}))
 	);
 
 	const [showFilters, setShowFilters] = useState(false);
-	const [activeItem, setActiveItem] = useState<ResultItem | null>(null);
+	const [activeItem, setActiveItem] = useState<any | null>(null);
 	const [modalTab, setModalTab] = useState<'overview' | 'map' | 'media'>('overview');
 
 	const handleSearch = (next: string) => {
@@ -119,11 +118,11 @@ const Results: React.FC = () => {
 		const start = items.length;
 		const more = Array.from({ length: 9 }).map((_, i) => ({
 			id: `r-${start + i}`,
-			type: (['project', 'wildlife', 'alert', 'research'] as ResultType[])[(start + i) % 4],
+			type: (['project', 'wildlife', 'alert', 'research'] as any[])[(start + i) % 4],
 			title: `Result ${start + i + 1}: ${query || 'Insight'}`,
 			description: 'Additional relevant data appended seamlessly as you scroll.',
 			location: ['Amazon', 'Congo Basin', 'Sumatra', 'Borneo'][(start + i) % 4],
-			health: (['healthy', 'stressed', 'critical'] as HealthStatus[])[(start + i) % 3],
+			health: (['healthy', 'stressed', 'critical'] as any[])[(start + i) % 3],
 			confidence: 0.6 + ((start + i) % 5) * 0.08,
 			endangered: (start + i) % 5 === 0,
 		}));
@@ -131,6 +130,8 @@ const Results: React.FC = () => {
 	};
 
 	const [page, setPage] = useState(1);
+
+	const makeThumb = (i: number) => `https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=60&w=${500 + i * 20}&auto=format&fit=crop`;
 
 	return (
 		<div className="relative z-10 min-h-screen">
@@ -189,31 +190,29 @@ const Results: React.FC = () => {
 						</div>
 					</div>
 
-					{/* Main layout: list + sidebar */}
-					<div className="mt-6 grid gap-6 lg:grid-cols-3">
-						<main className="lg:col-span-2 grid gap-4">
-							{items.map((it) => (
-								<ResultListItem
+					{/* Centered 70% width list */}
+					<div className="mt-6 mx-auto" style={{ width: 'min(1100px, 70vw)' }}>
+						<div className="grid gap-4">
+							{items.map((it, idx) => (
+								<ResultRichItem
 									key={it.id}
 									item={it}
 									onView={(it) => { setActiveItem(it); setModalTab('overview'); }}
 									accentColor={theme.accent}
-									isLocked={false}
-									aiIcon={THEME_CFG[aiParam]?.icon}
-									tintClass={THEME_CFG[aiParam]?.tint}
+									url="#"
+									source={`${aiParam.toUpperCase()} • example.org`}
+									date={`Today ${String(9 + (idx % 6)).padStart(2, '0')}:${String(10 + (idx % 5) * 5).padStart(2, '0')}`}
+									thumbUrl={makeThumb(idx)}
 									chips={THEME_CFG[aiParam]?.chips}
 								/>
 							))}
-
 							{/* Pagination controls */}
 							<div className="pt-2 flex items-center justify-center gap-2 text-sm">
 								<button onClick={() => setPage((p) => Math.max(1, p - 1))} className="px-3 py-1 rounded bg-white/10 border border-white/15 text-white/85">Prev</button>
 								<span className="text-white/80">Page {page}</span>
 								<button onClick={() => setPage((p) => p + 1)} className="px-3 py-1 rounded bg-white/10 border border-white/15 text-white/85">Next</button>
 							</div>
-						</main>
-
-						<SidebarWidgets ai={aiParam} accent={theme.accent} />
+						</div>
 					</div>
 
 					{/* Modal remains */}
