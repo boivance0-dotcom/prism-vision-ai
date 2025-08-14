@@ -4,7 +4,7 @@ import SearchBar from '@/components/SearchBar';
 import ResultCard, { ResultItem, ResultType, HealthStatus } from '@/components/results/ResultCard';
 
 const bgMap: Record<string, { url: string; accent: string; heading: string; blurb: string; theme: string }> = {
-	nature: { url: 'https://images.unsplash.com/photo-1504609813442-a8924e83f76e?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#86C232', heading: 'Nature Results', blurb: 'Curated nature intelligence and discoveries.', theme: 'forest' },
+	nature: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg', accent: '#86C232', heading: 'Nature Results', blurb: 'Curated nature intelligence and discoveries.', theme: 'forest' },
 	forest: { url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#86C232', heading: 'Forest Results', blurb: 'Forest health, conservation, and monitoring insights.', theme: 'forest' },
 	wildlife: { url: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#5C4033', heading: 'Wildlife Results', blurb: 'Species tracking, biodiversity, and habitat updates.', theme: 'wildlife' },
 	climate: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg', accent: '#4DB6E2', heading: 'Climate Results', blurb: 'Trends, projections, and renewable transitions.', theme: 'climate' },
