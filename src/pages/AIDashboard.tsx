@@ -14,7 +14,7 @@ const bgMap: Record<string, string> = {
   wildlife: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=90&w=3840&h=2160&fit=crop&auto=format',
   climate: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg',
   marine: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=90&w=3840&h=2160&fit=crop&auto=format',
-  research: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?q=90&w=3840&h=2160&fit=crop&auto=format',
+  research: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=90&w=3840&h=2160&fit=crop&auto=format',
   career: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=90&w=3840&h=2160&fit=crop&auto=format',
   education: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=90&w=3840&h=2160&fit=crop&auto=format',
 };
