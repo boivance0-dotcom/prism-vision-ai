@@ -129,13 +129,13 @@ const AIDashboard: React.FC = () => {
           style={{ backgroundImage: `url(${bgUrl})`, zIndex: 0 as unknown as number }}
           aria-hidden
         />
+        {/* Theme tint overlay */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(1200px_800px_at_10%_10%, ${accent}10, transparent 60%), radial-gradient(1000px_700px_at_90%_30%, ${accent}12, transparent 55%)` }} />
         <div className="hero-gradient-top" />
         <div className="hero-gradient-bottom" />
         <div className="hero-vignette" />
 
         <div className="relative z-10 container mx-auto px-6 py-10 md:py-14">
-          {/* Removed heading text to show only the AI image background */}
-          
           {/* Slider at top (compact), initialized to this AI */}
           <div className="mt-6 max-w-5xl mx-auto transform origin-top scale-90 md:scale-95">
             <FeatureCarousel initialTitle={aiTitle} />
@@ -144,16 +144,16 @@ const AIDashboard: React.FC = () => {
           {/* Dashboard below slider */}
           <div className="mt-0 grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2 grid gap-6">
-              <ForestHealthMap title={mapCfg.title} statusWeights={mapCfg.weights} />
-              <TrendChart title={trend.title} values={trend.values} />
+              <ForestHealthMap title={mapCfg.title} statusWeights={mapCfg.weights} theme={slug} />
+              <TrendChart title={trend.title} values={trend.values} theme={slug} />
             </div>
             <div className="lg:col-span-1">
-              <ThreatAnalysis />
+              <ThreatAnalysis theme={slug} />
             </div>
           </div>
 
           <div className="mt-6">
-            <BeforeAfterSlider beforeSrc={viewer.before} afterSrc={viewer.after} alt={viewer.alt} accentColor={accent} />
+            <BeforeAfterSlider beforeSrc={viewer.before} afterSrc={viewer.after} alt={viewer.alt} accentColor={accent} theme={slug} />
           </div>
         </div>
       </div>
