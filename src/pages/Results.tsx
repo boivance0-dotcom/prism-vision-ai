@@ -5,6 +5,13 @@ import ResultRichItem from '@/components/results/ResultRichItem';
 import { useAuth } from '@/context/AuthContext';
 import { Fish, Leaf, CloudSun, BookOpen, Briefcase, GraduationCap, PawPrint } from 'lucide-react';
 
+// Backend dev note:
+// - This page is wired for API integration. See the following locations:
+//   1) Sticky bar: call performSearch(q, filters, page, isPrivate) and set list items
+//   2) List items: render from API response items (title, snippet, url, source, thumb)
+//   3) Modal tabs: hydrate Map/Media using data-* attributes
+//   4) Use parseFilters(URLSearchParams) to build server filter params
+
 const bgMap: Record<string, { url: string; accent: string; heading: string; blurb: string; theme: string }> = {
 	nature: { url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#86C232', heading: 'Nature Results', blurb: 'Curated nature intelligence and discoveries.', theme: 'forest' },
 	forest: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg', accent: '#86C232', heading: 'Forest Results', blurb: 'Forest health, conservation, and monitoring insights.', theme: 'forest' },
@@ -131,6 +138,9 @@ const Results: React.FC = () => {
 
 	const [page, setPage] = useState(1);
 
+	// Backend dev note:
+	// Replace the mock items below with the server response from /api/search.
+	// Keep the shape compatible with ResultRichItem: { title, description, url, source, thumbUrl }.
 	const makeThumb = (i: number) => `https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=60&w=${500 + i * 20}&auto=format&fit=crop`;
 
 	return (
@@ -190,7 +200,8 @@ const Results: React.FC = () => {
 						</div>
 					</div>
 
-					{/* Centered 70% width list */}
+					{/* Backend dev note: center column shows search results. Populate from /api/search.
+         Call performSearch(query, filters, page, isLoggedIn) and setItems with the response */}
 					<div className="mt-6 mx-auto" style={{ width: 'min(1100px, 70vw)' }}>
 						<div className="grid gap-4">
 							{items.map((it, idx) => (
@@ -199,14 +210,14 @@ const Results: React.FC = () => {
 									item={it}
 									onView={(it) => { setActiveItem(it); setModalTab('overview'); }}
 									accentColor={theme.accent}
-									url="#"
-									source={`${aiParam.toUpperCase()} • example.org`}
-									date={`Today ${String(9 + (idx % 6)).padStart(2, '0')}:${String(10 + (idx % 5) * 5).padStart(2, '0')}`}
-									thumbUrl={makeThumb(idx)}
+									url="#" // Backend dev: set this to the canonical URL from the result
+									source={`${aiParam.toUpperCase()} • example.org`} // Backend dev: use domain/section
+									date={`Today ${String(9 + (idx % 6)).padStart(2, '0')}:${String(10 + (idx % 5) * 5).padStart(2, '0')}`} // Backend dev: server-provided timestamp
+									thumbUrl={makeThumb(idx)} // Backend dev: result.thumbnailUrl
 									chips={THEME_CFG[aiParam]?.chips}
 								/>
 							))}
-							{/* Pagination controls */}
+							{/* Pagination controls (Backend dev: use total/pages from /api/search) */}
 							<div className="pt-2 flex items-center justify-center gap-2 text-sm">
 								<button onClick={() => setPage((p) => Math.max(1, p - 1))} className="px-3 py-1 rounded bg-white/10 border border-white/15 text-white/85">Prev</button>
 								<span className="text-white/80">Page {page}</span>

@@ -1,4 +1,10 @@
 import React from 'react';
+// Backend dev note:
+// - Fetch AI-specific data on mount using slug: map weights, trend values, and gallery images
+// - Endpoints to consider:
+//   GET /api/ai/:slug/map-weights   -> pass to ForestHealthMap
+//   GET /api/ai/:slug/trend         -> pass to TrendChart
+//   GET /api/ai/:slug/gallery/today -> pass to SatelliteGallery (images)
 import { useParams, useNavigate } from 'react-router-dom';
 import FeatureCarousel from '@/components/FeatureCarousel';
 import ForestHealthMap from '@/components/ForestHealthMap';
@@ -134,6 +140,8 @@ const AIDashboard: React.FC = () => {
     </div>
   );
 
+  // Backend dev note:
+  // Replace the gallery placeholder with data from /api/ai/:slug/gallery/today
   const gallery: Array<{ url: string; caption: string; time?: string }> = [
     { url: viewer.before, caption: 'Morning pass', time: '09:10' },
     { url: viewer.after, caption: 'Afternoon pass', time: '14:25' },

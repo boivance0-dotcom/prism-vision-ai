@@ -1,5 +1,9 @@
 import React from 'react';
 
+// Backend dev note:
+// - Hydrate this gallery with GET /api/ai/:slug/gallery/today
+// - Expect an array of { url, caption, time, source }
+// - The data-endpoint attribute is provided for progressive enhancement
 interface GalleryImage {
   url: string;
   caption?: string;
