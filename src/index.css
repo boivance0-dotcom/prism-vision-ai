@@ -448,3 +448,22 @@
   .is-visible.reveal-right,
   .is-visible.reveal-fade { transform: translate(0,0); opacity: 1; }
 }
+
+/* Theme helpers */
+.ai-theme .theme-heading {
+  color: var(--accent);
+  text-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+.ai-theme .theme-accent {
+  color: var(--accent);
+}
+.ai-theme .theme-accent-bg {
+  background-color: var(--accent);
+}
+.ai-theme .theme-accent-border {
+  border-color: var(--accent);
+}
+/* Subtle card hover glow in accent */
+.ai-theme .card:hover {
+  box-shadow: 0 16px 48px var(--accent);
+}

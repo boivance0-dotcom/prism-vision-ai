@@ -54,12 +54,12 @@ const chartCfg: Record<string, { title: string; values?: number[] }> = {
 const accentMap: Record<string, string> = {
   nature: '#86C232',
   forest: '#86C232',
-  wildlife: '#FFB703',
-  climate: '#00B4D8',
-  marine: '#00C2FF',
-  research: '#C77DFF',
-  career: '#FFD166',
-  education: '#90E0EF',
+  wildlife: '#5C4033',
+  climate: '#4DB6E2',
+  marine: '#00B8D9',
+  research: '#2196F3',
+  career: '#FFC107',
+  education: '#1976D2',
 };
 
 const viewerImages: Record<string, { before: string; after: string; alt: string }> = {
@@ -121,7 +121,7 @@ const AIDashboard: React.FC = () => {
   };
 
   return (
-    <div className="relative z-10 min-h-screen">
+    <div className="relative z-10 min-h-screen ai-theme" data-theme={slug} style={{ ['--accent' as any]: accent }}>
       <div className="relative overflow-hidden">
         {/* AI background (no blur) */}
         <div
@@ -135,7 +135,7 @@ const AIDashboard: React.FC = () => {
 
         <div className="relative z-10 container mx-auto px-6 py-10 md:py-14">
           <div className="page-enter text-center max-w-4xl mx-auto">
-            <h1 className="hero-title-clean" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)' }}>{aiTitle} Dashboard</h1>
+            <h1 className="hero-title-clean theme-heading" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)' }}>{aiTitle} Dashboard</h1>
             <p className="mt-2 text-white/85 max-w-3xl mx-auto">Live insights, monitoring, and AI-driven analysis.</p>
             <div className="mt-5">
               <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
