@@ -16,6 +16,7 @@ import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/context/AuthContext';
+import CareerInsights from '@/components/CareerInsights';
 
 const bgMap: Record<string, string> = {
   nature: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=3840&h=2160&fit=crop&auto=format',
@@ -175,8 +176,9 @@ const AIDashboard: React.FC = () => {
               <ForestHealthMap title={mapCfg.title} statusWeights={mapCfg.weights} theme={slug} />
               <TrendChart title={trend.title} values={trend.values} theme={slug} />
             </div>
-            <div className="lg:col-span-1 relative">
+            <div className="lg:col-span-1 relative grid gap-6">
               <ThreatAnalysis theme={slug} />
+              {slug === 'career' && <CareerInsights accentColor={accent} />}
             </div>
           </div>
 
