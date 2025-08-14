@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Settings } from 'lucide-react';
+import { Settings, ArrowLeft } from 'lucide-react';
 import SettingsSheet from '@/components/SettingsSheet';
 import SearchBar from '@/components/SearchBar';
 
@@ -17,26 +17,33 @@ const Navbar: React.FC = () => {
     navigate(`/results?q=${encodeURIComponent(query)}&ai=${encodeURIComponent(ai)}`);
   };
 
+  const goBack = () => navigate(-1);
+
   return (
     <header
       className={"fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/60 shadow-[0_6px_24px_rgba(0,0,0,0.35)]"}
       role="banner"
     >
       <nav
-        className={"mx-auto max-w-7xl flex items-center justify-between gap-4 px-4 md:px-8 h-16"}
+        className={"mx-auto max-w-7xl flex items-center justify-between gap-3 px-4 md:px-8 h-16"}
         aria-label="Primary"
       >
-        {/* Left: Logo + Brand */}
-        <Link to="/forest-ai" className="flex items-center gap-3 rounded hover:opacity-90 focus-visible:underline" >
-          <div className="h-10 w-10 md:h-12 md:w-12 rounded bg-white/10 border border-white/20 flex items-center justify-center text-white font-bold">
-            FA
-          </div>
-          <span className="text-white/95 font-semibold tracking-wide hidden sm:inline">Forest AI</span>
-          <span className="sr-only">Forest AI Home</span>
-        </Link>
+        {/* Left: Back + Brand */}
+        <div className="flex items-center gap-2">
+          <button onClick={goBack} aria-label="Go back" className="h-10 w-10 grid place-items-center rounded-full border border-white/30 text-white/90 hover:text-white hover:bg-white/10 transition-colors">
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <Link to="/forest-ai" className="flex items-center gap-3 rounded hover:opacity-90 focus-visible:underline" >
+            <div className="h-10 w-10 md:h-12 md:w-12 rounded bg-white/10 border border-white/20 flex items-center justify-center text-white font-bold">
+              FA
+            </div>
+            <span className="text-white/95 font-semibold tracking-wide hidden sm:inline">Forest AI</span>
+            <span className="sr-only">Forest AI Home</span>
+          </Link>
+        </div>
 
-        {/* Center: Global Search */}
-        <div className="flex-1 hidden sm:block">
+        {/* Center: Global Search (always visible) */}
+        <div className="flex-1 block">
           <div className="max-w-xl mx-auto">
             <SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
           </div>
