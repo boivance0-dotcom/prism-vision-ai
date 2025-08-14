@@ -51,6 +51,49 @@ const chartCfg: Record<string, { title: string; values?: number[] }> = {
   education: { title: 'Learning Engagement Trend' },
 };
 
+const viewerImages: Record<string, { before: string; after: string; alt: string }> = {
+  forest: {
+    before: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=1920&h=1080&fit=crop&auto=format',
+    after: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=90&w=1920&h=1080&fit=crop&auto=format',
+    alt: 'Forest canopy comparison',
+  },
+  wildlife: {
+    before: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=90&w=1920&h=1080&fit=crop&auto=format',
+    after: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=90&w=1920&h=1080&fit=crop&auto=format',
+    alt: 'Wildlife habitat comparison',
+  },
+  climate: {
+    before: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=90&w=1920&h=1080&fit=crop&auto=format',
+    after: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=90&w=1920&h=1080&fit=crop&auto=format',
+    alt: 'Climate impact comparison',
+  },
+  marine: {
+    before: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=90&w=1920&h=1080&fit=crop&auto=format',
+    after: 'https://images.unsplash.com/photo-1504609813442-a8924e83f76e?q=90&w=1920&h=1080&fit=crop&auto=format',
+    alt: 'Marine habitat comparison',
+  },
+  nature: {
+    before: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=90&w=1920&h=1080&fit=crop&auto=format',
+    after: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?q=90&w=1920&h=1080&fit=crop&auto=format',
+    alt: 'Nature comparison',
+  },
+  research: {
+    before: 'https://images.unsplash.com/photo-1517976487492-576ea6b2936d?q=90&w=1920&h=1080&fit=crop&auto=format',
+    after: 'https://images.unsplash.com/photo-1523246191869-8b30bf8b4d56?q=90&w=1920&h=1080&fit=crop&auto=format',
+    alt: 'Research sites comparison',
+  },
+  career: {
+    before: 'https://images.unsplash.com/photo-1529336953121-ad5a0d43d0b5?q=90&w=1920&h=1080&fit=crop&auto=format',
+    after: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=90&w=1920&h=1080&fit=crop&auto=format',
+    alt: 'Career growth comparison',
+  },
+  education: {
+    before: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?q=90&w=1920&h=1080&fit=crop&auto=format',
+    after: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=90&w=1920&h=1080&fit=crop&auto=format',
+    alt: 'Education engagement comparison',
+  },
+};
+
 const AIDashboard: React.FC = () => {
   const { slug = 'forest' } = useParams();
   const navigate = useNavigate();
@@ -58,9 +101,7 @@ const AIDashboard: React.FC = () => {
   const aiTitle = titleMap[slug] || 'Forest AI';
   const mapCfg = mapWeights[slug] || mapWeights.forest;
   const trend = chartCfg[slug] || chartCfg.forest;
-
-  const before = 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?q=80&w=1600&auto=format&fit=crop';
-  const after = 'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop';
+  const viewer = viewerImages[slug] || viewerImages.forest;
 
   const handleSearch = (q: string) => {
     if (!q) return;
@@ -106,7 +147,7 @@ const AIDashboard: React.FC = () => {
           </div>
 
           <div className="mt-6">
-            <BeforeAfterSlider beforeSrc={before} afterSrc={after} alt={`${aiTitle} comparison`} />
+            <BeforeAfterSlider beforeSrc={viewer.before} afterSrc={viewer.after} alt={viewer.alt} />
           </div>
         </div>
       </div>
