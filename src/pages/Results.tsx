@@ -114,7 +114,7 @@ const Results: React.FC = () => {
 
 					<div className="mt-8 grid gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3">
 						{items.map((it) => (
-							<ResultCard key={it.id} item={it} onView={(it) => { setActiveItem(it); setModalTab('overview'); }} accentColor={theme.accent} theme={theme.theme} isLocked={!isLoggedIn} />
+							<ResultCard key={it.id} item={it} onView={(it) => { setActiveItem(it); setModalTab('overview'); }} accentColor={theme.accent} theme={theme.theme} isLocked={false} />
 						))}
 					</div>
 
@@ -162,7 +162,7 @@ const Results: React.FC = () => {
 						)}
 
 						{modalTab === 'map' && (
-							<div className="mt-3">
+							<div className="mt-3 relative">
 								<div
 									id="result-map"
 									className="h-48 md:h-64 rounded-lg bg-black/30 border border-white/10"
@@ -170,19 +170,31 @@ const Results: React.FC = () => {
 									data-result-id={activeItem.id}
 									data-location={activeItem.location || ''}
 								/>
-								<div className="mt-2 text-white/70 text-xs">This interactive map container is ready for a map library (Mapbox/Leaflet). Use the data-* attributes above.</div>
+								{!isLoggedIn && (
+									<div className="absolute inset-0 grid place-items-center rounded-lg bg-black/60 backdrop-blur-sm border border-white/10">
+										<div className="text-center text-white/90 text-xs">
+											Public preview — sign in for interactive map
+										</div>
+									</div>
+								)}
+								<div className="mt-2 text-white/70 text-xs">This container is ready for Mapbox/Leaflet. Use the data-* attributes above.</div>
 							</div>
 						)}
 
 						{modalTab === 'media' && (
 							<div className="mt-3 grid gap-3 md:grid-cols-2">
-								<div className="rounded-lg overflow-hidden bg-black/30 border border-white/10">
+								<div className="relative rounded-lg overflow-hidden bg-black/30 border border-white/10">
 									<div className="aspect-video bg-white/5 grid place-items-center text-white/60 text-xs"
 										data-endpoint="/api/results/:id/media"
 										data-result-id={activeItem.id}
 									>
 										Media placeholder (image/video)
 									</div>
+									{!isLoggedIn && (
+										<div className="absolute inset-0 grid place-items-center bg-black/60 backdrop-blur-sm border border-white/10">
+											<div className="text-center text-white/90 text-xs">Public preview — sign in for high‑res media</div>
+										</div>
+									)}
 								</div>
 								<div className="rounded-lg overflow-hidden bg-black/30 border border-white/10">
 									<div className="p-3 text-white/80 text-sm">
