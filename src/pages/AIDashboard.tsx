@@ -6,6 +6,7 @@ import TrendChart from '@/components/TrendChart';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import ThreatAnalysis from '@/components/ThreatAnalysis';
 import SearchBar from '@/components/SearchBar';
+import AboutSection from '@/components/AboutSection';
 
 const bgMap: Record<string, string> = {
   nature: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg',
@@ -155,6 +156,9 @@ const AIDashboard: React.FC = () => {
           <div className="mt-6">
             <BeforeAfterSlider beforeSrc={viewer.before} afterSrc={viewer.after} alt={viewer.alt} accentColor={accent} theme={slug} />
           </div>
+
+          {/* About us */}
+          <AboutSection accentColor={accent} />
         </div>
       </div>
     </div>

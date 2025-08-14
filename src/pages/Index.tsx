@@ -15,6 +15,7 @@ import ForestHealthMap from '@/components/ForestHealthMap';
 import TrendChart from '@/components/TrendChart';
 import ThreatAnalysis from '@/components/ThreatAnalysis';
 import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import AboutSection from '@/components/AboutSection';
 
 
 const Index = () => {
@@ -153,6 +154,9 @@ const Index = () => {
               )}
             </div>
           </div>
+
+          {/* About us */}
+          <AboutSection />
 
           {/* Bottom brand marker */}
           <div className="pb-6 text-left">
