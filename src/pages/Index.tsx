@@ -18,6 +18,7 @@ import BeforeAfterSlider from '@/components/BeforeAfterSlider';
 import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
+import SatelliteGallery from '@/components/SatelliteGallery';
 
 
 const Index = () => {
@@ -177,7 +178,11 @@ const Index = () => {
                       </div>
                     </div>
                     <div className="mt-6">
-                      <BeforeAfterSlider beforeSrc={before} afterSrc={after} alt="Deforestation comparison" />
+                      <SatelliteGallery images={[
+                        { url: before, caption: 'Morning pass', time: '09:10' },
+                        { url: after, caption: 'Afternoon pass', time: '14:25' },
+                        { url: forestHeroBgUrl, caption: 'Wide area capture' },
+                      ]} />
                     </div>
                   </div>
                 </div>

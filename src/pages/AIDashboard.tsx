@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import FeatureCarousel from '@/components/FeatureCarousel';
 import ForestHealthMap from '@/components/ForestHealthMap';
 import TrendChart from '@/components/TrendChart';
-import BeforeAfterSlider from '@/components/BeforeAfterSlider';
+import SatelliteGallery from '@/components/SatelliteGallery';
 import ThreatAnalysis from '@/components/ThreatAnalysis';
 import SearchBar from '@/components/SearchBar';
 import AboutSection from '@/components/AboutSection';
@@ -134,6 +134,12 @@ const AIDashboard: React.FC = () => {
     </div>
   );
 
+  const gallery: Array<{ url: string; caption: string; time?: string }> = [
+    { url: viewer.before, caption: 'Morning pass', time: '09:10' },
+    { url: viewer.after, caption: 'Afternoon pass', time: '14:25' },
+    { url: bgUrl, caption: 'Wide area capture' },
+  ];
+
   return (
     <div className="relative z-10 min-h-screen ai-theme" data-theme={slug} style={{ ['--accent' as any]: accent }}>
       <div className="relative overflow-hidden">
@@ -158,24 +164,17 @@ const AIDashboard: React.FC = () => {
           {/* Dashboard below slider */}
           <div className="mt-0 grid gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2 grid gap-6">
-              <div className="relative">
-                <ForestHealthMap title={mapCfg.title} statusWeights={mapCfg.weights} theme={slug} />
-                {!isLoggedIn && <LockOverlay />}
-              </div>
-              <div className="relative">
-                <TrendChart title={isLoggedIn ? trend.title : `${trend.title} (Demo)`} values={trend.values} theme={slug} />
-                {!isLoggedIn && <LockOverlay />}
-              </div>
+              <ForestHealthMap title={mapCfg.title} statusWeights={mapCfg.weights} theme={slug} />
+              <TrendChart title={trend.title} values={trend.values} theme={slug} />
             </div>
             <div className="lg:col-span-1 relative">
               <ThreatAnalysis theme={slug} />
-              {!isLoggedIn && <LockOverlay />}
             </div>
           </div>
 
-          <div className="mt-6 relative">
-            <BeforeAfterSlider beforeSrc={viewer.before} afterSrc={viewer.after} alt={viewer.alt} accentColor={accent} theme={slug} />
-            {!isLoggedIn && <LockOverlay />}
+          {/* Satellite gallery replacing imagery viewer */}
+          <div className="mt-6">
+            <SatelliteGallery images={gallery} accentColor={accent} />
           </div>
 
           {/* About + Contact */}
