@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SearchBar from '@/components/SearchBar';
 import ResultCard, { ResultItem, ResultType, HealthStatus } from '@/components/results/ResultCard';
+import ResultListItem from '@/components/results/ResultListItem';
 import { useAuth } from '@/context/AuthContext';
 
 const bgMap: Record<string, { url: string; accent: string; heading: string; blurb: string; theme: string }> = {
@@ -13,6 +14,58 @@ const bgMap: Record<string, { url: string; accent: string; heading: string; blur
 	research: { url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#2196F3', heading: 'Research Results', blurb: 'Papers, datasets, and field study findings.', theme: 'research' },
 	career: { url: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#FFC107', heading: 'Career Results', blurb: 'Roles, skills, and opportunities in sustainability.', theme: 'career' },
 	education: { url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#1976D2', heading: 'Education Results', blurb: 'Courses, tutorials, and learning resources.', theme: 'education' },
+};
+
+const SidebarWidgets: React.FC<{ ai: string; accent: string }> = ({ ai, accent }) => {
+	return (
+		<aside className="lg:col-span-1">
+			<div className="sticky top-20 grid gap-4">
+				{/* AI-specific widgets placeholders (ready for backend) */}
+				{ai === 'wildlife' && (
+					<div className="rounded-xl p-4 bg-black/40 border border-white/10">
+						<h4 className="text-white/90 font-semibold">Species Tracker</h4>
+						<div className="mt-2 text-white/75 text-sm">Top sightings today. <span className="text-white/60 text-xs">(data: /api/wildlife/species)</span></div>
+					</div>
+				)}
+				{ai === 'climate' && (
+					<div className="rounded-xl p-4 bg-black/40 border border-white/10">
+						<h4 className="text-white/90 font-semibold">Climate Indicators</h4>
+						<div className="mt-2 text-white/75 text-sm">AQI, CO₂, temp. <span className="text-white/60 text-xs">(data: /api/climate/indicators)</span></div>
+					</div>
+				)}
+				{ai === 'marine' && (
+					<div className="rounded-xl p-4 bg-black/40 border border-white/10">
+						<h4 className="text-white/90 font-semibold">Marine Conditions</h4>
+						<div className="mt-2 text-white/75 text-sm">SST, waves. <span className="text-white/60 text-xs">(data: /api/marine/conditions)</span></div>
+					</div>
+				)}
+				{ai === 'forest' && (
+					<div className="rounded-xl p-4 bg-black/40 border border-white/10">
+						<h4 className="text-white/90 font-semibold">Coverage & Biodiversity</h4>
+						<div className="mt-2 text-white/75 text-sm">Coverage %, index. <span className="text-white/60 text-xs">(data: /api/forest/indices)</span></div>
+					</div>
+				)}
+				{ai === 'research' && (
+					<div className="rounded-xl p-4 bg-black/40 border border-white/10">
+						<h4 className="text-white/90 font-semibold">Trending Topics</h4>
+						<div className="mt-2 text-white/75 text-sm">Keywords, authors. <span className="text-white/60 text-xs">(data: /api/research/trending)</span></div>
+					</div>
+				)}
+				{ai === 'career' && (
+					<div className="rounded-xl p-4 bg-black/40 border border-white/10">
+						<h4 className="text-white/90 font-semibold">Top Hiring</h4>
+						<div className="mt-2 text-white/75 text-sm">Companies, roles. <span className="text-white/60 text-xs">(data: /api/career/hiring)</span></div>
+					</div>
+				)}
+				{ai === 'education' && (
+					<div className="rounded-xl p-4 bg-black/40 border border-white/10">
+						<h4 className="text-white/90 font-semibold">Progress & Skills</h4>
+						<div className="mt-2 text-white/75 text-sm">Tracker, heatmap. <span className="text-white/60 text-xs">(data: /api/education/progress)</span></div>
+					</div>
+				)}
+			</div>
+		</aside>
+	);
 };
 
 const Results: React.FC = () => {
@@ -60,6 +113,8 @@ const Results: React.FC = () => {
 		setItems((prev) => [...prev, ...more]);
 	};
 
+	const [page, setPage] = useState(1);
+
 	return (
 		<div className="relative z-10 min-h-screen">
 			<div className="relative min-h-[60vh] overflow-hidden">
@@ -76,6 +131,30 @@ const Results: React.FC = () => {
 				<div className="hero-vignette" />
 
 				<div className="relative z-10 container mx-auto px-6 py-10 md:py-14">
+					{/* Sticky search/filters bar */}
+					<div className="sticky top-16 z-40 -mx-6 mb-6 px-6 py-3 bg-[rgba(7,16,12,0.7)] backdrop-blur-md border border-white/10 rounded-xl">
+						<div className="flex flex-wrap items-center gap-3 justify-between">
+							<div className="min-w-[260px] flex-1 max-w-xl">
+								<SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
+							</div>
+							<div className="flex items-center gap-2 text-xs text-white/80">
+								<button onClick={() => setShowFilters((v) => !v)} className="px-3 py-1 rounded bg-white/10 border border-white/15">
+									{showFilters ? 'Hide Filters' : 'Show Filters'}
+								</button>
+								<span className="px-2 py-1 rounded bg-white/10 border border-white/15">Relevance</span>
+								<span className="px-2 py-1 rounded bg-white/10 border border-white/15">Latest</span>
+								<span className="px-2 py-1 rounded bg-white/10 border border-white/15">Priority</span>
+							</div>
+						</div>
+						{showFilters && (
+							<div className="mt-3 rounded-lg p-3 bg-black/30 border border-white/10 text-white/80 text-sm">
+								{/* filters UI placeholder */}
+								Filters here (ecosystem, zone, species, status)
+							</div>
+						)}
+					</div>
+
+					{/* Heading panel */}
 					<div className="max-w-3xl mx-auto page-enter">
 						<div className="rounded-xl bg-black/55 border border-white/15 backdrop-blur-sm px-4 md:px-6 py-4 text-center">
 							<h1 className="hero-title-clean" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)', color: theme.accent }}>
@@ -91,38 +170,27 @@ const Results: React.FC = () => {
 								)}
 							</p>
 						</div>
-
-						<div className="mt-6">
-							<SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
-						</div>
-
-						<div className="mt-4 flex items-center justify-center gap-3 text-xs text-white/70">
-							<button onClick={() => setShowFilters((v) => !v)} className="px-3 py-1 rounded bg-white/10 border border-white/15">
-								{showFilters ? 'Hide Filters' : 'Show Filters'}
-							</button>
-							<span className="px-2 py-1 rounded bg-white/10 border border-white/15">Relevance</span>
-							<span className="px-2 py-1 rounded bg-white/10 border border-white/15">Latest</span>
-							<span className="px-2 py-1 rounded bg-white/10 border border-white/15">Priority</span>
-						</div>
 					</div>
 
-					{showFilters && (
-						<div className="mt-6 rounded-xl p-5 bg-[rgba(7,16,12,0.65)] border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
-							<div className="grid gap-4 md:grid-cols-4 text-sm text-white/85">
-								{/* filter chips here */}
+					{/* Main layout: list + sidebar */}
+					<div className="mt-6 grid gap-6 lg:grid-cols-3">
+						<main className="lg:col-span-2 grid gap-4">
+							{items.map((it) => (
+								<ResultListItem key={it.id} item={it} onView={(it) => { setActiveItem(it); setModalTab('overview'); }} accentColor={theme.accent} isLocked={false} />
+							))}
+
+							{/* Pagination controls */}
+							<div className="pt-2 flex items-center justify-center gap-2 text-sm">
+								<button onClick={() => setPage((p) => Math.max(1, p - 1))} className="px-3 py-1 rounded bg-white/10 border border-white/15 text-white/85">Prev</button>
+								<span className="text-white/80">Page {page}</span>
+								<button onClick={() => setPage((p) => p + 1)} className="px-3 py-1 rounded bg-white/10 border border-white/15 text-white/85">Next</button>
 							</div>
-						</div>
-					)}
+						</main>
 
-					<div className="mt-8 grid gap-5 md:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-						{items.map((it) => (
-							<ResultCard key={it.id} item={it} onView={(it) => { setActiveItem(it); setModalTab('overview'); }} accentColor={theme.accent} theme={theme.theme} isLocked={false} />
-						))}
+						<SidebarWidgets ai={aiParam} accent={theme.accent} />
 					</div>
 
-					<div className="mt-10 text-center">
-						<button onClick={loadMore} className="cta-outline-white hover-lift">Load more</button>
-					</div>
+					{/* Modal remains */}
 				</div>
 			</div>
 
