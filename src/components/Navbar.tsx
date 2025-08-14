@@ -4,12 +4,33 @@ import { Settings, ArrowLeft } from 'lucide-react';
 import SettingsSheet from '@/components/SettingsSheet';
 import SearchBar from '@/components/SearchBar';
 
+const SLUG_TITLE: Record<string, string> = {
+  nature: 'Nature AI',
+  forest: 'Forest AI',
+  wildlife: 'Wildlife AI',
+  climate: 'Climate AI',
+  marine: 'Marine AI',
+  research: 'Research AI',
+  career: 'Career AI',
+  education: 'Education AI',
+};
+
 const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const aiMatch = location.pathname.match(/^\/ai\/([^/]+)/);
-  const currentAISlug = aiMatch ? aiMatch[1] : undefined;
+  const pathAISlug = aiMatch ? aiMatch[1] : undefined;
+  const queryAISlug = new URLSearchParams(location.search).get('ai') || undefined;
+  const currentAISlug = (pathAISlug || queryAISlug || 'forest').toLowerCase();
+
+  const brandTitle = SLUG_TITLE[currentAISlug] || 'Forest AI';
+  const brandInitials = brandTitle
+    .split(' ')
+    .map((w) => w[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
 
   const handleSearch = (query: string) => {
     if (!query) return;
@@ -33,12 +54,12 @@ const Navbar: React.FC = () => {
           <button onClick={goBack} aria-label="Go back" className="h-10 w-10 grid place-items-center rounded-full border border-white/30 text-white/90 hover:text-white hover:bg-white/10 transition-colors">
             <ArrowLeft className="h-5 w-5" />
           </button>
-          <Link to="/forest-ai" className="flex items-center gap-3 rounded hover:opacity-90 focus-visible:underline" >
+          <Link to={`/ai/${currentAISlug}`} className="flex items-center gap-3 rounded hover:opacity-90 focus-visible:underline" >
             <div className="h-10 w-10 md:h-12 md:w-12 rounded bg-white/10 border border-white/20 flex items-center justify-center text-white font-bold">
-              FA
+              {brandInitials}
             </div>
-            <span className="text-white/95 font-semibold tracking-wide hidden sm:inline">Forest AI</span>
-            <span className="sr-only">Forest AI Home</span>
+            <span className="text-white/95 font-semibold tracking-wide hidden sm:inline">{brandTitle}</span>
+            <span className="sr-only">{brandTitle} Home</span>
           </Link>
         </div>
 
