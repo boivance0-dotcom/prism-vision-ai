@@ -8,14 +8,14 @@ import ThreatAnalysis from '@/components/ThreatAnalysis';
 import SearchBar from '@/components/SearchBar';
 
 const bgMap: Record<string, string> = {
-  nature: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg',
-  forest: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg',
+  nature: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=90&w=1920&h=1080&fit=crop&auto=format',
+  forest: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=1920&h=1080&fit=crop&auto=format',
   wildlife: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=90&w=1920&h=1080&fit=crop&auto=format',
-  climate: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg',
-  marine: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg',
-  research: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg',
-  career: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/business-concept-with-graphic-holography.jpg',
-  education: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/photography%20of%20shelves%20of%20books.jpg',
+  climate: 'https://images.unsplash.com/photo-1509395176047-4a66953fd231?q=90&w=1920&h=1080&fit=crop&auto=format',
+  marine: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=90&w=1920&h=1080&fit=crop&auto=format',
+  research: 'https://images.unsplash.com/photo-1559757175-0fcfcc8463aa?q=90&w=1920&h=1080&fit=crop&auto=format',
+  career: 'https://images.unsplash.com/photo-1529336953121-ad5a0d43d0b5?q=90&w=1920&h=1080&fit=crop&auto=format',
+  education: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?q=90&w=1920&h=1080&fit=crop&auto=format',
 };
 
 const titleMap: Record<string, string> = {
