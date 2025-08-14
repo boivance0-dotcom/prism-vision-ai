@@ -74,7 +74,7 @@ const Index = () => {
                 <div className="text-center animate-scale-fade-in parallax-item" data-speed="1">
                   <motion.h1
                     className="font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/80 drop-shadow-[0_20px_80px_rgba(0,0,0,0.6)]"
-                    style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', letterSpacing: '-0.02em' }}
+                    style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', letterSpacing: '-0.02em', textShadow: '0 8px 32px rgba(0,0,0,0.75)' }}
                     initial={prefersReducedMotion ? false : { x: -50, opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
@@ -82,14 +82,16 @@ const Index = () => {
                     Nature Intelligence, Beautifully Rendered
                   </motion.h1>
 
-                  <motion.p
-                    className="mt-5 mx-auto max-w-[760px] text-white/90 text-base md:text-xl font-medium tracking-wide"
+                  <motion.div
+                    className="mt-5 mx-auto max-w-[820px]"
                     initial={prefersReducedMotion ? false : { y: 20, opacity: 0 }}
                     animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 0.4 }}
                   >
-                    Explore forests, ecosystems, wildlife and climate signals with a sleek, theme-aware dashboard. Built for clarity. Designed to inspire.
-                  </motion.p>
+                    <p className="text-white/95 text-base md:text-xl font-medium tracking-wide bg-black/55 backdrop-blur-sm border border-white/15 rounded-lg px-5 py-4 shadow-[0_8px_30px_rgba(0,0,0,0.55)]">
+                      Explore forests, ecosystems, wildlife and climate signals with a sleek, theme-aware dashboard. Built for clarity. Designed to inspire.
+                    </p>
+                  </motion.div>
 
                   <motion.div
                     className="mt-8 flex items-center justify-center gap-3 md:gap-4"
@@ -108,9 +110,9 @@ const Index = () => {
                     animate={prefersReducedMotion ? {} : { y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, ease: EASE, delay: 1.1 }}
                   >
-                    <div className="rounded-xl bg-black/40 border border-white/10 px-4 py-3 text-white/85 text-sm">4K themed backgrounds</div>
-                    <div className="rounded-xl bg-black/40 border border-white/10 px-4 py-3 text-white/85 text-sm">Interactive maps & media</div>
-                    <div className="rounded-xl bg-black/40 border border-white/10 px-4 py-3 text-white/85 text-sm">Per‑AI color & layout harmony</div>
+                    <div className="rounded-xl bg-black/55 border border-white/20 px-4 py-3 text-white/90 text-sm">4K themed backgrounds</div>
+                    <div className="rounded-xl bg-black/55 border border-white/20 px-4 py-3 text-white/90 text-sm">Interactive maps & media</div>
+                    <div className="rounded-xl bg-black/55 border border-white/20 px-4 py-3 text-white/90 text-sm">Per‑AI color & layout harmony</div>
                   </motion.div>
 
                   {/* Search upfront for public */}
@@ -131,7 +133,7 @@ const Index = () => {
                   <div className="max-w-3xl mx-auto text-center">
                     <motion.h2
                       className="font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white/95 to-white/80"
-                      style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)', letterSpacing: '-0.02em', textShadow: '0 10px 20px rgba(0,0,0,0.45)' }}
+                      style={{ fontSize: 'clamp(1.8rem, 5vw, 3.2rem)', letterSpacing: '-0.02em', textShadow: '0 8px 28px rgba(0,0,0,0.6)' }}
                       initial={prefersReducedMotion ? false : { x: -50, opacity: 0 }}
                       animate={prefersReducedMotion ? {} : { x: 0, opacity: 1 }}
                       transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}

@@ -76,19 +76,21 @@ const Results: React.FC = () => {
 				<div className="hero-vignette" />
 
 				<div className="relative z-10 container mx-auto px-6 py-10 md:py-14">
-					<div className="text-center max-w-3xl mx-auto page-enter">
-						<h1 className="hero-title-clean" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)', color: theme.accent }}>
-							{theme.heading} {isLoggedIn ? '' : '(Demo)'}
-						</h1>
-						<p className="mt-3 text-white/90 text-base md:text-lg">
-							{query ? (
-								<>
-									Showing results for <span className="text-white font-semibold">"{query}"</span>
-								</>
-							) : (
-								theme.blurb
-							)}
-						</p>
+					<div className="max-w-3xl mx-auto page-enter">
+						<div className="rounded-xl bg-black/55 border border-white/15 backdrop-blur-sm px-4 md:px-6 py-4 text-center">
+							<h1 className="hero-title-clean" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3rem)', color: theme.accent }}>
+								{theme.heading} {isLoggedIn ? '' : '(Demo)'}
+							</h1>
+							<p className="mt-2 text-white/90 text-base md:text-lg">
+								{query ? (
+									<>
+										Showing results for <span className="text-white font-semibold">"{query}"</span>
+									</>
+								) : (
+									theme.blurb
+								)}
+							</p>
+						</div>
 
 						<div className="mt-6">
 							<SearchBar onSearch={handleSearch} className="search-input" buttonClassName="search-button" />
