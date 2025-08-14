@@ -9,14 +9,14 @@ import SearchBar from '@/components/SearchBar';
 import AboutSection from '@/components/AboutSection';
 
 const bgMap: Record<string, string> = {
-  nature: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg',
-  forest: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=1920&h=1080&fit=crop&auto=format',
-  wildlife: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=90&w=1920&h=1080&fit=crop&auto=format',
-  climate: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg',
-  marine: 'https://images.unsplash.com/photo-1504609813442-a8924e83f76e?q=90&w=1920&h=1080&fit=crop&auto=format',
-  research: 'https://images.unsplash.com/photo-1581091012184-7c54c8f43a3b?q=90&w=1920&h=1080&fit=crop&auto=format',
-  career: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=90&w=1920&h=1080&fit=crop&auto=format',
-  education: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=90&w=1920&h=1080&fit=crop&auto=format',
+  nature: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=90&w=3840&h=2160&fit=crop&auto=format',
+  forest: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=3840&h=2160&fit=crop&auto=format',
+  wildlife: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=90&w=3840&h=2160&fit=crop&auto=format',
+  climate: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=90&w=3840&h=2160&fit=crop&auto=format',
+  marine: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=90&w=3840&h=2160&fit=crop&auto=format',
+  research: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?q=90&w=3840&h=2160&fit=crop&auto=format',
+  career: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=90&w=3840&h=2160&fit=crop&auto=format',
+  education: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=90&w=3840&h=2160&fit=crop&auto=format',
 };
 
 const titleMap: Record<string, string> = {
@@ -75,12 +75,12 @@ const viewerImages: Record<string, { before: string; after: string; alt: string 
     alt: 'Wildlife habitat comparison',
   },
   climate: {
-    before: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=90&w=1920&h=1080&fit=crop&auto=format',
+    before: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=90&w=1920&h=1080&fit=crop&auto=format',
     after: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=90&w=1920&h=1080&fit=crop&auto=format',
     alt: 'Climate impact comparison',
   },
   marine: {
-    before: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=90&w=1920&h=1080&fit=crop&auto=format',
+    before: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=90&w=1920&h=1080&fit=crop&auto=format',
     after: 'https://images.unsplash.com/photo-1504609813442-a8924e83f76e?q=90&w=1920&h=1080&fit=crop&auto=format',
     alt: 'Marine habitat comparison',
   },
@@ -90,18 +90,18 @@ const viewerImages: Record<string, { before: string; after: string; alt: string 
     alt: 'Nature 4K comparison',
   },
   research: {
-    before: 'https://images.unsplash.com/photo-1517976487492-576ea6b2936d?q=90&w=1920&h=1080&fit=crop&auto=format',
+    before: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?q=90&w=1920&h=1080&fit=crop&auto=format',
     after: 'https://images.unsplash.com/photo-1523246191869-8b30bf8b4d56?q=90&w=1920&h=1080&fit=crop&auto=format',
     alt: 'Research sites comparison',
   },
   career: {
-    before: 'https://images.unsplash.com/photo-1529336953121-ad5a0d43d0b5?q=90&w=1920&h=1080&fit=crop&auto=format',
+    before: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=90&w=1920&h=1080&fit=crop&auto=format',
     after: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=90&w=1920&h=1080&fit=crop&auto=format',
     alt: 'Career growth comparison',
   },
   education: {
-    before: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?q=90&w=1920&h=1080&fit=crop&auto=format',
-    after: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=90&w=1920&h=1080&fit=crop&auto=format',
+    before: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=90&w=1920&h=1080&fit=crop&auto=format',
+    after: 'https://images.unsplash.com/photo-1463320726281-696a485928c7?q=90&w=1920&h=1080&fit=crop&auto=format',
     alt: 'Education engagement comparison',
   },
 };

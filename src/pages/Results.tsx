@@ -4,14 +4,14 @@ import SearchBar from '@/components/SearchBar';
 import ResultCard, { ResultItem, ResultType, HealthStatus } from '@/components/results/ResultCard';
 
 const bgMap: Record<string, { url: string; accent: string; heading: string; blurb: string; theme: string }> = {
-	nature: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/31201.jpg', accent: '#86C232', heading: 'Nature Results', blurb: 'Curated nature intelligence and discoveries.', theme: 'forest' },
-	forest: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/refs/heads/main/forest.jpg', accent: '#86C232', heading: 'Forest Results', blurb: 'Forest health, conservation, and monitoring insights.', theme: 'forest' },
-	wildlife: { url: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=2000&auto=format&fit=crop', accent: '#5C4033', heading: 'Wildlife Results', blurb: 'Species tracking, biodiversity, and habitat updates.', theme: 'wildlife' },
-	climate: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/climate.jpg', accent: '#4DB6E2', heading: 'Climate Results', blurb: 'Trends, projections, and renewable transitions.', theme: 'climate' },
-	marine: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/marine.jpg', accent: '#00B8D9', heading: 'Marine Results', blurb: 'Ocean health, coral status, and marine activity.', theme: 'marine' },
-	research: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/representation-user-experience-interface-design.jpg', accent: '#2196F3', heading: 'Research Results', blurb: 'Papers, datasets, and field study findings.', theme: 'research' },
-	career: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/business-concept-with-graphic-holography.jpg', accent: '#FFC107', heading: 'Career Results', blurb: 'Roles, skills, and opportunities in sustainability.', theme: 'career' },
-	education: { url: 'https://raw.githubusercontent.com/varunsingh3545/search-engine/main/photography%20of%20shelves%20of%20books.jpg', accent: '#1976D2', heading: 'Education Results', blurb: 'Courses, tutorials, and learning resources.', theme: 'education' },
+	nature: { url: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#86C232', heading: 'Nature Results', blurb: 'Curated nature intelligence and discoveries.', theme: 'forest' },
+	forest: { url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#86C232', heading: 'Forest Results', blurb: 'Forest health, conservation, and monitoring insights.', theme: 'forest' },
+	wildlife: { url: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#5C4033', heading: 'Wildlife Results', blurb: 'Species tracking, biodiversity, and habitat updates.', theme: 'wildlife' },
+	climate: { url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#4DB6E2', heading: 'Climate Results', blurb: 'Trends, projections, and renewable transitions.', theme: 'climate' },
+	marine: { url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#00B8D9', heading: 'Marine Results', blurb: 'Ocean health, coral status, and marine activity.', theme: 'marine' },
+	research: { url: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#2196F3', heading: 'Research Results', blurb: 'Papers, datasets, and field study findings.', theme: 'research' },
+	career: { url: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#FFC107', heading: 'Career Results', blurb: 'Roles, skills, and opportunities in sustainability.', theme: 'career' },
+	education: { url: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=90&w=3840&h=2160&fit=crop&auto=format', accent: '#1976D2', heading: 'Education Results', blurb: 'Courses, tutorials, and learning resources.', theme: 'education' },
 };
 
 const Results: React.FC = () => {
