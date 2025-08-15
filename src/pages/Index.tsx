@@ -18,7 +18,6 @@ import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import SatelliteGallery from '@/components/SatelliteGallery';
-import RealisticEarth from '@/components/RealisticEarth';
 
 const Index = () => {
   const [started, setStarted] = useState(false);
@@ -56,10 +55,26 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Hero Section with Realistic Earth Background */}
+      {/* Hero Section with Video Earth Background */}
       <div className="relative min-h-screen overflow-hidden">
-        {/* Realistic Earth and Space Background */}
-        <RealisticEarth />
+        {/* 4K Earth Rotation Video Background */}
+        <div className="absolute inset-0 w-full h-full">
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2400&auto=format&fit=crop"
+          >
+            {/* Remote primary source */}
+            <source src="https://videos.pexels.com/video-files/856051/856051-uhd_4096_2160_25fps.mp4" type="video/mp4" />
+            {/* Optional local fallback if you add /public/earth-4k.mp4 */}
+            <source src="/earth-4k.mp4" type="video/mp4" />
+          </video>
+          {/* Subtle dark overlay for readability */}
+          <div className="absolute inset-0 bg-black/45" />
+        </div>
 
         {/* Earth Entry Animation Container */}
         <div 
