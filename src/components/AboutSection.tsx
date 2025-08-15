@@ -54,11 +54,11 @@ const AboutSection: React.FC<{ accentColor?: string }> = ({ accentColor }) => {
         <div className="pointer-events-none absolute -bottom-24 -right-24 w-[520px] h-[520px] rounded-full opacity-[0.12] blur-3xl" style={{ background: accent }} />
 
         <div className="relative z-10">
-          <h2 className="text-white font-extrabold tracking-tight bg-clip-text" style={{ fontSize: 'clamp(1.4rem, 3.8vw, 2.2rem)' }}>
+          <h2 className="text-white font-extrabold tracking-tight bg-clip-text text-center" style={{ fontSize: 'clamp(1.4rem, 3.8vw, 2.2rem)' }}>
             About Us
           </h2>
 
-          <div className="mt-3 space-y-4 text-white/85 max-w-4xl">
+          <div className="mt-3 space-y-4 text-white/85 max-w-4xl mx-auto text-center">
             <TypewriterLine
               className="text-white font-semibold"
               text="What We Are: A Conservation Data & Collaboration Platform"
@@ -107,7 +107,7 @@ const AboutSection: React.FC<{ accentColor?: string }> = ({ accentColor }) => {
               speedMsPerChar={14}
             />
 
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-4 text-left">
               <div className="rounded-xl p-4 bg-black/40 border border-white/10">
                 <h4 className="text-white/90 font-semibold">Public Layer: Open Conservation Hub</h4>
                 <ul className="mt-2 list-disc pl-5 text-white/80 text-sm space-y-1">
