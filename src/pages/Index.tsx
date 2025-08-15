@@ -167,7 +167,7 @@ const Index = () => {
       {/* Main Content Section - Below Earth */}
       <div 
         ref={contentRef}
-        className="relative z-10 bg-gradient-to-b from-black via-gray-900 to-black"
+        className="relative z-10"
       >
         {showContent && (
           <>
