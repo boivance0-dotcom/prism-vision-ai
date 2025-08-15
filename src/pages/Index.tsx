@@ -18,7 +18,6 @@ import AboutSection from '@/components/AboutSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import SatelliteGallery from '@/components/SatelliteGallery';
-import RealisticEarth from '@/components/RealisticEarth';
 
 const Index = () => {
   const [started, setStarted] = useState(false);
@@ -56,10 +55,22 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Hero Section with Realistic Earth Background */}
+      {/* Hero Section with Earth Video Background */}
       <div className="relative min-h-screen overflow-hidden">
-        {/* Realistic Earth and Space Background */}
-        <RealisticEarth />
+        {/* Fixed Earth video as background */}
+        <div className="fixed inset-0 w-full h-full">
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2400&auto=format&fit=crop"
+          >
+            <source src="https://raw.githubusercontent.com/varunsingh3545/search-engine/main/84589-585553865.mp4" type="video/mp4" />
+          </video>
+          <div className="fixed inset-0 bg-black/45" />
+        </div>
 
         {/* Earth Entry Animation Container */}
         <div 
