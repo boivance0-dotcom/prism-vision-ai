@@ -12,6 +12,13 @@ const TABS: Array<{ key: string; label: string }> = [
 	{ key: 'maps', label: 'Maps' },
 ];
 
+const TIME_FILTERS: Array<{ key: string; label: string }> = [
+	{ key: 'any', label: 'Any time' },
+	{ key: '24h', label: 'Past 24 hours' },
+	{ key: 'week', label: 'Past week' },
+	{ key: 'year', label: 'Past year' },
+];
+
 const DOMAIN_POOL = [
 	'example.org',
 	'nature.org',
@@ -29,13 +36,24 @@ const makeResults = (q: string, type: string, offset: number) =>
 			id: `r-${idx}`,
 			title: `${q || 'Result'} — ${type.toUpperCase()} ${idx}`,
 			url: href,
+			domain,
 			displayUrl: `${domain}/…`,
 			snippet: 'A concise, relevant summary for this result. Replace with server-provided snippet for higher fidelity.',
 			site: domain.replace(/\..*$/, ''),
 			date: 'Today',
 			thumb: `https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=60&w=${420 + i * 15}&auto=format&fit=crop`,
+			duration: `${3 + (i % 6)}:${String(10 + (i * 7) % 50).padStart(2, '0')}`,
 		};
 	});
+
+const PAA_QUESTIONS = [
+	'What is the most biodiverse rainforest?',
+	'How does deforestation impact climate change?',
+	'Which species are endangered in the Amazon?',
+	'What are the latest conservation efforts?'
+];
+
+const RELATED = ['forest coverage map', 'endangered species list', 'rainforest facts', 'climate action', 'satellite imagery'];
 
 const SearchResults: React.FC = () => {
 	const navigate = useNavigate();
@@ -44,30 +62,38 @@ const SearchResults: React.FC = () => {
 	const t = (params.get('t') || 'all').toLowerCase();
 	const page = Math.max(1, Number(params.get('page') || 1));
 	const safe = params.get('safe') === '0' ? 0 : 1;
+	const time = (params.get('time') || 'any').toLowerCase();
 
 	const results = useMemo(() => makeResults(q, t, (page - 1) * 10), [q, t, page]);
+	const resultCount = useMemo(() => 12800 + (q.length * 37), [q]);
 
 	const onSearch = (query: string) => {
 		if (!query) return;
-		navigate(`/search/results?q=${encodeURIComponent(query)}&t=${encodeURIComponent(t)}&page=1&safe=${safe}`);
+		navigate(`/search/results?q=${encodeURIComponent(query)}&t=${encodeURIComponent(t)}&page=1&safe=${safe}&time=${time}`);
 	};
 
 	const setTab = (tab: string) => {
-		navigate(`/search/results?q=${encodeURIComponent(q)}&t=${encodeURIComponent(tab)}&page=1&safe=${safe}`);
+		navigate(`/search/results?q=${encodeURIComponent(q)}&t=${encodeURIComponent(tab)}&page=1&safe=${safe}&time=${time}`);
 	};
 
 	const goPage = (p: number) => {
-		navigate(`/search/results?q=${encodeURIComponent(q)}&t=${encodeURIComponent(t)}&page=${p}&safe=${safe}`);
+		navigate(`/search/results?q=${encodeURIComponent(q)}&t=${encodeURIComponent(t)}&page=${p}&safe=${safe}&time=${time}`);
+	};
+
+	const setTime = (next: string) => {
+		navigate(`/search/results?q=${encodeURIComponent(q)}&t=${encodeURIComponent(t)}&page=1&safe=${safe}&time=${next}`);
 	};
 
 	const [localSafe, setLocalSafe] = useState<boolean>(safe === 1);
 	useEffect(() => { setLocalSafe(safe === 1); }, [safe]);
 	useEffect(() => {
 		const nextSafe = localSafe ? 1 : 0;
-		navigate(`/search/results?q=${encodeURIComponent(q)}&t=${encodeURIComponent(t)}&page=${page}&safe=${nextSafe}`);
+		navigate(`/search/results?q=${encodeURIComponent(q)}&t=${encodeURIComponent(t)}&page=${page}&safe=${nextSafe}&time=${time}`);
 		try { localStorage.setItem('safeSearch', JSON.stringify(localSafe)); } catch {}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [localSafe]);
+
+	const [openPaa, setOpenPaa] = useState<number | null>(null);
 
 	return (
 		<div className="min-h-screen bg-white text-gray-800">
@@ -118,6 +144,14 @@ const SearchResults: React.FC = () => {
 							</button>
 						))}
 					</div>
+					{/* Filters row */}
+					<div className="mt-2 flex items-center gap-2 text-xs">
+						<span className="text-gray-600">Time:</span>
+						{TIME_FILTERS.map(f => (
+							<button key={f.key} onClick={() => setTime(f.key)} className={`px-2.5 py-1 rounded-full border ${time === f.key ? 'bg-gray-900 text-white border-gray-900' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'}`}>{f.label}</button>
+						))}
+						<span className="ml-auto text-gray-500">About {resultCount.toLocaleString()} results (0.{(q.length % 9) + 12}s){time !== 'any' ? ` • ${TIME_FILTERS.find(x => x.key === time)?.label}` : ''}</span>
+					</div>
 				</div>
 			</div>
 
@@ -125,34 +159,118 @@ const SearchResults: React.FC = () => {
 			<div className="mx-auto max-w-6xl px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
 				{/* Left: results */}
 				<div className="lg:col-span-8">
-					<div className="text-sm text-gray-500 mb-3">Showing results for <span className="text-gray-900 font-medium">{q || 'Search'}</span></div>
-					<div className="grid gap-6">
-						{results.map((r) => (
-							<div key={r.id} className="group">
-								<div className="text-xs text-gray-500">{r.displayUrl} · {r.date}</div>
-								<a href={r.url} className="mt-1 block text-xl leading-snug text-blue-700 hover:underline">
-									{r.title}
-								</a>
-								<div className="mt-1 flex items-start gap-3">
-									<p className="text-[15px] text-gray-700 flex-1">{r.snippet}</p>
-									<div className="hidden md:block w-28 h-20 rounded-md bg-gray-100 bg-cover bg-center" style={{ backgroundImage: `url(${r.thumb})` }} />
+					{t === 'images' ? (
+						/* Images grid */
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+							{results.map((r) => (
+								<div key={r.id} className="group rounded-lg overflow-hidden bg-gray-100">
+									<div className="aspect-[4/3] bg-cover bg-center" style={{ backgroundImage: `url(${r.thumb})` }} />
+									<div className="px-2 py-1 text-[12px] text-gray-700 truncate">{r.site}</div>
 								</div>
-								<div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
-									<button className="hover:text-gray-700">About this result</button>
-									<span>·</span>
-									<button className="hover:text-gray-700">Share</button>
-									<span>·</span>
-									<button className="hover:text-gray-700">Cached</button>
+							))}
+						</div>
+					) : t === 'videos' ? (
+						/* Videos grid */
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							{results.map((r) => (
+								<a key={r.id} href={r.url} className="rounded-xl border bg-white hover:shadow-sm transition overflow-hidden">
+									<div className="relative">
+										<div className="aspect-video bg-cover bg-center" style={{ backgroundImage: `url(${r.thumb})` }} />
+										<span className="absolute bottom-2 right-2 text-[11px] px-1.5 py-0.5 rounded bg-black/80 text-white">{r.duration}</span>
+									</div>
+									<div className="p-3">
+										<div className="text-sm text-gray-500">{r.displayUrl}</div>
+										<div className="mt-1 text-base font-semibold text-gray-900 line-clamp-2">{r.title}</div>
+									</div>
+								</a>
+							))}
+						</div>
+					) : t === 'news' ? (
+						/* News list */
+						<div className="grid gap-4">
+							{results.map((r) => (
+								<a key={r.id} href={r.url} className="rounded-xl border bg-white p-4 hover:shadow-sm transition block">
+									<div className="text-xs text-gray-500">{r.site} · {r.date}</div>
+									<div className="mt-1 text-lg font-semibold text-gray-900">{r.title}</div>
+									<p className="mt-1 text-[15px] text-gray-700">{r.snippet}</p>
+								</a>
+							))}
+						</div>
+					) : t === 'maps' ? (
+						/* Maps placeholder */
+						<div className="rounded-xl border bg-white overflow-hidden">
+							<div className="h-64 bg-[linear-gradient(135deg,#e5e7eb_25%,transparent_25%),linear-gradient(225deg,#e5e7eb_25%,transparent_25%),linear-gradient(45deg,#e5e7eb_25%,transparent_25%),linear-gradient(315deg,#e5e7eb_25%,#fff_25%)] bg-[length:20px_20px] bg-[position:0_0,0_10px,10px_-10px,-10px_0px]" />
+							<div className="p-4">
+								<div className="text-sm text-gray-500">Map preview (connect real map SDK here)</div>
+								<div className="mt-2 grid md:grid-cols-2 gap-2 text-sm">
+									<div>Nearest parks · 1.2km</div>
+									<div>Traffic: Light</div>
+									<div>Weather: Clear</div>
+									<div>POIs: 12</div>
 								</div>
 							</div>
-						))}
-					</div>
+						</div>
+					) : (
+						/* Default web results with enhancements */
+						<>
+							<div className="text-sm text-gray-500 mb-3">Showing results for <span className="text-gray-900 font-medium">{q || 'Search'}</span></div>
+							<div className="grid gap-6">
+								{results.map((r, idx) => (
+									<div key={r.id} className="group">
+										<div className="flex items-center gap-2 text-xs text-gray-500">
+											<img alt="favicon" className="h-4 w-4 rounded" src={`https://www.google.com/s2/favicons?sz=64&domain=${r.domain}`} />
+											<span>{r.displayUrl} · {r.date}</span>
+										</div>
+										<a href={r.url} className="mt-1 block text-xl leading-snug text-blue-700 hover:underline">
+											{r.title}
+										</a>
+										<p className="mt-1 text-[15px] text-gray-700">{r.snippet}</p>
+										{idx === 0 && (
+											/* People also ask */
+											<div className="mt-4 rounded-xl border bg-white">
+												<div className="px-4 py-3 text-sm font-semibold text-gray-900">People also ask</div>
+												<div className="divide-y">
+													{PAA_QUESTIONS.map((qst, i) => (
+														<div key={i} className="px-4 py-3">
+															<button onClick={() => setOpenPaa(openPaa === i ? null : i)} className="w-full text-left text-sm text-gray-900 hover:text-blue-700">
+																{qst}
+															</button>
+															{openPaa === i && (
+																<p className="mt-2 text-sm text-gray-700">Quick answer preview. Replace with real snippet.</p>
+															)}
+														</div>
+													))}
+												</div>
+											</div>
+										)}
+										<div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
+											<button className="hover:text-gray-700">About this result</button>
+											<span>·</span>
+											<button className="hover:text-gray-700">Share</button>
+											<span>·</span>
+											<button className="hover:text-gray-700">Cached</button>
+										</div>
+									</div>
+								))}
+							</div>
+						</>
+					)}
 
 					{/* Pagination */}
 					<div className="mt-6 flex items-center gap-2 text-sm">
 						<button onClick={() => goPage(Math.max(1, page - 1))} className="px-3 py-1 rounded border bg-white hover:bg-gray-50">Prev</button>
 						<span className="text-gray-600">Page {page}</span>
 						<button onClick={() => goPage(page + 1)} className="px-3 py-1 rounded border bg-white hover:bg-gray-50">Next</button>
+					</div>
+
+					{/* Related searches */}
+					<div className="mt-6">
+						<div className="text-sm text-gray-500 mb-2">Related searches</div>
+						<div className="flex flex-wrap gap-2">
+							{RELATED.map((rs) => (
+								<button key={rs} onClick={() => onSearch(rs)} className="px-3 py-1 rounded-full border bg-white hover:bg-gray-50 text-sm">{rs}</button>
+							))}
+						</div>
 					</div>
 				</div>
 
