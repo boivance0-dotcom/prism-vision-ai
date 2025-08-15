@@ -26,7 +26,7 @@ const Search: React.FC = () => {
 
 	const handleSearch = (query: string) => {
 		if (!query) return;
-		navigate(`/results?q=${encodeURIComponent(query)}&safe=${safeSearch ? '1' : '0'}`);
+		navigate(`/search/results?q=${encodeURIComponent(query)}&t=${encodeURIComponent(type)}&page=1&safe=${safeSearch ? '1' : '0'}`);
 	};
 
 	return (

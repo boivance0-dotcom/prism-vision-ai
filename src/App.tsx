@@ -12,6 +12,7 @@ import AIDashboard from "./pages/AIDashboard";
 import Login from "./pages/Login";
 import Test from "./pages/Test";
 import Search from "./pages/Search";
+import SearchResults from "./pages/SearchResults";
 import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const AppBody = () => {
         <Route path="/test" element={<Test />} />
         <Route path="/results" element={<Results />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/search/results" element={<SearchResults />} />
         <Route path="/forest-ai" element={<ForestAI />} />
         <Route path="/ai/:slug" element={<AIDashboard />} />
         <Route path="/login" element={<Login />} />
