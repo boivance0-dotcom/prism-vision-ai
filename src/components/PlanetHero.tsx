@@ -12,6 +12,7 @@ export type PlanetHeroProps = {
   redirectDelayMs?: number;
   staySpinning?: boolean;
   onAfterSequence?: () => void;
+  onStartExperience?: () => void;
 };
 
 const DEFAULT_TEXTURE_4K = 'https://www.solarsystemscope.com/textures/download/4k_earth_daymap.jpg';
@@ -26,6 +27,7 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
   redirectDelayMs = 3000,
   staySpinning = true,
   onAfterSequence,
+  onStartExperience,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -34,6 +36,14 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
   const [showLine1, setShowLine1] = useState(false);
   const [showBrand, setShowBrand] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [showCTA, setShowCTA] = useState(false);
+
+  useEffect(() => {
+    if (showBrand) {
+      const t = setTimeout(() => setShowCTA(true), 600);
+      return () => clearTimeout(t);
+    }
+  }, [showBrand]);
 
   useEffect(() => {
     let cleanupFn: (() => void) | null = null;
@@ -280,7 +290,7 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
         </div>
       )}
 
-      {/* Overlay content */}
+      {/* Overlay content (texts) */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-20">
         <AnimatePresence>
           {clicked && (
@@ -326,6 +336,18 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
           )}
         </AnimatePresence>
       </div>
+
+      {/* CTA overlay */}
+      {showCTA && (
+        <div className="absolute inset-x-0 bottom-10 z-30 flex items-center justify-center">
+          <button
+            onClick={onStartExperience}
+            className="px-8 py-4 rounded-full bg-[var(--accent,#86C232)] text-black font-extrabold tracking-wide shadow-[0_16px_40px_rgba(134,194,50,0.55)] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+          >
+            Start Experience
+          </button>
+        </div>
+      )}
 
       {/* Help text overlay before click */}
       {!clicked && (

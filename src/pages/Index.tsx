@@ -57,6 +57,7 @@ const Index = () => {
         redirectTo="/ai/forest"
         redirectDelayMs={3000}
         onAfterSequence={() => setPlanetSequenceDone(true)}
+        onStartExperience={() => setStarted(true)}
       />
 
       {/* Reveal Section: Earth Intelligence */}
@@ -98,6 +99,23 @@ const Index = () => {
           </div>
         </motion.section>
       </div>
+
+      {/* Company card pops up after Start Experience */}
+      {started && (
+        <div className="container mx-auto px-6 mt-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: EASE }}
+            className="rounded-2xl bg-black/55 border border-white/15 backdrop-blur-md p-6 shadow-[0_8px_30px_rgba(0,0,0,0.45)]"
+          >
+            <h3 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">BioVance</h3>
+            <p className="mt-2 text-white/90 text-base md:text-lg">
+              We’re building intelligent systems to help the Earth thrive — uniting satellite data, AI, and science to protect ecosystems and power sustainable development.
+            </p>
+          </motion.div>
+        </div>
+      )}
 
       {/* Rest of page content */}
       <div className="relative container mx-auto px-6 py-16 min-h-screen flex flex-col page-enter">
