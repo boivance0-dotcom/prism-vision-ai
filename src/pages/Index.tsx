@@ -134,7 +134,7 @@ const Index = () => {
 
             {/* Call to Action */}
             <motion.div
-              className="mt-8"
+              className="mt-8 flex items-center justify-center gap-4 flex-wrap"
               initial={{ opacity: 0, y: 30 }}
               animate={earthAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: EASE, delay: 2.5 }}
@@ -145,6 +145,12 @@ const Index = () => {
               >
                 Explore Our Technology
               </button>
+              <Link
+                to="/search"
+                className="px-8 py-4 bg-white/90 text-black font-bold text-lg rounded-xl border border-white/20 shadow-2xl hover:bg-white transition-all duration-300 transform hover:scale-105"
+              >
+                All‑in‑One Search
+              </Link>
             </motion.div>
           </motion.div>
         </div>
