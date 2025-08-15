@@ -39,7 +39,7 @@ const AllInOneNavbar: React.FC<AllInOneNavbarProps> = ({ selectedType, onTypeCha
       <nav className="mx-auto max-w-7xl h-16 px-4 md:px-8 flex items-center justify-between gap-3">
         {/* Left: Brand */}
         <div className="min-w-[140px] flex items-center">
-          <Link to="/search" className="font-extrabold tracking-tight text-lg md:text-xl text-gray-900">Prism Vision</Link>
+          <Link to="/search" className="font-extrabold tracking-tight text-lg md:text-xl text-gray-900">Zytherion Biovance</Link>
         </div>
         {/* Center: Type tabs */}
         <div className="flex-1 flex items-center justify-center">
