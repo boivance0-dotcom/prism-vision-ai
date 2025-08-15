@@ -73,40 +73,42 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
       hoverLight.position.set(0, 0, 2.2);
       scene.add(hoverLight);
 
-      // Planet
+      // Planet geometry and immediate fallback material
       const radius = 1.0;
       const sphereGeo = new THREE.SphereGeometry(radius, 96, 96);
-
-      const textureLoader = new THREE.TextureLoader();
-      let colorMap: THREE.Texture | null = null;
-      try {
-        colorMap = await new Promise<THREE.Texture>((resolve, reject) => {
-          textureLoader.load(
-            textureUrl,
-            (tex) => {
-              tex.colorSpace = THREE.SRGBColorSpace;
-              tex.anisotropy = Math.min(8, (renderer.capabilities as any).getMaxAnisotropy?.() || 4);
-              resolve(tex);
-            },
-            undefined,
-            (err) => reject(err)
-          );
-        });
-      } catch (err) {
-        // Fallback: no texture — use a subtle colored material so we never blank out
-        colorMap = null;
-      }
-
-      const materialOptions: any = colorMap
-        ? { map: colorMap, roughness: 0.9, metalness: 0.0 }
-        : { color: 0x1a3b5d, roughness: 0.85, metalness: 0.05 }; // fallback tint
-
-      const sphereMat = new THREE.MeshStandardMaterial(materialOptions);
+      const sphereMat = new THREE.MeshStandardMaterial({ color: 0x1a3b5d, roughness: 0.85, metalness: 0.05 });
       const planet = new THREE.Mesh(sphereGeo, sphereMat);
 
       const planetGroup = new THREE.Group();
       planetGroup.add(planet);
       scene.add(planetGroup);
+
+      // Start rendering immediately
+      setIsReady(true);
+
+      // Attempt to load texture asynchronously and swap into material when ready
+      try {
+        const textureLoader = new THREE.TextureLoader();
+        (textureLoader as any).crossOrigin = 'anonymous';
+        textureLoader.load(
+          textureUrl,
+          (tex) => {
+            tex.colorSpace = THREE.SRGBColorSpace;
+            (tex as any).anisotropy = Math.min(8, (renderer.capabilities as any).getMaxAnisotropy?.() || 4);
+            sphereMat.map = tex;
+            sphereMat.color.set(0xffffff);
+            sphereMat.roughness = 0.9;
+            sphereMat.metalness = 0.0;
+            sphereMat.needsUpdate = true;
+          },
+          undefined,
+          () => {
+            // ignore error: keep fallback material
+          }
+        );
+      } catch {
+        // ignore loader failures entirely
+      }
 
       // Add subtle additive glow sprite around the planet
       const glowSize = 256;
@@ -132,9 +134,6 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
       const glowSprite = new THREE.Sprite(glowMaterial);
       glowSprite.scale.set(radius * 3.0, radius * 3.0, 1);
       planetGroup.add(glowSprite);
-
-      // Mark ready once scene is assembled
-      setIsReady(true);
 
       // Resize handler
       const handleResize = () => {
@@ -262,6 +261,13 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
       className={`relative min-h-screen w-full overflow-hidden bg-[radial-gradient(1200px_600px_at_50%_30%,rgba(30,48,80,0.55),transparent_70%)] from-[#07090f] via-[#060b12] to-[#05080d] ${className || ''}`}
       style={{ backgroundImage: 'linear-gradient(180deg, #05070B 0%, #0B1020 60%, #0B0F14 100%)' }}
     >
+      {/* Fallback background image (blurred) */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-0 bg-center bg-cover"
+        style={{ backgroundImage: `url(${textureUrl})`, filter: 'blur(60px) brightness(0.6)', transform: 'scale(1.1)' }}
+      />
+
       {/* 3D Canvas container */}
       <div ref={containerRef} className="absolute inset-0 z-0" aria-label="Interactive 3D planet" />
 
