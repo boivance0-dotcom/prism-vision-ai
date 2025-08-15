@@ -102,7 +102,7 @@ const SearchResults: React.FC = () => {
 				<div className="mx-auto max-w-6xl px-4 py-3 flex items-center gap-4">
 					{/* Brand left */}
 					<div className="min-w-[140px]">
-						<Link to="/search" className="font-extrabold tracking-tight text-lg md:text-xl text-gray-900">Prism Vision</Link>
+						<Link to="/search" className="font-extrabold tracking-tight text-lg md:text-xl text-gray-900">Zytherion Biovance</Link>
 					</div>
 					{/* Center search */}
 					<div className="flex-1 max-w-3xl">
