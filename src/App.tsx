@@ -11,6 +11,7 @@ import ForestAI from "./pages/ForestAI";
 import AIDashboard from "./pages/AIDashboard";
 import Login from "./pages/Login";
 import Test from "./pages/Test";
+import Search from "./pages/Search";
 import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/test" element={<Test />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/search" element={<Search />} />
             <Route path="/forest-ai" element={<ForestAI />} />
             <Route path="/ai/:slug" element={<AIDashboard />} />
             <Route path="/login" element={<Login />} />
