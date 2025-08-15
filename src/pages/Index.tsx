@@ -53,6 +53,13 @@ const Index = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // When experience starts, bring the content section into view
+  useEffect(() => {
+    if (started && contentRef.current) {
+      contentRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [started]);
+
   return (
     <div className="relative min-h-screen">
       {/* Hero Section with Earth Video Background */}
@@ -85,12 +92,13 @@ const Index = () => {
             transition={{ duration: 1.5, ease: EASE, delay: 0.5 }}
           >
             <motion.h1
-              className="font-black leading-[0.9] text-transparent bg-clip-text bg-gradient-to-br from-white via-blue-50 to-blue-100 drop-shadow-[0_25px_100px_rgba(0,0,0,0.8)]"
+              className={`font-black leading-[0.9] text-transparent bg-clip-text bg-gradient-to-br from-white via-blue-50 to-blue-100 drop-shadow-[0_25px_100px_rgba(0,0,0,0.8)] ${started ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
               style={{ 
                 fontSize: 'clamp(2.5rem, 7vw, 5rem)', 
                 letterSpacing: '-0.03em', 
                 textShadow: '0 10px 40px rgba(0,0,0,0.9)',
-                fontFeatureSettings: '"liga" 1, "kern" 1'
+                fontFeatureSettings: '"liga" 1, "kern" 1',
+                transition: 'opacity 400ms ease'
               }}
             >
               <span className="block">Earth Intelligence</span>
@@ -101,7 +109,7 @@ const Index = () => {
 
             {/* Company Theory Reveal */}
             <motion.div
-              className="mt-8 max-w-4xl mx-auto"
+              className={`mt-8 max-w-4xl mx-auto ${started ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={earthAnimationComplete ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
               transition={{ duration: 1.2, ease: EASE, delay: 1.5 }}
