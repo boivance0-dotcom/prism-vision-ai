@@ -11,6 +11,7 @@ export type PlanetHeroProps = {
   redirectTo?: string;
   redirectDelayMs?: number;
   staySpinning?: boolean;
+  onAfterSequence?: () => void;
 };
 
 const DEFAULT_TEXTURE_4K = 'https://www.solarsystemscope.com/textures/download/4k_earth_daymap.jpg';
@@ -24,6 +25,7 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
   redirectTo = '/ai/forest',
   redirectDelayMs = 3000,
   staySpinning = true,
+  onAfterSequence,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
@@ -73,25 +75,32 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
       // Planet
       const radius = 1.0;
       const sphereGeo = new THREE.SphereGeometry(radius, 96, 96);
-      const textureLoader = new THREE.TextureLoader();
-      const colorMap = await new Promise<THREE.Texture>((resolve, reject) => {
-        textureLoader.load(
-          textureUrl,
-          (tex) => {
-            tex.colorSpace = THREE.SRGBColorSpace;
-            tex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy?.() || 4);
-            resolve(tex);
-          },
-          undefined,
-          (err) => reject(err)
-        );
-      });
 
-      const sphereMat = new THREE.MeshStandardMaterial({
-        map: colorMap,
-        roughness: 0.9,
-        metalness: 0.0,
-      });
+      const textureLoader = new THREE.TextureLoader();
+      let colorMap: THREE.Texture | null = null;
+      try {
+        colorMap = await new Promise<THREE.Texture>((resolve, reject) => {
+          textureLoader.load(
+            textureUrl,
+            (tex) => {
+              tex.colorSpace = THREE.SRGBColorSpace;
+              tex.anisotropy = Math.min(8, (renderer.capabilities as any).getMaxAnisotropy?.() || 4);
+              resolve(tex);
+            },
+            undefined,
+            (err) => reject(err)
+          );
+        });
+      } catch (err) {
+        // Fallback: no texture — use a subtle colored material so we never blank out
+        colorMap = null;
+      }
+
+      const materialOptions: any = colorMap
+        ? { map: colorMap, roughness: 0.9, metalness: 0.0 }
+        : { color: 0x1a3b5d, roughness: 0.85, metalness: 0.05 }; // fallback tint
+
+      const sphereMat = new THREE.MeshStandardMaterial(materialOptions);
       const planet = new THREE.Mesh(sphereGeo, sphereMat);
 
       const planetGroup = new THREE.Group();
@@ -127,7 +136,7 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
       const handleResize = () => {
         if (!container) return;
         const { clientWidth: w, clientHeight: h } = container;
-        camera.aspect = w / h;
+        camera.aspect = Math.max(0.0001, w / Math.max(1, h));
         camera.updateProjectionMatrix();
         renderer.setSize(w, h, false);
         const base = Math.min(w, h);
@@ -152,8 +161,8 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
         const rect = renderer.domElement.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
-        const dx = (e.clientX - cx) / rect.width;
-        const dy = (e.clientY - cy) / rect.height;
+        const dx = (e.clientX - cx) / Math.max(1, rect.width);
+        const dy = (e.clientY - cy) / Math.max(1, rect.height);
         const d = Math.sqrt(dx * dx + dy * dy);
         const prox = Math.max(0, 1 - d * 4); // within ~1/4 canvas radius
         hoverProximity = Math.max(0, Math.min(1, prox));
@@ -230,17 +239,19 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
     };
   }, [textureUrl, staySpinning]);
 
-  // Handle redirect after both texts are shown
+  // Trigger redirect and/or inform parent when sequence is done
   useEffect(() => {
-    if (!clicked) return;
-    if (!autoRedirect) return;
-    if (!showLine1 || !showBrand) return;
+    if (!clicked || !showLine1 || !showBrand) return;
 
+    // Notify parent once when sequence completes
+    onAfterSequence?.();
+
+    if (!autoRedirect) return;
     const t = setTimeout(() => {
       navigate(redirectTo);
     }, redirectDelayMs);
     return () => clearTimeout(t);
-  }, [clicked, showLine1, showBrand, autoRedirect, redirectTo, redirectDelayMs, navigate]);
+  }, [clicked, showLine1, showBrand, autoRedirect, redirectTo, redirectDelayMs, navigate, onAfterSequence]);
 
   return (
     <section

@@ -24,6 +24,7 @@ import PlanetHero from '@/components/PlanetHero';
 
 const Index = () => {
   const [started, setStarted] = useState(false);
+  const [planetSequenceDone, setPlanetSequenceDone] = useState(false);
   const experienceRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
 
@@ -55,7 +56,48 @@ const Index = () => {
         autoRedirect={false}
         redirectTo="/ai/forest"
         redirectDelayMs={3000}
+        onAfterSequence={() => setPlanetSequenceDone(true)}
       />
+
+      {/* Reveal Section: Earth Intelligence */}
+      <div className="container mx-auto px-6">
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={planetSequenceDone ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: EASE }}
+          className="mt-12 md:mt-16"
+        >
+          <div className="max-w-4xl">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-white">Earth Intelligence</h2>
+            <p className="mt-2 text-xl md:text-3xl font-extrabold text-white/95">Beautifully Rendered</p>
+            <h3 className="mt-8 text-2xl md:text-3xl font-extrabold text-white">Our Vision</h3>
+            <p className="mt-3 text-white/90 text-base md:text-lg leading-relaxed">
+              We believe in harnessing the power of Earth observation to create intelligent systems that understand our planet's complex ecosystems. Through advanced AI and real-time data analysis, we transform satellite imagery into actionable insights that drive environmental conservation and sustainable development.
+            </p>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="rounded-xl bg-black/50 border border-white/10 p-5">
+              <div className="text-3xl font-extrabold text-white">24/7</div>
+              <div className="text-white/80">Global Monitoring</div>
+            </div>
+            <div className="rounded-xl bg-black/50 border border-white/10 p-5">
+              <div className="text-3xl font-extrabold text-white">AI-Powered</div>
+              <div className="text-white/80">Intelligent Analysis</div>
+            </div>
+            <div className="rounded-xl bg-black/50 border border-white/10 p-5">
+              <div className="text-3xl font-extrabold text-white">Real-Time</div>
+              <div className="text-white/80">Data Processing</div>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <Link to="/ai/forest" className="inline-block px-6 py-3 rounded-lg bg-[var(--accent,#86C232)] text-black font-bold hover:brightness-110 transition">
+              Explore Our Technology
+            </Link>
+          </div>
+        </motion.section>
+      </div>
 
       {/* Rest of page content */}
       <div className="relative container mx-auto px-6 py-16 min-h-screen flex flex-col page-enter">
