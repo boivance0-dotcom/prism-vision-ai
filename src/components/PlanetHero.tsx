@@ -33,6 +33,7 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
   const [clicked, setClicked] = useState(false);
   const [showLine1, setShowLine1] = useState(false);
   const [showBrand, setShowBrand] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     let cleanupFn: (() => void) | null = null;
@@ -126,11 +127,14 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
         transparent: true,
         opacity: 0.0,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
+        blending: (await import('three')).AdditiveBlending,
       });
       const glowSprite = new THREE.Sprite(glowMaterial);
       glowSprite.scale.set(radius * 3.0, radius * 3.0, 1);
       planetGroup.add(glowSprite);
+
+      // Mark ready once scene is assembled
+      setIsReady(true);
 
       // Resize handler
       const handleResize = () => {
@@ -259,10 +263,19 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
       style={{ backgroundImage: 'linear-gradient(180deg, #05070B 0%, #0B1020 60%, #0B0F14 100%)' }}
     >
       {/* 3D Canvas container */}
-      <div ref={containerRef} className="absolute inset-0" aria-label="Interactive 3D planet" />
+      <div ref={containerRef} className="absolute inset-0 z-0" aria-label="Interactive 3D planet" />
+
+      {/* Loading overlay */}
+      {!isReady && (
+        <div className="absolute inset-0 z-10 grid place-items-center">
+          <div className="text-white/80 text-sm tracking-wider bg-black/40 border border-white/10 backdrop-blur-sm rounded-md px-4 py-2">
+            Loading Earth...
+          </div>
+        </div>
+      )}
 
       {/* Overlay content */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-20">
         <AnimatePresence>
           {clicked && (
             <motion.div
@@ -310,7 +323,7 @@ const PlanetHero: React.FC<PlanetHeroProps> = ({
 
       {/* Help text overlay before click */}
       {!clicked && (
-        <div className="absolute inset-x-0 bottom-8 flex items-center justify-center">
+        <div className="absolute inset-x-0 bottom-8 flex items-center justify-center z-20">
           <div className="pointer-events-none text-white/80 text-xs tracking-widest uppercase bg-black/30 border border-white/10 backdrop-blur-sm rounded-md px-3 py-1.5">
             Click the planet
           </div>
