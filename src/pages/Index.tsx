@@ -103,7 +103,7 @@ const Index = () => {
             >
               <span className="block">digital nervous system</span>
               <span className="block text-4xl md:text-5xl lg:text-6xl font-light tracking-wider text-blue-200/90" style={{ letterSpacing: '0.1em' }}>
-                Beautifully Rendered
+                digital nervous system
               </span>
             </motion.h1>
 
