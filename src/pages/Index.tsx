@@ -101,7 +101,7 @@ const Index = () => {
                 transition: 'opacity 400ms ease'
               }}
             >
-              <span className="block">Earth Intelligence</span>
+              <span className="block">digital nervous system</span>
               <span className="block text-4xl md:text-5xl lg:text-6xl font-light tracking-wider text-blue-200/90" style={{ letterSpacing: '0.1em' }}>
                 Beautifully Rendered
               </span>
