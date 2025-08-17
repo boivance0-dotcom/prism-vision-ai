@@ -1,3 +1,0 @@
-name = "prism-vision-ai"
-# Cloudflare Pages: output directory for Vite
-pages_build_output_dir = "dist"
