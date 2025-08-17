@@ -28,15 +28,16 @@ const ContactSection: React.FC<{ companyName?: string; accentColor?: string }> =
             <div className="mt-5 grid gap-3 text-sm">
               <div className="rounded-xl p-4 bg-black/40 border border-white/10">
                 <div className="text-white/90 font-semibold">{companyName}</div>
-                <div className="text-white/70 mt-1">Earth Intelligence Lab</div>
-                <div className="text-white/70">123 Evergreen Way, Canopy District</div>
+                <div className="text-white/70 mt-1">Digital Nervous System Lab</div>
+                <div className="text-white/70">4539 North 22nd STE R</div>
+                <div className="text-white/70">Phoenix, AZ 85016</div>
               </div>
               <div className="rounded-xl p-4 bg-black/40 border border-white/10 flex items-center justify-between">
                 <div className="text-white/80">
-                  <div>hello@{companyName.toLowerCase().replace(/\s+/g, '')}.ai</div>
-                  <div className="text-white/60 text-xs">+1 (555) 012-3456</div>
+                  <div>info@zytherionbiovance.com</div>
+                  <div className="text-white/60 text-xs">480-490-4120</div>
                 </div>
-                <a href="#" className="px-3 py-1 rounded-md text-white text-xs font-semibold ring-1 ring-white/40 hover:brightness-105 transition" style={{ backgroundColor: accent, textShadow: '0 1px 0 rgba(0,0,0,0.65), 0 0 8px rgba(0,0,0,0.35)' }}>Email us</a>
+                <a href="mailto:info@zytherionbiovance.com" className="px-3 py-1 rounded-md text-white text-xs font-semibold ring-1 ring-white/40 hover:brightness-105 transition" style={{ backgroundColor: accent, textShadow: '0 1px 0 rgba(0,0,0,0.65), 0 0 8px rgba(0,0,0,0.35)' }}>Email us</a>
               </div>
             </div>
           </div>
