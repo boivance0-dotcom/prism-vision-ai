@@ -42,7 +42,7 @@ const Search: React.FC = () => {
 			{/* Page content */}
 			<div className="relative z-10 container mx-auto px-6 pt-28 pb-16">
 				<div className="max-w-3xl mx-auto text-center">
-					<h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">All‑in‑One Search</h1>
+					<h1 className="text-4xl md:text-5xl font-bold tracking-tight text-white">DNS Discovery</h1>
 					<p className="mt-2 text-white/85">Enhanced, fast, and focused — switch categories and search your world.</p>
 
 					<div className="mt-6">
