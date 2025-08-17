@@ -95,7 +95,7 @@ const AboutSection: React.FC<{ accentColor?: string }> = ({ accentColor }) => {
             />
             <TypewriterLine
               className=""
-              text={"Think of it as “Google for Conservation” — a comprehensive search and discovery system that indexes conservation research, wildlife data, habitat information, and scientific findings from across the globe. Users can search across decades of research, current monitoring projects, and real‑time environmental conditions."}
+              text={"Think of it as "search engine for conservation" — a comprehensive search and discovery system that indexes conservation research, wildlife data, habitat information, and scientific findings from across the globe. Users can search across decades of research, current monitoring projects, and real‑time environmental conditions."}
               delay={1600}
               speedMsPerChar={12}
             />
